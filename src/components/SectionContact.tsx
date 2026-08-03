@@ -37,14 +37,38 @@ const labelStyle: React.CSSProperties = {
 export default function SectionContact() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
+    setError(null);
+
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    const interests = data.getAll("interest") as string[];
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          company: data.get("company"),
+          name: data.get("name"),
+          email: data.get("email"),
+          industry: data.get("industry"),
+          interests,
+          message: data.get("message"),
+        }),
+      });
+
+      if (!res.ok) throw new Error("Failed to send");
       setSubmitted(true);
-    }, 900);
+    } catch {
+      setError("Something went wrong. Please try again or email us directly.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -143,20 +167,27 @@ export default function SectionContact() {
                   Thank you — we will be in touch shortly.
                 </p>
               ) : (
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="inline-block bg-[var(--black)] text-white no-underline transition-colors hover:bg-[var(--dark)] cursor-pointer"
-                  style={{
-                    padding: "0.85rem 2.2rem",
-                    fontSize: "0.7rem",
-                    letterSpacing: "0.16em",
-                    textTransform: "uppercase",
-                    border: "none",
-                  }}
-                >
-                  {loading ? "Sending…" : "Submit Inquiry"}
-                </button>
+                <>
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="inline-block bg-[var(--black)] text-white no-underline transition-colors hover:bg-[var(--dark)] cursor-pointer disabled:opacity-50"
+                    style={{
+                      padding: "0.85rem 2.2rem",
+                      fontSize: "0.7rem",
+                      letterSpacing: "0.16em",
+                      textTransform: "uppercase",
+                      border: "none",
+                    }}
+                  >
+                    {loading ? "Sending…" : "Submit Inquiry"}
+                  </button>
+                  {error && (
+                    <p style={{ fontSize: "0.82rem", color: "#c0392b", marginTop: "0.75rem" }}>
+                      {error}
+                    </p>
+                  )}
+                </>
               )}
             </div>
           </form>
