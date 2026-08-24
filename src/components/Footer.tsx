@@ -33,10 +33,16 @@ export default function Footer() {
       </div>
 
       <div
-        className="max-w-[1200px] mx-auto mt-10 pt-8"
+        className="max-w-[1200px] mx-auto mt-10 pt-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4"
         style={{ borderTop: "1px solid rgba(255,255,255,.08)", fontSize: "0.7rem", color: "rgba(255,255,255,.2)" }}
       >
-        &copy; 2026 Mugeniki. All rights reserved.
+        <span>&copy; 2026 Mugeniki. All rights reserved.</span>
+        <a href="https://rankcaster.ai" target="_blank" rel="noopener noreferrer" style={{ opacity: 0.4, lineHeight: 0 }}>
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcSet="https://rankcaster.ai/badge-dark.svg" />
+            <img src="https://rankcaster.ai/badge-light.svg" alt="AI Visibility tracked by RankCaster AI" width={110} height={18} style={{ display: "block" }} />
+          </picture>
+        </a>
       </div>
 
     </footer>
