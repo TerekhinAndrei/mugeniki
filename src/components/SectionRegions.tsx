@@ -30,12 +30,12 @@ export default function SectionRegions() {
         </RevealWrapper>
 
         <div
-          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5"
+          className="grid grid-cols-1 min-[420px]:grid-cols-2 sm:grid-cols-3 lg:grid-cols-5"
           style={{ gap: "1px", background: "rgba(255,255,255,.08)", border: "1px solid rgba(255,255,255,.08)" }}
         >
           {regions.map((r, i) => {
             const body = (
-              <div className="region-card p-10 h-full" style={{ background: "var(--offblack)" }}>
+              <div className="region-card p-6 md:p-10 h-full" style={{ background: "var(--offblack)" }}>
                 <p
                   className="text-white mb-1"
                   style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: "1.4rem", fontWeight: 400 }}

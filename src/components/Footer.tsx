@@ -16,7 +16,10 @@ const linkStyle = {
   fontSize: "0.68rem",
   letterSpacing: "0.14em",
   textTransform: "uppercase" as const,
-  color: "rgba(255,255,255,.62)",
+  color: "rgba(255,255,255,.72)",
+  display: "inline-flex",
+  alignItems: "center",
+  minHeight: 44,
 };
 
 export default function Footer() {
@@ -35,7 +38,7 @@ export default function Footer() {
           </p>
         </div>
 
-        <ul className="flex flex-wrap gap-8 list-none p-0 m-0 justify-end">
+        <ul className="flex flex-wrap gap-x-8 gap-y-1 list-none p-0 m-0 justify-end">
           {links.map((l) => (
             <li key={l.href}>
               <Link href={l.href} className="footer-link no-underline" style={linkStyle}>
@@ -51,7 +54,13 @@ export default function Footer() {
         style={{ borderTop: "1px solid rgba(255,255,255,.08)", fontSize: "0.7rem", color: "rgba(255,255,255,.4)" }}
       >
         <span>&copy; 2026 Mugeniki. All rights reserved.</span>
-        <a href="https://rankcaster.ai" target="_blank" rel="noopener noreferrer" style={{ opacity: 0.4, lineHeight: 0 }}>
+        <a
+          href="https://rankcaster.ai"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="AI visibility tracked by RankCaster AI"
+          style={{ opacity: 0.55, lineHeight: 0, display: "inline-flex", alignItems: "center", minHeight: 44 }}
+        >
           <picture>
             <source media="(prefers-color-scheme: dark)" srcSet="https://rankcaster.ai/badge-dark.svg" />
             <img src="https://rankcaster.ai/badge-light.svg" alt="AI Visibility tracked by RankCaster AI" width={110} height={18} style={{ display: "block" }} />
