@@ -54,8 +54,8 @@ export default function AritaPage() {
             ]}
           />
           <Callout>
-            Every Arita quotation we send names the kiln, its capacity and its queue. Where a workshop has never
-            had its glaze tested, we say so and arrange testing before a pilot order.
+            Every Arita quotation names the kiln, its capacity and its queue. Where a glaze has never been
+            tested, we arrange the lead and cadmium migration test before a pilot run.
           </Callout>
         </PageSection>
 

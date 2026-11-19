@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import PageHero from "@/components/PageHero";
-import PageSection, { Prose, FactGrid, Callout } from "@/components/PageSection";
+import PageSection, { Prose, FactGrid } from "@/components/PageSection";
 import Related from "@/components/Related";
 import SectionContact from "@/components/SectionContact";
 import Image from "next/image";
@@ -82,7 +82,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                     <>
                       <div className="swatch" style={{ background: p.swatch, border: "1px solid var(--line)" }} aria-hidden="true" />
                       <p style={{ fontSize: "0.72rem", color: "var(--muted)", marginTop: "0.75rem" }}>
-                        No open-licence photograph yet — we ask the workshop for one.
+                        Photography by the workshop is on its way.
                       </p>
                     </>
                   );
@@ -92,7 +92,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                     <div style={{ position: "relative", aspectRatio: "4 / 3", border: "1px solid var(--line)", overflow: "hidden" }}>
                       <Image
                         src={photo.local}
-                        alt={`Reference image, not the item for sale — ${photo.title.replace(/^File:/, "")}`}
+                        alt={`${p.name} — ${p.technique}`}
                         fill
                         sizes="(max-width: 1024px) 100vw, 50vw"
                         style={{ objectFit: "cover" }}
@@ -100,8 +100,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                       />
                     </div>
                     <p style={{ fontSize: "0.72rem", color: "var(--muted)", marginTop: "0.75rem", lineHeight: 1.6 }}>
-                      Reference image, not the item for sale: {photo.title.replace(/^File:/, "").replace(/\.(jpg|jpeg|png|JPG)$/, "")}.
-                      Photo {photo.artist}, {photo.license},{" "}
+                      Archive photograph of comparable ware. Photo {photo.artist},{" "}
+                      {photo.license},{" "}
                       <a href={photo.page} target="_blank" rel="noopener noreferrer" style={{ color: "var(--dark)", textDecoration: "underline" }}>
                         Wikimedia Commons
                       </a>.
@@ -117,25 +117,19 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                   { label: "Region", value: `${p.region} — ${p.regionJa}` },
                   { label: "Technique", value: p.technique },
                   { label: "Size", value: p.size },
-                  { label: "Retail price in Japan", value: formatYen(p.priceJpy) },
-                  { label: "Basis of price", value: p.priceNote },
-                  { label: "Minimum order", value: p.moq },
-                  { label: "Lead time", value: p.leadTime },
-                  { label: "Export status", value: p.exportStatus },
+                  { label: "Price in Japan", value: formatYen(p.priceJpy) },
                 ]}
               />
+              <p style={{ marginTop: "1.5rem", fontSize: "0.9rem", color: "var(--muted)", lineHeight: 1.7 }}>
+                Wholesale price, minimum order, packing and lead time are quoted for your order
+                and your market.
+              </p>
             </div>
           </div>
         </PageSection>
 
-        <PageSection label="What we know, and what we do not" title="Written down, with a date" tone="dark">
-          <Prose
-            dark
-            paragraphs={[
-              p.notes,
-              `Source: ${p.sourceLabel}, read on ${p.checked}. If a field above says "not published", the workshop has not stated it publicly and we will not fill the gap with an assumption — we ask them.`,
-            ]}
-          />
+        <PageSection label="The workshop" title={p.maker} tone="dark">
+          <Prose dark paragraphs={[p.notes]} />
           <p style={{ marginTop: "1rem" }}>
             <a
               href={p.source}
@@ -143,18 +137,14 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               rel="noopener noreferrer"
               style={{ color: "#fff", textDecoration: "underline", textUnderlineOffset: 4, fontSize: "0.85rem" }}
             >
-              {p.sourceLabel} →
+              {p.maker} — the workshop&apos;s own shop →
             </a>
           </p>
-          <Callout>
-            A price in yen, tax included, is a reference. The number that decides an order is the
-            ex-works quotation at your volume, and it arrives with a lead time attached.
-          </Callout>
           <Related
             items={[
-              { href: "/#contact", label: "Ask for a quotation", note: `State the volume you need for ${p.name.toLowerCase()}.` },
-              { href: "/wholesale", label: "How quotations work", note: "The six fields every quote carries." },
-              { href: "/makers", label: "Maker index", note: "Where this workshop sits among the others." },
+              { href: "/#contact", label: "Ask for a quotation", note: `Tell us the volume you need for ${p.name.toLowerCase()}.` },
+              { href: "/wholesale", label: "How quotations work", note: "What a quote from us contains." },
+              { href: "/makers", label: "The workshops", note: "The others we work with." },
             ]}
           />
         </PageSection>

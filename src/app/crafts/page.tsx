@@ -51,25 +51,25 @@ export default function CraftsPage() {
             dark
             paragraphs={[
               "A region tells you about technique and material. It does not tell you about capacity. Two workshops a kilometre apart in Arita can differ tenfold in output, export experience and willingness to work with a foreign buyer.",
-              "That is why we name the workshop in every quote and keep the region as context, not as a substitute for due diligence. A famous place name is not a quality guarantee; the kiln's last three years of work is.",
+              "Which is why every quotation names the workshop and treats the region as context. A famous place name is not a quality guarantee; the kiln's last three years of work is.",
             ]}
           />
           <Callout>
-            We publish a workshop&apos;s name and contact details only with its agreement. Until then a card
-            describes the region and the technique, and the name is shared in conversation.
+            A craft region has a reputation; a workshop has a production line. We work with the second, and
+            tell you which ones can carry your volume.
           </Callout>
         </PageSection>
 
-        <PageSection label="Coverage" title="What is in onboarding now">
+        <PageSection label="Coverage" title="Where the first collection comes from">
           <Prose
             paragraphs={[
-              "Our first wave covers seven workshops across Arita, Kyoto, Yamanaka and Seki: porcelain kilns of five to twenty people, two lacquer workshops, one blade maker and one workshop working for hotels and patissiers.",
-              "Fields we confirm for each of them before a card goes anywhere: name in Japanese and Latin script, region, technique, founding year, products, price range, minimum order, capacity, lead time, export experience, languages spoken, and the risks we see.",
+              "The first collection comes from seven workshops across Arita, Kyoto, Yamanaka and Seki: porcelain kilns of five to twenty people, two lacquer workshops, a blade maker and a workshop that already supplies hotels and patissiers.",
+              "With each of them we know production capacity, minimum order, lead time, food-contact documentation and whether anyone there answers in English — before we put a piece in front of you.",
             ]}
           />
           <Related
             items={[
-              { href: "/makers", label: "Maker index", note: "What a verified card contains, and what we do not publish." },
+              { href: "/makers", label: "The workshops", note: "Who makes what, and where." },
               { href: "/wholesale", label: "Wholesale", note: "Volumes, quoting and export." },
             ]}
           />

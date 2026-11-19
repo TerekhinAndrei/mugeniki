@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import PageHero from "@/components/PageHero";
-import PageSection, { Prose, FactGrid, Callout } from "@/components/PageSection";
+import PageSection, { Prose } from "@/components/PageSection";
 import Related from "@/components/Related";
 import SectionContact from "@/components/SectionContact";
 import CatalogueGrid from "@/components/CatalogueGrid";
@@ -11,60 +11,47 @@ import { products } from "@/data/products";
 export const metadata: Metadata = {
   title: "Catalogue — Japanese Ceramics, Tea Wares and Lacquer",
   description:
-    "Real items from named Japanese workshops, with the workshop's own published price and the date we read it. Wholesale and export terms are quoted per order.",
+    "Donburi, plates, mugs, tea bowls and lacquer from workshops in Arita and Kyoto, with retail prices in Japan. Wholesale terms quoted per order.",
   alternates: { canonical: "/collections" },
 };
 
 export default function CollectionsPage() {
-  const withPrice = products.filter((p) => p.priceJpy !== null).length;
-
   return (
     <>
       <Nav />
       <main>
         <PageHero
           label="Catalogue"
-          title="What these workshops actually make"
-          lead="Each entry below comes from a workshop's own shop or works page, with the price they publish and the date we read it. Where a price is not published, the field says so instead of holding a guess."
+          title="Pieces from Arita and Kyoto, priced as the workshops price them"
+          lead="Donburi, plates, mugs, tea bowls, a water jar for tea ceremony — thirteen pieces from two workshops, with the retail price in Japan shown on each card."
         />
 
-        <PageSection label="How to read this" title="Prices are Japanese retail, not wholesale">
+        <PageSection label="Prices" title="Japanese retail, shown in yen">
           <Prose
             paragraphs={[
-              "Every figure here is the price a Japanese customer pays in the workshop's own shop, tax included. It is a floor and a reference, not an offer: wholesale is negotiated per order, and none of these workshops publishes an export price, a minimum order or a capacity figure.",
-              `${withPrice} of ${products.length} entries carry a published price. The rest are real products whose price the workshop does not publish — those read "price on request", because that is what they are.`,
+              "Prices are what a customer pays in the workshop's own shop, consumption tax included. They give you a sense of where a piece sits against your own retail, and where a collection could be built.",
+              "Wholesale is a separate conversation: ex-works price, minimum order, packing and lead time are quoted for your design, your volume and your market. Pieces marked “price on request” are made to order at a level the workshop prices per commission rather than per item.",
+              "Most of the tableware is made to order rather than pulled from a shelf. Allow four to eight weeks from confirmation to a fired batch, longer for a new mould or a new glaze.",
             ]}
           />
-          <FactGrid
-            items={[
-              { label: "What is verified", value: "Item name, workshop, region, technique and the retail price where one is published." },
-              { label: "What is not", value: "Minimum order, monthly capacity, ex-works price, packing and export documents." },
-              { label: "How terms are set", value: "By written quotation from the workshop, per design and per volume." },
-              { label: "About the photographs", value: "Open-licence reference images of the same ware and period, credited on each card. They show the technique, not the exact piece — product photography comes from the workshop." },
-            ]}
-          />
-          <Callout>
-            Nothing on this page is a stock list. Several items are made to order and the kiln says
-            so openly; an order in April may be fired in May.
-          </Callout>
         </PageSection>
 
-        <PageSection label="The catalogue" title="Filter by what you need" tone="dark">
+        <PageSection label="The collection" title="Filter by what you need" tone="dark">
           <CatalogueGrid products={products} />
         </PageSection>
 
-        <PageSection label="What comes next" title="From a page to a purchase order">
+        <PageSection label="Next step" title="From a page to a purchase order">
           <Prose
             paragraphs={[
-              "Pick the pieces you want to see, and we ask the workshop three questions before any price reaches you: can they make this design at your volume, what does it cost ex-works, and how long from order to a pallet ready for export.",
+              "Choose the pieces you want to see and we come back with the workshop's own answers: whether the design can be made at your volume, what it costs ex-works, and how long from order to a pallet ready for export.",
               "Samples come before a purchase order, always. For ceramics that means a fired piece from the same mould and glaze batch, not a photograph.",
             ]}
           />
           <Related
             items={[
-              { href: "/wholesale", label: "Wholesale terms", note: "Volumes, quotation fields and lead times." },
-              { href: "/hospitality", label: "For hospitality", note: "Collections that survive daily service." },
-              { href: "/makers", label: "The maker index", note: "Who we are in conversation with, and where." },
+              { href: "/wholesale", label: "Wholesale terms", note: "Volumes, quotation and lead times." },
+              { href: "/hospitality", label: "For hospitality", note: "Tableware built for daily service." },
+              { href: "/makers", label: "The workshops", note: "Where they work and what they make." },
             ]}
           />
         </PageSection>

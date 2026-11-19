@@ -46,7 +46,7 @@ export default function YamanakaPage() {
           />
         </PageSection>
 
-        <PageSection label="The honest questions" title="Finish, food safety and time">
+        <PageSection label="What to check" title="Finish, food safety and time">
           <Prose
             paragraphs={[
               "Lacquerware is not automatically food-safe: it depends on the finish. Traditional urushi cured correctly is the material Japanese tableware has used for centuries; synthetic urethane finishes are cheaper, faster and behave differently with hot liquid and with dishwashers. Ask which one is in the piece and how it was cured.",
@@ -55,8 +55,8 @@ export default function YamanakaPage() {
             ]}
           />
           <Callout>
-            We do not describe a lacquered piece as food-safe without knowing the finish and its documentation.
-            Where the answer is unclear, we get it in writing from the workshop first.
+            A lacquered piece is only as food-safe as its finish. Urushi cured properly is the material Japanese
+            tables have used for centuries; urethane is cheaper and behaves differently with heat.
           </Callout>
         </PageSection>
 

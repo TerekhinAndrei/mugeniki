@@ -47,7 +47,7 @@ export default function HospitalityPage() {
             <Prose
               dark
               paragraphs={[
-                "Discontinued patterns are the quiet problem in hospitality. A hotel orders four hundred plates, breaks sixty in three years, and finds the line has ended. When we source a collection, we ask the workshop what it can still make in five years, and we write the answer down.",
+                "Discontinued patterns are the quiet problem in hospitality. A hotel orders four hundred plates, breaks sixty in three years, and finds the line has ended. We ask each workshop what it can still make in five years and build the collection around that answer.",
               ]}
             />
           </div>
@@ -56,13 +56,13 @@ export default function HospitalityPage() {
         <PageSection label="Compliance" title="What the kitchen and the auditor will ask">
           <Prose
             paragraphs={[
-              "Anything that touches food needs documentation, and for ceramics that means migration testing for lead and cadmium, not a certificate of authenticity. We ask the workshop for test results before a sample is shipped, and we say plainly when a workshop has never had its glaze tested.",
+              "Anything that touches food needs documentation, and for ceramics that means migration testing for lead and cadmium, not a certificate of authenticity. Test results come with the sample; where a workshop has never had its glaze tested, we arrange the test before a piece is sold.",
               "For the European Union the frame is Regulation (EC) 1935/2004 with the ceramics directive 84/500/EEC and its amendments; Germany adds LFGB, the United States adds FDA requirements. For lacquerware we check the finish — urushi, cashew or synthetic — because that decides whether the piece is food-safe at all.",
             ]}
           />
           <Callout>
-            Requirements differ by destination and change. We confirm them for your market and country before
-            production, and we give you the date we checked.
+            Requirements differ by destination and are revised often. We confirm the current ones for your
+            market before production starts.
           </Callout>
         </PageSection>
 

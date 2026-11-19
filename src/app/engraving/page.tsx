@@ -56,8 +56,8 @@ export default function EngravingPage() {
             ]}
           />
           <Callout>
-            We do not promise exclusivity on a blade model until the workshop confirms it in writing. When a gift
-            programme needs it, we ask before the first order, not after.
+            Exclusivity on a blade model is confirmed by the workshop in writing before the first order, not
+            promised after it.
           </Callout>
         </PageSection>
 

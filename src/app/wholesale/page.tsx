@@ -29,7 +29,7 @@ export default function WholesalePage() {
             paragraphs={[
               "Most Japanese tableware sold in Europe arrives through trading houses. By the time a plate reaches a hotel in Berlin, nobody in the chain can answer two questions that matter: who made it, and what happens if you need six hundred more of the same in April.",
               "We work the other way. Mugeniki deals with the workshop directly — the kiln in Arita, the turner in Yamanaka, the blade smith in Seki — and coordinates the parts a small maker cannot do alone: documentation, testing, packing, and the conversation with your buying team.",
-              "That does not make every workshop an exporter. Most of them have never shipped abroad, and some will tell us plainly that they do not want to. Part of our work is telling you which is which before you build a collection on top of it.",
+              "Not every workshop exports. Most of these have never shipped abroad, and a few prefer not to. You hear which is which before you build a collection on one.",
             ]}
           />
         </PageSection>
@@ -43,7 +43,7 @@ export default function WholesalePage() {
             <Prose
               dark
               paragraphs={[
-                "A price on its own is useless for planning. Ours always arrives with the same six fields, because those are the six things that decide whether an order is possible.",
+                "Every quotation we send carries the same six points, because they decide whether an order is possible at all.",
               ]}
             />
           </div>
@@ -65,12 +65,12 @@ export default function WholesalePage() {
               { title: "Pilot: 300–600 pieces", text: "One design, one workshop, enough to test a market and a shelf without committing a season's budget." },
               { title: "Annual: 1,000–3,000 pieces", text: "Repeat production across a small collection, with the same workshop or a pair of workshops on one technique." },
               { title: "Custom: private collections", text: "Your shape, your glaze, your box. Development time depends on the workshop and is quoted before anything starts." },
-              { title: "Below 300 pieces", text: "Possible with some workshops, but it is a conversation, not a price list. Ask and we will tell you honestly." },
+              { title: "Below 300 pieces", text: "Possible with several of these workshops. Tell us the quantity and the date, and we will say whether it can be done." },
             ]}
           />
           <Callout>
-            We do not publish a price a workshop has not given us, and we do not quote a minimum order we
-            have not confirmed in writing. Anything else on a sourcing site is decoration.
+            Below three hundred pieces we work case by case — a private label, a single restaurant or a
+            corporate gift run can make sense at that size.
           </Callout>
         </PageSection>
 

@@ -40,12 +40,11 @@ export default function RestorationPage() {
             dark
             paragraphs={[
               "Kintsugi — a break repaired with a gold seam — is beautiful and much of it is decorative. Traditional finishes used urushi, which is food-safe when correctly cured; many modern kits use epoxy that is not intended for drinking vessels or for hot food.",
-              "If the piece will be used at a table, ask what the repair is made of before it is done. We ask the workshop the same question, and if the answer is 'epoxy', we say so and suggest the piece be treated as decorative.",
+              "A repair at a table is only as safe as the material in it. Urushi, cashew and epoxy behave differently under hot food, and a piece repaired with epoxy belongs on a shelf, not in service.",
             ]}
           />
           <Callout>
-            We do not describe a repaired piece as food-safe without knowing the material used in the repair and
-            its curing.
+            A repaired piece is called food-safe only when the material and its curing are known and documented.
           </Callout>
         </PageSection>
 
@@ -53,7 +52,7 @@ export default function RestorationPage() {
           <NumberedList
             items={[
               { title: "Send photographs", text: "One wide shot, one close-up of the damage, and one of any maker's mark on the base." },
-              { title: "We ask the workshop", text: "Whether it can be repaired, by whom, and what it would cost — before anything is shipped." },
+              { title: "Assessment first", text: "Whether it can be repaired, by whom, and what it would cost — before anything is shipped." },
               { title: "Decision", text: "You get a yes with a price and a time, or an honest no. Not every piece is worth the shipping." },
               { title: "Repair and return", text: "The piece travels to Japan, is repaired by the relevant trade, and comes back with a note on what was done." },
             ]}
@@ -65,7 +64,7 @@ export default function RestorationPage() {
             dark
             paragraphs={[
               "Hotels with a discontinued pattern and sixty broken plates; restaurants with a set they still serve on; collectors with a piece that matters more than its price; and anyone who bought a bowl in Japan and would rather not throw it away.",
-              "We do not run a mail-in repair shop and we do not promise a turnaround in days. This is a small, deliberate service built on workshops that still practise the trade.",
+              "This is not a mail-in repair service and it is not measured in days. It is a small, deliberate job done by workshops that still practise the trade.",
             ]}
           />
         </PageSection>

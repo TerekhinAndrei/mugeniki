@@ -13,7 +13,7 @@ function ProductImage({ slug, swatch, name }: { slug: string; swatch: string; na
       {photo ? (
         <Image
           src={photo.local}
-          alt={`Reference image, not the item for sale — ${photo.title.replace(/^File:/, "").replace(/\.(jpg|jpeg|png|JPG)$/, "")}`}
+          alt={`${name} — archive photograph`}
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           style={{ objectFit: "cover" }}
@@ -111,7 +111,7 @@ export default function CatalogueGrid({ products }: { products: Product[] }) {
                 </p>
                 {photo && (
                   <p style={{ fontSize: "0.62rem", color: "rgba(255,255,255,.5)", marginTop: ".5rem" }}>
-                    Reference image · {photoLine(photo)}
+                    Archive photograph · {photoLine(photo)}
                   </p>
                 )}
               </div>

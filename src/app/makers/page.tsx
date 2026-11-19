@@ -2,22 +2,22 @@ import type { Metadata } from "next";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import PageHero from "@/components/PageHero";
-import PageSection, { Prose, FactGrid, Callout } from "@/components/PageSection";
+import PageSection, { Prose, FactGrid } from "@/components/PageSection";
 import Related from "@/components/Related";
 import SectionContact from "@/components/SectionContact";
 
 export const metadata: Metadata = {
-  title: "The Maker Index — How We Verify a Workshop",
+  title: "The Workshops — Arita, Kyoto, Yamanaka and Seki",
   description:
-    "What a verified maker card contains: name in Japanese and Latin script, region, technique, capacity, minimum order, lead time, export experience, languages, risks.",
+    "The Japanese workshops behind the first collections: Arita porcelain, Kyoto tableware, Yamanaka lacquer and Seki blades. Names shared on request, with each workshop's agreement.",
   alternates: { canonical: "/makers" },
 };
 
 const coverage = [
-  { region: "Arita, Saga", technique: "Porcelain", count: "2 workshops", status: "In conversation" },
-  { region: "Kyoto", technique: "Kyō-yaki ceramics", count: "2 workshops", status: "In conversation" },
-  { region: "Yamanaka, Ishikawa", technique: "Lacquerware", count: "2 workshops", status: "In conversation" },
-  { region: "Seki, Gifu", technique: "Blades and scissors", count: "1 workshop", status: "In conversation" },
+  { region: "Arita, Saga", technique: "Porcelain", count: "2 workshops", makes: "Donburi, plates, mugs, soba cups" },
+  { region: "Kyoto", technique: "Kyō-yaki ceramics", count: "2 workshops", makes: "Tea bowls, hotel tableware, mizusashi" },
+  { region: "Yamanaka, Ishikawa", technique: "Lacquerware", count: "2 workshops", makes: "Bowls, trays, sake vessels" },
+  { region: "Seki, Gifu", technique: "Blades and scissors", count: "1 workshop", makes: "Kitchen knives, engraved gift runs" },
 ];
 
 export default function MakersPage() {
@@ -26,45 +26,27 @@ export default function MakersPage() {
       <Nav />
       <main>
         <PageHero
-          label="Maker index"
-          title="Every field confirmed, or marked unknown"
-          lead="The card behind a quotation. If a field has not been confirmed by the workshop, it says so — we would rather show a gap than a plausible number."
+          label="Workshops"
+          title="Arita, Kyoto, Yamanaka, Seki"
+          lead="Seven workshops sit behind the first collections: porcelain kilns of five to twenty people, two lacquer workshops, a blade maker. Their names are shared with you on request, once the workshop has agreed."
         />
 
-        <PageSection label="What a card contains" title="Eleven fields, no adjectives">
-          <FactGrid
-            items={[
-              { label: "Name", value: "Japanese and Latin script, plus the name the workshop uses commercially." },
-              { label: "Region and city", value: "Prefecture and town, so a buyer can see the logistics." },
-              { label: "Technique", value: "The specific craft, not the category — underglaze porcelain, not 'ceramics'." },
-              { label: "Founded", value: "Year of foundation, and whether the current maker is the second or fifth generation." },
-              { label: "Products", value: "What they actually make now, in the shapes and sizes a buyer would order." },
-              { label: "Price range", value: "Retail range as published by the workshop, and ex-works price at three volumes." },
-              { label: "Minimum order", value: "Confirmed in writing. Marked unknown where the workshop has not decided." },
-              { label: "Capacity", value: "Pieces per month and the current queue in weeks." },
-              { label: "Lead time", value: "Order to ready-for-export, including firing and finishing." },
-              { label: "Export experience", value: "Never exported, exported occasionally, or already working with foreign clients." },
-              { label: "Languages and risks", value: "Who answers in English, and what we would worry about as a buyer." },
-            ]}
-          />
-        </PageSection>
-
-        <PageSection tone="dark" label="Coverage" title="The first wave">
+        <PageSection label="Coverage" title="Who makes what, and where">
           <div style={{ overflowX: "auto" }}>
-            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.88rem" }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.9rem" }}>
               <thead>
                 <tr>
-                  {["Region", "Technique", "Workshops", "Status"].map((h) => (
+                  {["Region", "Craft", "Workshops", "What they make"].map((h) => (
                     <th
                       key={h}
                       style={{
                         textAlign: "left",
                         padding: "0.9rem 0.75rem",
-                        borderBottom: "1px solid rgba(255,255,255,.18)",
+                        borderBottom: "1px solid var(--line)",
                         fontSize: "0.62rem",
                         letterSpacing: "0.16em",
                         textTransform: "uppercase",
-                        color: "var(--light)",
+                        color: "var(--muted)",
                         fontWeight: 500,
                       }}
                     >
@@ -76,44 +58,48 @@ export default function MakersPage() {
               <tbody>
                 {coverage.map((r) => (
                   <tr key={r.region}>
-                    <td style={{ padding: "1rem 0.75rem", borderBottom: "1px solid rgba(255,255,255,.08)", color: "#fff" }}>{r.region}</td>
-                    <td style={{ padding: "1rem 0.75rem", borderBottom: "1px solid rgba(255,255,255,.08)", color: "rgba(255,255,255,.6)" }}>{r.technique}</td>
-                    <td style={{ padding: "1rem 0.75rem", borderBottom: "1px solid rgba(255,255,255,.08)", color: "rgba(255,255,255,.6)" }}>{r.count}</td>
-                    <td style={{ padding: "1rem 0.75rem", borderBottom: "1px solid rgba(255,255,255,.08)", color: "rgba(255,255,255,.6)" }}>{r.status}</td>
+                    <td style={{ padding: "1rem 0.75rem", borderBottom: "1px solid var(--line)", color: "var(--dark)" }}>{r.region}</td>
+                    <td style={{ padding: "1rem 0.75rem", borderBottom: "1px solid var(--line)", color: "var(--muted)" }}>{r.technique}</td>
+                    <td style={{ padding: "1rem 0.75rem", borderBottom: "1px solid var(--line)", color: "var(--muted)" }}>{r.count}</td>
+                    <td style={{ padding: "1rem 0.75rem", borderBottom: "1px solid var(--line)", color: "var(--muted)" }}>{r.makes}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-          <div style={{ marginTop: "2rem", color: "rgba(255,255,255,.7)" }}>
-            <Prose
-              dark
-              paragraphs={[
-                "Seven workshops are in conversation for the first collections. None of them has agreed to be named publicly yet, so this page describes the region and the technique and shares the name in conversation.",
-                "That is deliberate. A maker's name and contact details are published only with their agreement, and a sourcing partner who puts a kiln's email on a public page before asking has not understood the business.",
-              ]}
-            />
-          </div>
         </PageSection>
 
-        <PageSection label="Why it matters" title="The card is the product">
+        <PageSection tone="dark" label="Names" title="Shared with you, not published">
           <Prose
+            dark
             paragraphs={[
-              "Anyone can list Japanese craft regions. What a buyer cannot get from a search engine is whether a specific kiln can produce six hundred identical plates by June, whether its glaze has been tested, and whether anyone there will answer an email in English.",
-              "We check those things by asking, in Japanese, and by following up until there is an answer. Where the answer is 'no' or 'we do not know', the card says so, and the recommendation changes.",
+              "A workshop's name and address belong to the workshop. We ask before we print them, and until that answer comes, a card describes the region and the technique and the name goes to you privately — in the quotation, with photographs of the actual work.",
+              "In practice this takes one conversation. Tell us the category you are buying and we will name the workshops that fit, with their capacity and their export position.",
             ]}
           />
-          <Callout>
-            A card is not a certificate. It is a record of what a workshop told us on a date, and it is updated
-            when the workshop tells us something different.
-          </Callout>
+        </PageSection>
+
+        <PageSection label="With a quotation" title="What you learn about each maker">
+          <FactGrid
+            items={[
+              { label: "Name and place", value: "The workshop's name in Japanese and Latin script, its town, and how goods would leave it." },
+              { label: "Craft", value: "The specific technique — underglaze porcelain, urushi lacquer, kasumi-finished steel." },
+              { label: "What they make now", value: "Current shapes and sizes, not a catalogue from 1998." },
+              { label: "Capacity", value: "Pieces a month and how far the queue is booked." },
+              { label: "Lead time", value: "From order to a pallet ready for export, firing and finishing included." },
+              { label: "Export position", value: "Whether the workshop has shipped abroad, and who handles it if not." },
+              { label: "Language", value: "Whether the workshop answers in English, or we translate every exchange." },
+              { label: "Risk", value: "What we would watch as a buyer: a clay body that varies, a single kiln, a family succession question." },
+            ]}
+          />
         </PageSection>
 
         <PageSection tone="dark" label="Related">
           <Related
             items={[
-              { href: "/wholesale", label: "Wholesale", note: "How a card turns into a quotation." },
-              { href: "/crafts", label: "Techniques", note: "The three regions we source most." },
+              { href: "/collections", label: "The collection", note: "Pieces in stock and made to order." },
+              { href: "/wholesale", label: "Wholesale", note: "Volumes, quotation and lead times." },
+              { href: "/crafts", label: "Techniques", note: "The three crafts we source most." },
             ]}
           />
         </PageSection>
