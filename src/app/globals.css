@@ -109,3 +109,14 @@ button:disabled { cursor: not-allowed; }
   inset: 0;
   background-image: radial-gradient(circle at 30% 30%, rgba(255,255,255,.55), transparent 60%);
 }
+
+/* Inside dark sections every block that sits directly on the section background
+   needs light text — inline colours elsewhere must not win. */
+.tone-dark .callout { border-left-color: rgba(255,255,255,.55) !important; }
+.tone-dark .callout p,
+.tone-dark .prose p,
+.tone-dark .nl-item p,
+.tone-dark .nl-num { color: rgba(255,255,255,.88) !important; }
+.tone-dark .nl-item h3 { color: #ffffff !important; }
+.tone-dark .nl-item a,
+.tone-dark .callout a { color: #ffffff !important; }

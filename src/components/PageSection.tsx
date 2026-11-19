@@ -18,7 +18,7 @@ export default function PageSection({
   return (
     <section
       id={id}
-      className="py-24 px-6 md:px-16"
+      className={`py-24 px-6 md:px-16 ${dark ? "tone-dark" : "tone-light"}`}
       style={{ background: dark ? "var(--offblack)" : "var(--bg)" }}
     >
       <div style={{ maxWidth: 1200, margin: "0 auto" }}>
@@ -55,7 +55,7 @@ export function Prose({
   dark?: boolean;
 }) {
   return (
-    <div style={{ maxWidth: 700 }}>
+    <div className="prose" style={{ maxWidth: 700 }}>
       {paragraphs.map((p, i) => (
         <RevealWrapper key={i} delay={(Math.min(i, 3) as 0 | 1 | 2 | 3)}>
           <p
@@ -117,8 +117,9 @@ export function NumberedList({ items }: { items: { title: string; text: string }
     <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: "2rem 3rem", marginTop: "1rem" }}>
       {items.map((it, i) => (
         <RevealWrapper key={it.title} delay={(Math.min(i, 3) as 0 | 1 | 2 | 3)}>
-          <div>
+          <div className="nl-item">
             <p
+              className="nl-num"
               style={{
                 fontFamily: "var(--font-cormorant), Georgia, serif",
                 fontSize: "1.1rem",
@@ -140,6 +141,7 @@ export function NumberedList({ items }: { items: { title: string; text: string }
 export function Callout({ children }: { children: React.ReactNode }) {
   return (
     <div
+      className="callout"
       style={{
         borderLeft: "2px solid var(--black)",
         paddingLeft: "1.5rem",
