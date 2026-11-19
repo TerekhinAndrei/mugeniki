@@ -59,18 +59,34 @@ export default function Hero() {
           Mugeniki helps international brands, retailers, hospitality groups, and organizations
           discover, source, and develop authentic Japanese products through trusted local partnerships.
         </p>
-        <a
-          href="#contact"
-          className="inline-block bg-white text-[var(--black)] no-underline transition-colors hover:bg-[var(--rule)]"
-          style={{
-            padding: "0.85rem 2.2rem",
-            fontSize: "0.7rem",
-            letterSpacing: "0.16em",
-            textTransform: "uppercase",
-          }}
-        >
-          Start a Partnership
-        </a>
+        <div className="flex flex-wrap gap-3">
+          <a
+            href="#contact"
+            className="inline-block bg-white text-[var(--black)] no-underline transition-colors hover:bg-[var(--rule)] tap-target"
+            style={{
+              padding: "0.85rem 2.2rem",
+              fontSize: "0.7rem",
+              letterSpacing: "0.16em",
+              textTransform: "uppercase",
+            }}
+          >
+            Start a Partnership
+          </a>
+          <a
+            href="/collections"
+            className="inline-block no-underline transition-colors tap-target"
+            style={{
+              padding: "0.85rem 2.2rem",
+              fontSize: "0.7rem",
+              letterSpacing: "0.16em",
+              textTransform: "uppercase",
+              color: "#ffffff",
+              border: "1px solid rgba(255,255,255,.5)",
+            }}
+          >
+            See the catalogue
+          </a>
+        </div>
       </div>
 
       <style>{`
