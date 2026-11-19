@@ -40,6 +40,7 @@ export default function CollectionsPage() {
               { label: "What is verified", value: "Item name, workshop, region, technique and the retail price where one is published." },
               { label: "What is not", value: "Minimum order, monthly capacity, ex-works price, packing and export documents." },
               { label: "How terms are set", value: "By written quotation from the workshop, per design and per volume." },
+              { label: "About the photographs", value: "Open-licence reference images of the same ware and period, credited on each card. They show the technique, not the exact piece — product photography comes from the workshop." },
             ]}
           />
           <Callout>

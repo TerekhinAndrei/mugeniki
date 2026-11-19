@@ -2,15 +2,28 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Product, formatYen } from "@/data/products";
+import { getPhoto, photoLine } from "@/lib/photos";
 
-const swatchText = (p: Product) => (
-  <div
-    className="swatch"
-    style={{ background: p.swatch }}
-    aria-hidden="true"
-  />
-);
+function ProductImage({ slug, swatch, name }: { slug: string; swatch: string; name: string }) {
+  const photo = getPhoto(slug);
+  return (
+    <div className="swatch" style={{ background: swatch }}>
+      {photo ? (
+        <Image
+          src={photo.local}
+          alt={`Reference image, not the item for sale — ${photo.title.replace(/^File:/, "").replace(/\.(jpg|jpeg|png|JPG)$/, "")}`}
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          style={{ objectFit: "cover" }}
+        />
+      ) : (
+        <span className="sr-only">{name}</span>
+      )}
+    </div>
+  );
+}
 
 export default function CatalogueGrid({ products }: { products: Product[] }) {
   const [filter, setFilter] = useState<string>("All");
@@ -52,51 +65,59 @@ export default function CatalogueGrid({ products }: { products: Product[] }) {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {shown.map((p) => (
-          <Link
-            key={p.slug}
-            href={`/collections/${p.slug}`}
-            className="card"
-            style={{ background: "var(--offblack)", borderColor: "rgba(255,255,255,.16)", color: "#fff" }}
-          >
-            {swatchText(p)}
-            <div className="p-6 flex flex-col flex-1">
-              <p
-                style={{
-                  fontSize: "0.6rem",
-                  letterSpacing: "0.18em",
-                  textTransform: "uppercase",
-                  color: "rgba(255,255,255,.62)",
-                  marginBottom: "0.6rem",
-                }}
-              >
-                {p.region} · {p.category}
-              </p>
-              <h3
-                className="card-title"
-                style={{
-                  fontFamily: "var(--font-cormorant), Georgia, serif",
-                  fontSize: "1.25rem",
-                  fontWeight: 500,
-                  lineHeight: 1.25,
-                  marginBottom: "0.3rem",
-                  textDecorationThickness: "1px",
-                }}
-              >
-                {p.name}
-              </h3>
-              <p style={{ fontSize: "0.8rem", color: "rgba(255,255,255,.7)", marginBottom: "1rem" }}>
-                {p.nameJa} · {p.makerJa}
-              </p>
-              <p style={{ fontSize: "0.9rem", marginTop: "auto", color: "rgba(255,255,255,.92)" }}>
-                {formatYen(p.priceJpy)}
-                <span style={{ fontSize: "0.72rem", color: "rgba(255,255,255,.55)", marginLeft: ".5rem" }}>
-                  {p.priceJpy !== null ? "retail in Japan" : ""}
-                </span>
-              </p>
-            </div>
-          </Link>
-        ))}
+        {shown.map((p) => {
+          const photo = getPhoto(p.slug);
+          return (
+            <Link
+              key={p.slug}
+              href={`/collections/${p.slug}`}
+              className="card"
+              style={{ background: "var(--offblack)", borderColor: "rgba(255,255,255,.16)", color: "#fff" }}
+            >
+              <ProductImage slug={p.slug} swatch={p.swatch} name={p.name} />
+              <div className="p-6 flex flex-col flex-1">
+                <p
+                  style={{
+                    fontSize: "0.6rem",
+                    letterSpacing: "0.18em",
+                    textTransform: "uppercase",
+                    color: "rgba(255,255,255,.62)",
+                    marginBottom: "0.6rem",
+                  }}
+                >
+                  {p.region} · {p.category}
+                </p>
+                <h3
+                  className="card-title"
+                  style={{
+                    fontFamily: "var(--font-cormorant), Georgia, serif",
+                    fontSize: "1.25rem",
+                    fontWeight: 500,
+                    lineHeight: 1.25,
+                    marginBottom: "0.3rem",
+                    textDecorationThickness: "1px",
+                  }}
+                >
+                  {p.name}
+                </h3>
+                <p style={{ fontSize: "0.8rem", color: "rgba(255,255,255,.7)", marginBottom: "1rem" }}>
+                  {p.nameJa} · {p.makerJa}
+                </p>
+                <p style={{ fontSize: "0.9rem", marginTop: "auto", color: "rgba(255,255,255,.92)" }}>
+                  {formatYen(p.priceJpy)}
+                  <span style={{ fontSize: "0.72rem", color: "rgba(255,255,255,.55)", marginLeft: ".5rem" }}>
+                    {p.priceJpy !== null ? "retail in Japan" : ""}
+                  </span>
+                </p>
+                {photo && (
+                  <p style={{ fontSize: "0.62rem", color: "rgba(255,255,255,.5)", marginTop: ".5rem" }}>
+                    Reference image · {photoLine(photo)}
+                  </p>
+                )}
+              </div>
+            </Link>
+          );
+        })}
       </div>
 
       {shown.length === 0 && (

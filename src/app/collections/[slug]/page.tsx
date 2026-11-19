@@ -7,7 +7,9 @@ import PageHero from "@/components/PageHero";
 import PageSection, { Prose, FactGrid, Callout } from "@/components/PageSection";
 import Related from "@/components/Related";
 import SectionContact from "@/components/SectionContact";
+import Image from "next/image";
 import { products, getProduct, formatYen } from "@/data/products";
+import { getPhoto } from "@/lib/photos";
 
 export function generateStaticParams() {
   return products.map((p) => ({ slug: p.slug }));
@@ -73,10 +75,40 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         <PageSection label="The piece" title={p.nameJa}>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             <div>
-              <div className="swatch" style={{ background: p.swatch, border: "1px solid var(--line)" }} aria-hidden="true" />
-              <p style={{ fontSize: "0.72rem", color: "var(--muted)", marginTop: "0.75rem" }}>
-                Colour shown is a placeholder until the workshop sends photography.
-              </p>
+              {(() => {
+                const photo = getPhoto(p.slug);
+                if (!photo) {
+                  return (
+                    <>
+                      <div className="swatch" style={{ background: p.swatch, border: "1px solid var(--line)" }} aria-hidden="true" />
+                      <p style={{ fontSize: "0.72rem", color: "var(--muted)", marginTop: "0.75rem" }}>
+                        No open-licence photograph yet — we ask the workshop for one.
+                      </p>
+                    </>
+                  );
+                }
+                return (
+                  <>
+                    <div style={{ position: "relative", aspectRatio: "4 / 3", border: "1px solid var(--line)", overflow: "hidden" }}>
+                      <Image
+                        src={photo.local}
+                        alt={`Reference image, not the item for sale — ${photo.title.replace(/^File:/, "")}`}
+                        fill
+                        sizes="(max-width: 1024px) 100vw, 50vw"
+                        style={{ objectFit: "cover" }}
+                        priority
+                      />
+                    </div>
+                    <p style={{ fontSize: "0.72rem", color: "var(--muted)", marginTop: "0.75rem", lineHeight: 1.6 }}>
+                      Reference image, not the item for sale: {photo.title.replace(/^File:/, "").replace(/\.(jpg|jpeg|png|JPG)$/, "")}.
+                      Photo {photo.artist}, {photo.license},{" "}
+                      <a href={photo.page} target="_blank" rel="noopener noreferrer" style={{ color: "var(--dark)", textDecoration: "underline" }}>
+                        Wikimedia Commons
+                      </a>.
+                    </p>
+                  </>
+                );
+              })()}
             </div>
             <div>
               <FactGrid
