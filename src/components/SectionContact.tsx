@@ -84,7 +84,7 @@ export default function SectionContact() {
   }
 
   return (
-    <section id="contact" className="py-28 px-16" style={{ background: "var(--bg)" }}>
+    <section id="contact" className="py-20 md:py-28 px-6 md:px-16" style={{ background: "var(--bg)" }}>
       <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-[1fr_1.4fr] gap-28 items-start">
         <RevealWrapper>
           <SectionLabel>Get in Touch</SectionLabel>

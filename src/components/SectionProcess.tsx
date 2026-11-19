@@ -26,7 +26,7 @@ const steps = [
 
 export default function SectionProcess() {
   return (
-    <section id="process" className="py-28 px-16 bg-white">
+    <section id="process" className="py-20 md:py-28 px-6 md:px-16 bg-white">
       <div className="max-w-[1200px] mx-auto">
         <RevealWrapper>
           <SectionLabel>The Journey</SectionLabel>
@@ -66,7 +66,7 @@ export default function SectionProcess() {
                     fontFamily: "var(--font-cormorant), Georgia, serif",
                     fontSize: "1.4rem",
                     fontWeight: 300,
-                    color: "var(--light)",
+                    color: "var(--muted)",
                   }}
                 >
                   {step.num}

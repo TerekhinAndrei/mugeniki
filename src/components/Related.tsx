@@ -33,7 +33,7 @@ export default function Related({
               fontSize: "0.6rem",
               letterSpacing: "0.18em",
               textTransform: "uppercase",
-              color: "var(--light)",
+              color: "var(--muted)",
               marginTop: "1rem",
             }}
           >

@@ -30,7 +30,7 @@ const services = [
 
 export default function SectionServices() {
   return (
-    <section id="services" className="py-28 px-16 bg-white">
+    <section id="services" className="py-20 md:py-28 px-6 md:px-16 bg-white">
       <div className="max-w-[1200px] mx-auto">
         <RevealWrapper>
           <SectionLabel>How We Help</SectionLabel>
@@ -60,7 +60,7 @@ export default function SectionServices() {
                   style={{
                     fontFamily: "var(--font-cormorant), Georgia, serif",
                     fontSize: "0.9rem",
-                    color: "var(--light)",
+                    color: "var(--muted)",
                   }}
                 >
                   {s.index}

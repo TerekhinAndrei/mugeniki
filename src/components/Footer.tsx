@@ -2,6 +2,7 @@ import Link from "next/link";
 
 const links = [
   { label: "About", href: "/#intro" },
+  { label: "Catalogue", href: "/collections" },
   { label: "Wholesale", href: "/wholesale" },
   { label: "Hospitality", href: "/hospitality" },
   { label: "Craft", href: "/crafts" },
@@ -15,7 +16,7 @@ const linkStyle = {
   fontSize: "0.68rem",
   letterSpacing: "0.14em",
   textTransform: "uppercase" as const,
-  color: "rgba(255,255,255,.45)",
+  color: "rgba(255,255,255,.62)",
 };
 
 export default function Footer() {
@@ -29,7 +30,7 @@ export default function Footer() {
           >
             Mugeniki
           </p>
-          <p style={{ fontSize: "0.75rem", letterSpacing: "0.1em", color: "rgba(255,255,255,.35)" }}>
+          <p style={{ fontSize: "0.75rem", letterSpacing: "0.1em", color: "rgba(255,255,255,.55)" }}>
             Japanese Craftsmanship. Global Partnerships.
           </p>
         </div>
@@ -47,7 +48,7 @@ export default function Footer() {
 
       <div
         className="max-w-[1200px] mx-auto mt-10 pt-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4"
-        style={{ borderTop: "1px solid rgba(255,255,255,.08)", fontSize: "0.7rem", color: "rgba(255,255,255,.2)" }}
+        style={{ borderTop: "1px solid rgba(255,255,255,.08)", fontSize: "0.7rem", color: "rgba(255,255,255,.4)" }}
       >
         <span>&copy; 2026 Mugeniki. All rights reserved.</span>
         <a href="https://rankcaster.ai" target="_blank" rel="noopener noreferrer" style={{ opacity: 0.4, lineHeight: 0 }}>

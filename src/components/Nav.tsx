@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const links = [
-  { href: "/#intro", label: "About" },
+  { href: "/collections", label: "Catalogue" },
   { href: "/wholesale", label: "Wholesale" },
   { href: "/hospitality", label: "Hospitality" },
   { href: "/crafts", label: "Craft" },
@@ -14,35 +15,70 @@ const links = [
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
+  const [solid, setSolid] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
-    if (open) document.body.style.overflow = "hidden";
-    else document.body.style.overflow = "";
-    return () => { document.body.style.overflow = ""; };
+    const onScroll = () => setSolid(window.scrollY > 40);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+    };
   }, [open]);
+
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
+  const dark = solid && !open;
 
   return (
     <>
       <nav
-        className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-16 py-6 mix-blend-difference"
-        style={{ mixBlendMode: "difference" }}
+        className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-5 md:px-16 transition-all duration-300"
+        style={{
+          paddingTop: dark ? "0.9rem" : "1.4rem",
+          paddingBottom: dark ? "0.9rem" : "1.4rem",
+          background: dark ? "rgba(248,246,242,0.94)" : "transparent",
+          backdropFilter: dark ? "saturate(180%) blur(10px)" : "none",
+          borderBottom: `1px solid ${dark ? "var(--line)" : "transparent"}`,
+        }}
       >
         <Link
           href="/"
-          className="text-white no-underline tracking-widest text-lg"
-          style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontWeight: 400 }}
+          className="no-underline tracking-widest text-lg tap-target"
+          style={{
+            fontFamily: "var(--font-cormorant), Georgia, serif",
+            fontWeight: 500,
+            color: dark ? "var(--black)" : "#ffffff",
+          }}
         >
           Mugeniki
         </Link>
 
-        {/* Desktop links */}
-        <ul className="hidden md:flex gap-10 list-none m-0 p-0">
+        <ul className="hidden md:flex gap-8 list-none m-0 p-0">
           {links.map((l) => (
             <li key={l.href}>
               <Link
                 href={l.href}
-                className="text-white no-underline text-xs tracking-widest uppercase opacity-85 hover:opacity-100 transition-opacity"
-                style={{ fontSize: "0.68rem", letterSpacing: "0.18em" }}
+                className="no-underline tracking-widest uppercase tap-target"
+                style={{
+                  fontSize: "0.72rem",
+                  letterSpacing: "0.18em",
+                  fontWeight: 400,
+                  color: dark ? "var(--dark)" : "rgba(255,255,255,0.92)",
+                }}
               >
                 {l.label}
               </Link>
@@ -50,28 +86,39 @@ export default function Nav() {
           ))}
         </ul>
 
-        {/* Hamburger */}
         <button
-          className="md:hidden flex flex-col gap-[5px] cursor-pointer bg-transparent border-0 p-0"
+          className="md:hidden flex flex-col justify-center gap-[5px] bg-transparent border-0 p-2 -mr-2 tap-target"
           onClick={() => setOpen(true)}
           aria-label="Open menu"
+          aria-expanded={open}
+          aria-controls="mobile-menu"
         >
-          <span className="block w-6 h-px bg-white" />
-          <span className="block w-6 h-px bg-white" />
-          <span className="block w-6 h-px bg-white" />
+          <span
+            className="block w-6 h-px"
+            style={{ background: dark ? "var(--black)" : "#ffffff" }}
+          />
+          <span
+            className="block w-6 h-px"
+            style={{ background: dark ? "var(--black)" : "#ffffff" }}
+          />
+          <span
+            className="block w-6 h-px"
+            style={{ background: dark ? "var(--black)" : "#ffffff" }}
+          />
         </button>
       </nav>
 
-      {/* Mobile overlay */}
       {open && (
         <div
-          className="fixed inset-0 z-[99] flex flex-col justify-center items-center gap-10"
+          id="mobile-menu"
+          className="fixed inset-0 z-[99] flex flex-col justify-center items-start gap-7 px-8 overflow-y-auto"
           style={{ background: "var(--black)" }}
         >
           <button
-            className="absolute top-6 right-16 text-white text-2xl bg-transparent border-0 cursor-pointer opacity-60 hover:opacity-100"
+            className="absolute top-4 right-4 text-xl bg-transparent border-0 tap-target"
             onClick={() => setOpen(false)}
             aria-label="Close menu"
+            style={{ color: "rgba(255,255,255,0.75)" }}
           >
             ✕
           </button>
@@ -80,11 +127,12 @@ export default function Nav() {
               key={l.href}
               href={l.href}
               onClick={() => setOpen(false)}
-              className="text-white no-underline opacity-75 hover:opacity-100 transition-opacity"
+              className="no-underline tap-target"
               style={{
                 fontFamily: "var(--font-cormorant), Georgia, serif",
                 fontSize: "2rem",
-                fontWeight: 300,
+                fontWeight: 400,
+                color: "rgba(255,255,255,0.92)",
               }}
             >
               {l.label}

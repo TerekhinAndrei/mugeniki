@@ -28,7 +28,10 @@ export default function Hero() {
         }}
       />
 
-      <div className="relative px-16 pb-20 max-w-3xl" style={{ padding: "0 4rem 5rem" }}>
+      <div
+        className="relative px-6 md:px-16 pb-16 md:pb-20 max-w-3xl w-full"
+        style={{ paddingBottom: "clamp(3rem, 8vw, 5rem)" }}
+      >
         <p
           className="mb-5 text-[var(--light)]"
           style={{ fontSize: "0.65rem", letterSpacing: "0.22em", textTransform: "uppercase" }}

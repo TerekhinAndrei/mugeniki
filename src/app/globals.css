@@ -4,11 +4,14 @@
   --black:    #0a0a0a;
   --offblack: #1a1a1a;
   --dark:     #2c2c2c;
-  --mid:      #6b6b6b;
-  --light:    #b8b8b8;
+  --mid:      #585550;
+  --light:    #b9b2a8;
+  --muted:    #5c5852;
   --rule:     #e0e0e0;
+  --line:     #d8d2c7;
   --bg:       #f8f6f2;
   --white:    #ffffff;
+  --accent:   #8a1f1f;
 }
 
 html { scroll-behavior: smooth; }
@@ -16,37 +19,93 @@ html { scroll-behavior: smooth; }
 body {
   background: var(--bg);
   color: var(--black);
-  font-weight: 300;
+  font-weight: 400;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
-/* Scroll reveal */
+h1, h2, h3, h4 { text-wrap: balance; }
+p { text-wrap: pretty; }
+
+/* Scroll reveal — content is always readable, even before or without JS */
 .reveal {
   opacity: 0;
   transform: translateY(24px);
   transition: opacity 0.7s ease, transform 0.7s ease;
+  animation: reveal-fallback 0.01s linear 1.6s forwards;
 }
 .reveal.visible {
   opacity: 1;
   transform: none;
+  animation: none;
+}
+@keyframes reveal-fallback {
+  to { opacity: 1; transform: none; }
 }
 .reveal-delay-1 { transition-delay: 0.1s; }
 .reveal-delay-2 { transition-delay: 0.2s; }
 .reveal-delay-3 { transition-delay: 0.3s; }
 .reveal-delay-4 { transition-delay: 0.4s; }
 
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; animation: none; }
+}
+
 /* Form resets */
 input, select, textarea {
   border-radius: 0;
   -webkit-appearance: none;
   appearance: none;
+  font-family: inherit;
 }
+input[type="checkbox"] { -webkit-appearance: checkbox; appearance: checkbox; }
 
 select {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b6b6b' stroke-width='1.2'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23585550' stroke-width='1.2'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 1rem center;
 }
 
+/* Links and buttons: every target is reachable by keyboard and thumb */
+a, button { -webkit-tap-highlight-color: transparent; cursor: pointer; }
+button:disabled { cursor: not-allowed; }
+
+:focus-visible {
+  outline: 2px solid var(--black);
+  outline-offset: 3px;
+}
+.on-dark :focus-visible, .on-dark:focus-visible { outline-color: #ffffff; }
+
+.tap-target { min-height: 44px; min-width: 44px; display: inline-flex; align-items: center; }
+
 .region-card:hover { background: #242424 !important; }
-.footer-link:hover { color: rgba(255,255,255,.85) !important; }
+.footer-link:hover { color: #ffffff !important; }
+
+/* Cards: the whole surface is the link */
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--white);
+  border: 1px solid var(--line);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.25s ease, transform 0.25s ease;
+}
+.card:hover { border-color: var(--dark); transform: translateY(-2px); }
+.card:hover .card-title { text-decoration: underline; text-underline-offset: 4px; }
+
+/* Catalogue swatch — stands in for photography we do not have yet */
+.swatch {
+  aspect-ratio: 4 / 3;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+.swatch::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle at 30% 30%, rgba(255,255,255,.55), transparent 60%);
+}

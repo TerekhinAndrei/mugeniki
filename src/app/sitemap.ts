@@ -1,10 +1,12 @@
 import type { MetadataRoute } from "next";
+import { products } from "@/data/products";
 
 const base = "https://mugeneki.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const routes = [
     { path: "/", priority: 1 },
+    { path: "/collections", priority: 0.95 },
     { path: "/wholesale", priority: 0.9 },
     { path: "/hospitality", priority: 0.9 },
     { path: "/crafts", priority: 0.8 },
@@ -14,6 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/engraving", priority: 0.8 },
     { path: "/restoration", priority: 0.7 },
     { path: "/makers", priority: 0.7 },
+    ...products.map((p) => ({ path: `/collections/${p.slug}`, priority: 0.6 })),
   ];
 
   return routes.map((r) => ({

@@ -3,11 +3,11 @@ import RevealWrapper from "./RevealWrapper";
 import SectionLabel from "./SectionLabel";
 
 const regions = [
-  { name: "Kyoto", jp: "京都", desc: "Traditional crafts, textiles, ceramics, and cultural products rooted in imperial heritage." },
+  { name: "Kyoto", jp: "京都", desc: "Traditional crafts, textiles, ceramics, and cultural products rooted in imperial heritage.", href: "/collections" },
   { name: "Arita", jp: "有田", desc: "One of Japan's most respected ceramic traditions — porcelain crafted since the 17th century.", href: "/crafts/arita-porcelain" },
   { name: "Seki", jp: "関", desc: "Known worldwide for precision blades and craftsmanship refined over 700 years.", href: "/crafts/seki-blades" },
   { name: "Kanazawa", jp: "金沢", desc: "Gold leaf, lacquerware, and refined artisan techniques from Japan's cultural capital of the west.", href: "/crafts/yamanaka-lacquer" },
-  { name: "Osaka", jp: "大阪", desc: "Manufacturing expertise, commercial networks, and the pulse of modern Japanese trade." },
+  { name: "Osaka", jp: "大阪", desc: "Manufacturing expertise, commercial networks, and the pulse of modern Japanese trade.", href: "/makers" },
 ];
 
 export default function SectionRegions() {
@@ -45,14 +45,14 @@ export default function SectionRegions() {
                 <p className="mb-5" style={{ fontSize: "0.75rem", letterSpacing: "0.12em", color: "var(--light)" }}>
                   {r.jp}
                 </p>
-                <p style={{ fontSize: "0.82rem", color: "rgba(255,255,255,.5)", lineHeight: 1.7 }}>{r.desc}</p>
+                <p style={{ fontSize: "0.82rem", color: "rgba(255,255,255,.72)", lineHeight: 1.7 }}>{r.desc}</p>
                 {r.href && (
                   <p
                     style={{
                       fontSize: "0.58rem",
                       letterSpacing: "0.18em",
                       textTransform: "uppercase",
-                      color: "var(--mid)",
+                      color: "rgba(255,255,255,.75)",
                       marginTop: "1.25rem",
                     }}
                   >

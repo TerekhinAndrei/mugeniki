@@ -22,7 +22,7 @@ const items = [
 
 export default function SectionWhy() {
   return (
-    <section id="why" className="py-28 px-16" style={{ background: "var(--bg)" }}>
+    <section id="why" className="py-20 md:py-28 px-6 md:px-16" style={{ background: "var(--bg)" }}>
       <div className="max-w-[1200px] mx-auto">
         <RevealWrapper>
           <SectionLabel>Our Commitment</SectionLabel>

@@ -17,7 +17,7 @@ export default function SectionExplore() {
               lineHeight: 1.2,
             }}
           >
-            Four ways in
+            Six ways in
           </h2>
           <p style={{ fontSize: "0.95rem", color: "var(--dark)", maxWidth: 560, lineHeight: 1.8, marginBottom: "2.5rem" }}>
             Most conversations start with one of these. Each page explains what we quote, what we need from you,
@@ -28,6 +28,7 @@ export default function SectionExplore() {
         <RevealWrapper delay={1}>
           <Related
             items={[
+              { href: "/collections", label: "Catalogue", note: "Eleven real items from two workshops, with the price each publishes and the date we read it." },
               { href: "/wholesale", label: "Wholesale", note: "Ceramics, lacquerware and blades, priced at 300, 600 and 1,000 pieces." },
               { href: "/hospitality", label: "Hospitality", note: "Collections for hotels and restaurants, with a plan for breakage." },
               { href: "/engraving", label: "Engraved gifts", note: "Corporate programmes from fifty pieces, made in Seki." },

@@ -3,7 +3,7 @@ import SectionLabel from "./SectionLabel";
 
 export default function SectionAbout() {
   return (
-    <section id="about" className="py-28 px-16" style={{ background: "var(--black)" }}>
+    <section id="about" className="py-20 md:py-28 px-6 md:px-16" style={{ background: "var(--black)" }}>
       <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-32 items-center">
         <RevealWrapper>
           <SectionLabel light>Our Story</SectionLabel>

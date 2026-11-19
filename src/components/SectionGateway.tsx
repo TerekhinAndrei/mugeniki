@@ -10,7 +10,7 @@ const items = [
 
 export default function SectionGateway() {
   return (
-    <section id="gateway" className="py-28 px-16" style={{ background: "var(--black)" }}>
+    <section id="gateway" className="py-20 md:py-28 px-6 md:px-16" style={{ background: "var(--black)" }}>
       <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-24 items-center">
         <RevealWrapper>
           <SectionLabel light>Local Expertise</SectionLabel>

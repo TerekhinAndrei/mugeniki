@@ -29,7 +29,7 @@ const cases = [
 
 export default function SectionCases() {
   return (
-    <section id="cases" className="py-28 px-16 bg-white">
+    <section id="cases" className="py-20 md:py-28 px-6 md:px-16 bg-white">
       <div className="max-w-[1200px] mx-auto">
         <RevealWrapper>
           <SectionLabel>Results</SectionLabel>
@@ -77,7 +77,7 @@ export default function SectionCases() {
                     <div key={d.label} className="mb-5">
                       <p
                         className="mb-1.5"
-                        style={{ fontSize: "0.62rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--light)" }}
+                        style={{ fontSize: "0.62rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--muted)" }}
                       >
                         {d.label}
                       </p>

@@ -122,7 +122,7 @@ export function NumberedList({ items }: { items: { title: string; text: string }
               style={{
                 fontFamily: "var(--font-cormorant), Georgia, serif",
                 fontSize: "1.1rem",
-                color: "var(--light)",
+                color: "var(--muted)",
                 marginBottom: "0.35rem",
               }}
             >

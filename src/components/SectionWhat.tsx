@@ -24,7 +24,7 @@ const cards = [
 
 export default function SectionWhat() {
   return (
-    <section id="what" className="py-28 px-16" style={{ background: "var(--bg)" }}>
+    <section id="what" className="py-20 md:py-28 px-6 md:px-16" style={{ background: "var(--bg)" }}>
       <div className="max-w-[1200px] mx-auto">
         <RevealWrapper>
           <SectionLabel>Our Expertise</SectionLabel>
@@ -55,7 +55,7 @@ export default function SectionWhat() {
                     fontFamily: "var(--font-cormorant), Georgia, serif",
                     fontSize: "2.5rem",
                     fontWeight: 300,
-                    color: "var(--rule)",
+                    color: "#948c80",
                   }}
                 >
                   {card.num}
@@ -74,7 +74,7 @@ export default function SectionWhat() {
                       className="relative pl-4"
                       style={{ fontSize: "0.85rem", color: "var(--mid)", padding: "0.3rem 0 0.3rem 1rem" }}
                     >
-                      <span className="absolute left-0" style={{ color: "var(--light)" }}>—</span>
+                      <span className="absolute left-0" style={{ color: "var(--muted)" }}>—</span>
                       {item}
                     </li>
                   ))}

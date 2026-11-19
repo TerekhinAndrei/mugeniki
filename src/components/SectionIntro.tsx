@@ -3,7 +3,7 @@ import SectionLabel from "./SectionLabel";
 
 export default function SectionIntro() {
   return (
-    <section id="intro" className="py-28 px-16 bg-white">
+    <section id="intro" className="py-20 md:py-28 px-6 md:px-16 bg-white">
       <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-24 items-start">
         <RevealWrapper>
           <SectionLabel>The Opportunity</SectionLabel>
