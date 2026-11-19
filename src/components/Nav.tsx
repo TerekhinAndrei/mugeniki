@@ -4,12 +4,12 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 const links = [
-  { href: "#intro", label: "About" },
-  { href: "#services", label: "Services" },
-  { href: "#industries", label: "Industries" },
-  { href: "#regions", label: "Regions" },
-  { href: "#cases", label: "Case Studies" },
-  { href: "#contact", label: "Contact" },
+  { href: "/#intro", label: "About" },
+  { href: "/wholesale", label: "Wholesale" },
+  { href: "/hospitality", label: "Hospitality" },
+  { href: "/crafts", label: "Craft" },
+  { href: "/makers", label: "Makers" },
+  { href: "/#contact", label: "Contact" },
 ];
 
 export default function Nav() {
@@ -28,7 +28,7 @@ export default function Nav() {
         style={{ mixBlendMode: "difference" }}
       >
         <Link
-          href="#hero"
+          href="/"
           className="text-white no-underline tracking-widest text-lg"
           style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontWeight: 400 }}
         >
@@ -39,13 +39,13 @@ export default function Nav() {
         <ul className="hidden md:flex gap-10 list-none m-0 p-0">
           {links.map((l) => (
             <li key={l.href}>
-              <a
+              <Link
                 href={l.href}
                 className="text-white no-underline text-xs tracking-widest uppercase opacity-85 hover:opacity-100 transition-opacity"
                 style={{ fontSize: "0.68rem", letterSpacing: "0.18em" }}
               >
                 {l.label}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
@@ -76,7 +76,7 @@ export default function Nav() {
             ✕
           </button>
           {links.map((l) => (
-            <a
+            <Link
               key={l.href}
               href={l.href}
               onClick={() => setOpen(false)}
@@ -88,7 +88,7 @@ export default function Nav() {
               }}
             >
               {l.label}
-            </a>
+            </Link>
           ))}
         </div>
       )}

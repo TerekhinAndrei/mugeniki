@@ -8,10 +8,13 @@ export async function POST(req: Request) {
   const resend = new Resend(process.env.RESEND_API_KEY);
   try {
     const body = await req.json();
-    const { company, name, email, industry, interests, message } = body;
+    const { company, name, email, industry, interests, quantity, market, deadline, compliance, message } = body;
 
     const interestList = Array.isArray(interests) && interests.length
       ? interests.join(", ")
+      : "—";
+    const complianceList = Array.isArray(compliance) && compliance.length
+      ? compliance.join(", ")
       : "—";
 
     const { error } = await resend.emails.send({
@@ -30,6 +33,10 @@ export async function POST(req: Request) {
             <tr><td style="padding:12px 0;border-bottom:1px solid #e0e0e0;color:#6b6b6b;font-size:12px">Email</td><td style="padding:12px 0;border-bottom:1px solid #e0e0e0;font-size:14px"><a href="mailto:${email}" style="color:#0a0a0a">${email}</a></td></tr>
             <tr><td style="padding:12px 0;border-bottom:1px solid #e0e0e0;color:#6b6b6b;font-size:12px">Industry</td><td style="padding:12px 0;border-bottom:1px solid #e0e0e0;font-size:14px">${industry || "—"}</td></tr>
             <tr><td style="padding:12px 0;border-bottom:1px solid #e0e0e0;color:#6b6b6b;font-size:12px">Looking for</td><td style="padding:12px 0;border-bottom:1px solid #e0e0e0;font-size:14px">${interestList}</td></tr>
+            <tr><td style="padding:12px 0;border-bottom:1px solid #e0e0e0;color:#6b6b6b;font-size:12px">Quantity</td><td style="padding:12px 0;border-bottom:1px solid #e0e0e0;font-size:14px">${quantity || "—"}</td></tr>
+            <tr><td style="padding:12px 0;border-bottom:1px solid #e0e0e0;color:#6b6b6b;font-size:12px">Market</td><td style="padding:12px 0;border-bottom:1px solid #e0e0e0;font-size:14px">${market || "—"}</td></tr>
+            <tr><td style="padding:12px 0;border-bottom:1px solid #e0e0e0;color:#6b6b6b;font-size:12px">Deadline</td><td style="padding:12px 0;border-bottom:1px solid #e0e0e0;font-size:14px">${deadline || "—"}</td></tr>
+            <tr><td style="padding:12px 0;border-bottom:1px solid #e0e0e0;color:#6b6b6b;font-size:12px">Compliance</td><td style="padding:12px 0;border-bottom:1px solid #e0e0e0;font-size:14px">${complianceList}</td></tr>
             <tr><td style="padding:12px 0;color:#6b6b6b;font-size:12px;vertical-align:top">Message</td><td style="padding:12px 0;font-size:14px;line-height:1.7">${message || "—"}</td></tr>
           </table>
         </div>

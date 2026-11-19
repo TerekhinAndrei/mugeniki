@@ -12,6 +12,13 @@ const interests = [
   { value: "partnership", label: "Partnership opportunities" },
 ];
 
+const compliance = [
+  { value: "food-contact", label: "Food contact" },
+  { value: "gifting", label: "Corporate gifting" },
+  { value: "retail-packaging", label: "Retail packaging" },
+  { value: "none-yet", label: "Not sure yet" },
+];
+
 const inputStyle: React.CSSProperties = {
   fontFamily: "inherit",
   fontSize: "0.9rem",
@@ -47,6 +54,7 @@ export default function SectionContact() {
     const form = e.currentTarget;
     const data = new FormData(form);
     const interests = data.getAll("interest") as string[];
+    const compliance = data.getAll("compliance") as string[];
 
     try {
       const res = await fetch("/api/contact", {
@@ -58,6 +66,10 @@ export default function SectionContact() {
           email: data.get("email"),
           industry: data.get("industry"),
           interests,
+          quantity: data.get("quantity"),
+          market: data.get("market"),
+          deadline: data.get("deadline"),
+          compliance,
           message: data.get("message"),
         }),
       });
@@ -145,6 +157,63 @@ export default function SectionContact() {
                       style={{ width: 16, height: 16, cursor: "pointer", accentColor: "var(--black)", flexShrink: 0 }}
                     />
                     <span style={{ fontSize: "0.85rem", color: "var(--dark)" }}>{interest.label}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+              <div>
+                <label style={labelStyle} htmlFor="quantity">Quantity</label>
+                <select
+                  id="quantity"
+                  name="quantity"
+                  style={{ ...inputStyle, paddingRight: "2.5rem", cursor: "pointer" }}
+                  defaultValue=""
+                >
+                  <option value="">Select volume</option>
+                  <option>Under 300 pieces</option>
+                  <option>300–600 pieces</option>
+                  <option>600–1,000 pieces</option>
+                  <option>1,000–3,000 pieces</option>
+                  <option>Above 3,000 pieces</option>
+                  <option>Not decided yet</option>
+                </select>
+              </div>
+              <div>
+                <label style={labelStyle} htmlFor="market">Target market</label>
+                <select
+                  id="market"
+                  name="market"
+                  style={{ ...inputStyle, paddingRight: "2.5rem", cursor: "pointer" }}
+                  defaultValue=""
+                >
+                  <option value="">Select market</option>
+                  <option>EU</option>
+                  <option>United Kingdom</option>
+                  <option>United States</option>
+                  <option>UAE and Gulf</option>
+                  <option>Other / multiple</option>
+                </select>
+              </div>
+              <div>
+                <label style={labelStyle} htmlFor="deadline">Deadline</label>
+                <input id="deadline" name="deadline" type="month" style={inputStyle} />
+              </div>
+            </div>
+
+            <div>
+              <span style={labelStyle}>Compliance needed</span>
+              <div className="flex flex-wrap gap-x-6 gap-y-2">
+                {compliance.map((item) => (
+                  <label key={item.value} className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      name="compliance"
+                      value={item.value}
+                      style={{ width: 16, height: 16, cursor: "pointer", accentColor: "var(--black)", flexShrink: 0 }}
+                    />
+                    <span style={{ fontSize: "0.85rem", color: "var(--dark)" }}>{item.label}</span>
                   </label>
                 ))}
               </div>

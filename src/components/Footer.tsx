@@ -1,9 +1,26 @@
-const links = ["About", "Services", "Industries", "Regions", "Case Studies", "Contact"];
-const hrefs = ["#intro", "#services", "#industries", "#regions", "#cases", "#contact"];
+import Link from "next/link";
+
+const links = [
+  { label: "About", href: "/#intro" },
+  { label: "Wholesale", href: "/wholesale" },
+  { label: "Hospitality", href: "/hospitality" },
+  { label: "Craft", href: "/crafts" },
+  { label: "Engraving", href: "/engraving" },
+  { label: "Restoration", href: "/restoration" },
+  { label: "Makers", href: "/makers" },
+  { label: "Contact", href: "/#contact" },
+];
+
+const linkStyle = {
+  fontSize: "0.68rem",
+  letterSpacing: "0.14em",
+  textTransform: "uppercase" as const,
+  color: "rgba(255,255,255,.45)",
+};
 
 export default function Footer() {
   return (
-    <footer className="px-16 py-16" style={{ background: "var(--black)" }}>
+    <footer className="px-6 md:px-16 py-16" style={{ background: "var(--black)" }}>
       <div className="max-w-[1200px] mx-auto flex flex-col sm:flex-row justify-between items-start sm:items-end gap-8">
         <div>
           <p
@@ -18,15 +35,11 @@ export default function Footer() {
         </div>
 
         <ul className="flex flex-wrap gap-8 list-none p-0 m-0 justify-end">
-          {links.map((link, i) => (
-            <li key={link}>
-              <a
-                href={hrefs[i]}
-                className="footer-link no-underline"
-                style={{ fontSize: "0.68rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,.45)" }}
-              >
-                {link}
-              </a>
+          {links.map((l) => (
+            <li key={l.href}>
+              <Link href={l.href} className="footer-link no-underline" style={linkStyle}>
+                {l.label}
+              </Link>
             </li>
           ))}
         </ul>

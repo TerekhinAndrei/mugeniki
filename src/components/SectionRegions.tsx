@@ -1,18 +1,19 @@
+import Link from "next/link";
 import RevealWrapper from "./RevealWrapper";
 import SectionLabel from "./SectionLabel";
 
 const regions = [
   { name: "Kyoto", jp: "京都", desc: "Traditional crafts, textiles, ceramics, and cultural products rooted in imperial heritage." },
-  { name: "Arita", jp: "有田", desc: "One of Japan's most respected ceramic traditions — porcelain crafted since the 17th century." },
-  { name: "Seki", jp: "関", desc: "Known worldwide for precision blades and craftsmanship refined over 700 years." },
-  { name: "Kanazawa", jp: "金沢", desc: "Gold leaf, lacquerware, and refined artisan techniques from Japan's cultural capital of the west." },
+  { name: "Arita", jp: "有田", desc: "One of Japan's most respected ceramic traditions — porcelain crafted since the 17th century.", href: "/crafts/arita-porcelain" },
+  { name: "Seki", jp: "関", desc: "Known worldwide for precision blades and craftsmanship refined over 700 years.", href: "/crafts/seki-blades" },
+  { name: "Kanazawa", jp: "金沢", desc: "Gold leaf, lacquerware, and refined artisan techniques from Japan's cultural capital of the west.", href: "/crafts/yamanaka-lacquer" },
   { name: "Osaka", jp: "大阪", desc: "Manufacturing expertise, commercial networks, and the pulse of modern Japanese trade." },
 ];
 
 export default function SectionRegions() {
   return (
     <section id="regions" className="py-28" style={{ background: "var(--offblack)" }}>
-      <div className="max-w-[1200px] mx-auto px-16">
+      <div className="max-w-[1200px] mx-auto px-6 md:px-16">
         <RevealWrapper>
           <SectionLabel light>Across Japan</SectionLabel>
           <h2
@@ -32,12 +33,9 @@ export default function SectionRegions() {
           className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5"
           style={{ gap: "1px", background: "rgba(255,255,255,.08)", border: "1px solid rgba(255,255,255,.08)" }}
         >
-          {regions.map((r, i) => (
-            <RevealWrapper key={r.name} delay={(i % 4) as 0 | 1 | 2 | 3 | 4}>
-              <div
-                className="region-card p-10 h-full"
-                style={{ background: "var(--offblack)" }}
-              >
+          {regions.map((r, i) => {
+            const body = (
+              <div className="region-card p-10 h-full" style={{ background: "var(--offblack)" }}>
                 <p
                   className="text-white mb-1"
                   style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: "1.4rem", fontWeight: 400 }}
@@ -48,9 +46,34 @@ export default function SectionRegions() {
                   {r.jp}
                 </p>
                 <p style={{ fontSize: "0.82rem", color: "rgba(255,255,255,.5)", lineHeight: 1.7 }}>{r.desc}</p>
+                {r.href && (
+                  <p
+                    style={{
+                      fontSize: "0.58rem",
+                      letterSpacing: "0.18em",
+                      textTransform: "uppercase",
+                      color: "var(--mid)",
+                      marginTop: "1.25rem",
+                    }}
+                  >
+                    Explore →
+                  </p>
+                )}
               </div>
-            </RevealWrapper>
-          ))}
+            );
+
+            return (
+              <RevealWrapper key={r.name} delay={(i % 4) as 0 | 1 | 2 | 3 | 4}>
+                {r.href ? (
+                  <Link href={r.href} className="no-underline block h-full">
+                    {body}
+                  </Link>
+                ) : (
+                  body
+                )}
+              </RevealWrapper>
+            );
+          })}
         </div>
       </div>
     </section>

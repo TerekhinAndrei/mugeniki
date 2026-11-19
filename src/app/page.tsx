@@ -5,6 +5,7 @@ import SectionWhat from "@/components/SectionWhat";
 import SectionGateway from "@/components/SectionGateway";
 import SectionServices from "@/components/SectionServices";
 import SectionIndustries from "@/components/SectionIndustries";
+import SectionExplore from "@/components/SectionExplore";
 import SectionRegions from "@/components/SectionRegions";
 import SectionProcess from "@/components/SectionProcess";
 import SectionWhy from "@/components/SectionWhy";
@@ -31,6 +32,7 @@ export default function Home() {
         <SectionServices />
         <Divider />
         <SectionIndustries />
+        <SectionExplore />
         <SectionRegions />
         <SectionProcess />
         <Divider />

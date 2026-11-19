@@ -1,0 +1,95 @@
+import type { Metadata } from "next";
+import Nav from "@/components/Nav";
+import Footer from "@/components/Footer";
+import PageHero from "@/components/PageHero";
+import PageSection, { Prose, FactGrid, NumberedList, Callout } from "@/components/PageSection";
+import Related from "@/components/Related";
+import SectionContact from "@/components/SectionContact";
+
+export const metadata: Metadata = {
+  title: "Japanese Tableware Wholesale — Ceramics, Lacquerware, Blades",
+  description:
+    "Wholesale Japanese tableware from named workshops in Arita, Kyoto, Yamanaka and Seki. Verified capacity, EU and US food-contact documentation, export handled.",
+  alternates: { canonical: "/wholesale" },
+};
+
+export default function WholesalePage() {
+  return (
+    <>
+      <Nav />
+      <main>
+        <PageHero
+          label="Wholesale"
+          title="Japanese tableware, wholesale, from workshops we can name"
+          lead="Ceramics, lacquerware and blades sourced directly from manufacturers in Arita, Kyoto, Yamanaka and Seki — with production, compliance and export coordinated from Japan."
+        />
+
+        <PageSection label="The problem" title="Three or four layers between you and the kiln">
+          <Prose
+            paragraphs={[
+              "Most Japanese tableware sold in Europe arrives through trading houses. By the time a plate reaches a hotel in Berlin, nobody in the chain can answer two questions that matter: who made it, and what happens if you need six hundred more of the same in April.",
+              "We work the other way. Mugeniki deals with the workshop directly — the kiln in Arita, the turner in Yamanaka, the blade smith in Seki — and coordinates the parts a small maker cannot do alone: documentation, testing, packing, and the conversation with your buying team.",
+              "That does not make every workshop an exporter. Most of them have never shipped abroad, and some will tell us plainly that they do not want to. Part of our work is telling you which is which before you build a collection on top of it.",
+            ]}
+          />
+        </PageSection>
+
+        <PageSection
+          tone="dark"
+          label="What a quotation contains"
+          title="Every quote names the workshop"
+        >
+          <div style={{ color: "rgba(255,255,255,.7)" }}>
+            <Prose
+              dark
+              paragraphs={[
+                "A price on its own is useless for planning. Ours always arrives with the same six fields, because those are the six things that decide whether an order is possible.",
+              ]}
+            />
+          </div>
+          <FactGrid
+            items={[
+              { label: "Workshop", value: "Name, city and technique — the maker behind the price, not a trading company." },
+              { label: "Capacity", value: "How many pieces a month the workshop can produce, and what is already in its queue." },
+              { label: "Price at three volumes", value: "Ex-works price at 300, 600 and 1,000 pieces of one design." },
+              { label: "Lead time", value: "From confirmed order to goods ready for export, in weeks, including the firing schedule." },
+              { label: "Food contact", value: "Test documentation for EU 1935/2004 and LFGB, and FDA for the United States, where the workshop has it." },
+              { label: "Packing and export", value: "Branded box, Japanese paper, palletisation, HS code and the export route we would use." },
+            ]}
+          />
+        </PageSection>
+
+        <PageSection label="Volumes" title="What this is built for">
+          <NumberedList
+            items={[
+              { title: "Pilot: 300–600 pieces", text: "One design, one workshop, enough to test a market and a shelf without committing a season's budget." },
+              { title: "Annual: 1,000–3,000 pieces", text: "Repeat production across a small collection, with the same workshop or a pair of workshops on one technique." },
+              { title: "Custom: private collections", text: "Your shape, your glaze, your box. Development time depends on the workshop and is quoted before anything starts." },
+              { title: "Below 300 pieces", text: "Possible with some workshops, but it is a conversation, not a price list. Ask and we will tell you honestly." },
+            ]}
+          />
+          <Callout>
+            We do not publish a price a workshop has not given us, and we do not quote a minimum order we
+            have not confirmed in writing. Anything else on a sourcing site is decoration.
+          </Callout>
+        </PageSection>
+
+        <PageSection tone="dark" label="Where next">
+          <Related
+            items={[
+              { href: "/crafts/arita-porcelain", label: "Arita porcelain", note: "Blue-and-white, celadon and everyday porcelain from kilns in Saga." },
+              { href: "/crafts/yamanaka-lacquer", label: "Yamanaka lacquerware", note: "Turned wood and urushi for bowls, trays and bento." },
+              { href: "/crafts/seki-blades", label: "Seki blades", note: "Kitchen knives forged and finished in Gifu." },
+              { href: "/hospitality", label: "For hospitality", note: "Tableware and in-room objects for hotels and restaurants." },
+              { href: "/engraving", label: "Engraved gifts", note: "Knives with a name on them, from fifty pieces." },
+              { href: "/restoration", label: "Restoration", note: "Repair and re-lacquering by the workshops themselves." },
+            ]}
+          />
+        </PageSection>
+
+        <SectionContact />
+      </main>
+      <Footer />
+    </>
+  );
+}
