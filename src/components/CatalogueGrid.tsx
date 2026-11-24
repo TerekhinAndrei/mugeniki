@@ -128,7 +128,11 @@ export default function CatalogueGrid({ products }: { products: Product[] }) {
                 <p style={{ fontSize: "0.9rem", marginTop: "auto", color: "rgba(255,255,255,.92)" }}>
                   {formatYen(p.priceJpy)}
                   <span style={{ fontSize: "0.72rem", color: "rgba(255,255,255,.55)", marginLeft: ".5rem" }}>
-                    {p.priceJpy !== null ? "retail in Japan" : ""}
+                    {p.priceJpy !== null
+                      ? (p.priceNote ?? "").startsWith("EXW")
+                        ? "EXW Japan"
+                        : "retail in Japan"
+                      : ""}
                   </span>
                 </p>
                 {photo && (

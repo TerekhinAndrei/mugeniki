@@ -117,7 +117,12 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                   { label: "Region", value: `${p.region} — ${p.regionJa}` },
                   { label: "Technique", value: p.technique },
                   { label: "Size", value: p.size },
-                  { label: "Price in Japan", value: formatYen(p.priceJpy) },
+                  {
+                    label: (p.priceNote ?? "").startsWith("EXW")
+                      ? "Price in Japan, ex-works"
+                      : "Price in Japan",
+                    value: formatYen(p.priceJpy),
+                  },
                 ]}
               />
               <p style={{ marginTop: "1.5rem", fontSize: "0.9rem", color: "var(--muted)", lineHeight: 1.7 }}>
