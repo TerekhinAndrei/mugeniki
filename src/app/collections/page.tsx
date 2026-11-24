@@ -8,10 +8,13 @@ import SectionContact from "@/components/SectionContact";
 import CatalogueGrid from "@/components/CatalogueGrid";
 import { products } from "@/data/products";
 
+const makerCount = new Set(products.map((p) => p.maker)).size;
+const placeCount = new Set(products.map((p) => p.region)).size;
+
 export const metadata: Metadata = {
   title: "Catalogue — Japanese Ceramics, Tea Wares and Lacquer",
   description:
-    "Donburi, plates, mugs, tea bowls and lacquer from workshops in Arita and Kyoto, with retail prices in Japan. Wholesale terms quoted per order.",
+    `${products.length} pieces from ${makerCount} workshops — ceramics, tea wares, lacquerware and blades, with retail prices in Japan. Wholesale terms quoted per order.`,
   alternates: { canonical: "/collections" },
 };
 
@@ -22,8 +25,8 @@ export default function CollectionsPage() {
       <main>
         <PageHero
           label="Catalogue"
-          title="Pieces from Arita and Kyoto, priced as the workshops price them"
-          lead="Donburi, plates, mugs, tea bowls, a water jar for tea ceremony — thirteen pieces from two workshops, with the retail price in Japan shown on each card."
+          title={`Pieces from ${makerCount} workshops, priced as the workshops price them`}
+          lead={`${products.length} pieces from ${makerCount} workshops across ${placeCount} places — donburi, plates, mugs, tea bowls, lacquerware and blades, with the retail price in Japan shown on each card.`}
         />
 
         <PageSection label="Prices" title="Japanese retail, shown in yen">

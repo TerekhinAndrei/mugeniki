@@ -1,6 +1,9 @@
 import RevealWrapper from "./RevealWrapper";
 import SectionLabel from "./SectionLabel";
 import Related from "./Related";
+import { products } from "@/data/products";
+
+const makerCount = new Set(products.map((p) => p.maker)).size;
 
 export default function SectionExplore() {
   return (
@@ -27,7 +30,7 @@ export default function SectionExplore() {
         <RevealWrapper delay={1}>
           <Related
             items={[
-              { href: "/collections", label: "Catalogue", note: "Thirteen pieces from Arita and Kyoto, with retail prices in Japan." },
+              { href: "/collections", label: "Catalogue", note: `${products.length} pieces from ${makerCount} workshops, with retail prices in Japan.` },
               { href: "/wholesale", label: "Wholesale", note: "Ceramics, lacquerware and blades, priced at 300, 600 and 1,000 pieces." },
               { href: "/hospitality", label: "Hospitality", note: "Collections for hotels and restaurants, with a plan for breakage." },
               { href: "/engraving", label: "Engraved gifts", note: "Corporate programmes from fifty pieces, made in Seki." },
