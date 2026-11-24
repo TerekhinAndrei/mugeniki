@@ -59,6 +59,30 @@ export default function WholesalePage() {
           />
         </PageSection>
 
+        <PageSection label="Landed cost" title="How a landed price is built">
+          <Prose
+            paragraphs={[
+              "An ex-works price in Japan is not the price you pay. Between the workshop's door and your warehouse sit five costs, and every one of them is quotable before you commit.",
+            ]}
+          />
+          <FactGrid
+            items={[
+              { label: "Ex-works", value: "The workshop's own price per piece, packing materials included." },
+              { label: "Freight", value: "Sea freight by volume — around €180 per m³ on the routes we use, about 45 days door to door." },
+              { label: "Handling", value: "Origin and destination charges, roughly €800 a shipment, spread across the pieces in it." },
+              { label: "Packing", value: "Branded box and Japanese paper, around €2.20 a piece; pallets quoted separately." },
+              { label: "Risk and money", value: "Two per cent breakage on ceramics and a financing line of one and a half per cent." },
+              { label: "Duty", value: "Zero today for ceramics and cutlery entering the EU; we verify the tariff code before the first shipment." },
+            ]}
+          />
+          <Prose
+            paragraphs={[
+              "One example we can show, because the maker quoted it to us: a kitchen shears from Seki at ¥1,800 ex-works lands near €14 a piece at six hundred pieces, wholesale sits around €23, and the European shelf is near €46.",
+              "Two of the nine workshops in the catalogue have given us trade terms. The rest price per design, and we say so on the quotation instead of estimating a number for you.",
+            ]}
+          />
+        </PageSection>
+
         <PageSection label="Volumes" title="What this is built for">
           <NumberedList
             items={[
