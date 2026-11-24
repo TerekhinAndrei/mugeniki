@@ -6,11 +6,23 @@ import Image from "next/image";
 import { Product, formatYen } from "@/data/products";
 import { getPhoto, photoLine } from "@/lib/photos";
 
-function ProductImage({ slug, swatch, name }: { slug: string; swatch: string; name: string }) {
+function ProductImage({
+  slug,
+  swatch,
+  name,
+  nameJa,
+  technique,
+}: {
+  slug: string;
+  swatch: string;
+  name: string;
+  nameJa: string;
+  technique: string;
+}) {
   const photo = getPhoto(slug);
-  return (
-    <div className="swatch" style={{ background: swatch }}>
-      {photo ? (
+  if (photo) {
+    return (
+      <div className="swatch" style={{ background: swatch }}>
         <Image
           src={photo.local}
           alt={`${name} — archive photograph`}
@@ -18,9 +30,13 @@ function ProductImage({ slug, swatch, name }: { slug: string; swatch: string; na
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           style={{ objectFit: "cover" }}
         />
-      ) : (
-        <span className="sr-only">{name}</span>
-      )}
+      </div>
+    );
+  }
+  return (
+    <div className="swatch swatch-word" style={{ background: swatch }}>
+      <span className="swatch-word-ja">{nameJa}</span>
+      <span className="swatch-word-note">{technique}</span>
     </div>
   );
 }
@@ -74,7 +90,13 @@ export default function CatalogueGrid({ products }: { products: Product[] }) {
               className="card"
               style={{ background: "var(--offblack)", borderColor: "rgba(255,255,255,.16)", color: "#fff" }}
             >
-              <ProductImage slug={p.slug} swatch={p.swatch} name={p.name} />
+              <ProductImage
+                slug={p.slug}
+                swatch={p.swatch}
+                name={p.name}
+                nameJa={p.nameJa}
+                technique={p.technique}
+              />
               <div className="p-6 flex flex-col flex-1">
                 <p
                   style={{

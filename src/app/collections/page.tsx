@@ -35,6 +35,7 @@ export default function CollectionsPage() {
               "Prices are what a customer pays in the workshop's own shop, consumption tax included. They give you a sense of where a piece sits against your own retail, and where a collection could be built.",
               "Wholesale is a separate conversation: ex-works price, minimum order, packing and lead time are quoted for your design, your volume and your market. Pieces marked “price on request” are made to order at a level the workshop prices per commission rather than per item.",
               "Most of the tableware is made to order rather than pulled from a shelf. Allow four to eight weeks from confirmation to a fired batch, longer for a new mould or a new glaze.",
+              "Cards that carry a photograph show a museum piece from the same tradition: it demonstrates the technique, not the exact item. The workshops' own product photography belongs to them, so it reaches you with the first quotation rather than before it.",
             ]}
           />
         </PageSection>

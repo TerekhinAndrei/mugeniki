@@ -110,6 +110,38 @@ button:disabled { cursor: not-allowed; }
   background-image: radial-gradient(circle at 30% 30%, rgba(255,255,255,.55), transparent 60%);
 }
 
+/* Card without photography yet: the piece's own Japanese name carries it */
+.swatch-word {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  padding: 1.5rem;
+  text-align: center;
+}
+.swatch-word::after {
+  background-image: radial-gradient(circle at 50% 45%, rgba(255,255,255,.55), rgba(255,255,255,0) 72%);
+}
+.swatch-word-ja {
+  position: relative;
+  z-index: 1;
+  font-size: clamp(1.15rem, 2.4vw, 1.5rem);
+  line-height: 1.5;
+  letter-spacing: .08em;
+  color: rgba(28, 25, 22, .82);
+}
+.swatch-word-note {
+  position: relative;
+  z-index: 1;
+  max-width: 26ch;
+  font-size: .58rem;
+  line-height: 1.6;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: rgba(28, 25, 22, .52);
+}
+
 /* Inside dark sections every block that sits directly on the section background
    needs light text — inline colours elsewhere must not win. */
 .tone-dark .callout { border-left-color: rgba(255,255,255,.55) !important; }
