@@ -1,0 +1,1840 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mugeniki — поставщики</title>
+<style>
+:root{--paper:#faf7f1;--card:#fffdf9;--ink:#1b2420;--muted:#6f6a5f;--line:#e3dccd;
+--accent:#2f5d50;--accent-soft:#e8efeb;--terra:#b4552d;--gold:#b08a3e}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-size:15px;line-height:1.5;
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Hiragino Sans","Noto Sans JP",Roboto,Helvetica,Arial,sans-serif;
+-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(47,93,80,.3)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px 60px}
+header.top{padding:34px 0 18px;border-bottom:1px solid var(--line);margin-bottom:22px}
+.brand{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+h1{font-size:29px;line-height:1.2;margin:8px 0 6px;font-weight:600;letter-spacing:-.01em}
+.sub{color:var(--muted);margin:0;max-width:660px}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:24px 0 6px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.kpi .n{font-size:26px;font-weight:600;letter-spacing:-.02em}
+.kpi .l{font-size:12px;color:var(--muted);margin-top:2px}
+.kpi.hot .n{color:var(--terra)}
+nav.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:26px 0 20px;border-bottom:1px solid var(--line)}
+nav.tabs button{appearance:none;background:none;border:0;border-bottom:2px solid transparent;padding:10px 14px;
+font:inherit;color:var(--muted);cursor:pointer;border-radius:6px 6px 0 0}
+nav.tabs button:hover{background:#f2ede2}
+nav.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+.panel[hidden]{display:none}
+.controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+input[type=search],select{font:inherit;padding:8px 11px;border:1px solid var(--line);border-radius:8px;
+background:var(--card);color:var(--ink);min-width:150px}
+input[type=search]{min-width:240px;flex:1;max-width:340px}
+input[type=search]:focus,select:focus{outline:2px solid var(--accent-soft);border-color:var(--accent)}
+.pill{font:inherit;font-size:13px;padding:6px 12px;border:1px solid var(--line);border-radius:999px;
+background:var(--card);cursor:pointer;color:var(--muted)}
+.pill[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+.charts{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:4px 0 26px}
+.chart{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.chart h3{margin:0 0 12px;font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600}
+.bar{display:grid;grid-template-columns:132px 1fr 26px;align-items:center;gap:10px;margin:7px 0;font-size:13px}
+.bar .track{background:#efeade;border-radius:4px;height:9px;overflow:hidden}
+.bar .fill{height:100%;background:var(--accent);border-radius:4px}
+.bar .num{text-align:right;color:var(--muted);font-variant-numeric:tabular-nums}
+.bar .lbl{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cards{display:grid;grid-template-columns:1fr;gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+.card-head{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:flex-start}
+.card h3{margin:0;font-size:19px;font-weight:600}
+.card h3 .lat{font-size:13px;color:var(--muted);font-weight:400;margin-left:8px}
+.meta{color:var(--muted);font-size:13px;margin-top:3px}
+.badges{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.badge{font-size:12px;padding:4px 10px;border-radius:999px;border:1px solid var(--line);background:#f6f2e9;
+color:var(--muted);white-space:nowrap}
+.badge.st-work{background:#fff4e6;border-color:#f0d4ac;color:#8a5a12}
+.badge.st-replied{background:#e8f3ec;border-color:#bcdcc7;color:#28583c}
+.badge.st-none{background:#f2efe8;color:var(--muted)}
+.badge.st-reserve{background:#efe9f2;border-color:#d8cde0;color:#5d4670}
+.badge.u-wide{background:#f7ece9;border-color:#e6c9c0;color:#8f4a34}
+.badge.u-point{background:#eef1f6;border-color:#cfd8e6;color:#3c5378}
+.badge.u-none{background:var(--accent-soft);border-color:#c9dcd2;color:#2b5445}
+.stars{display:inline-flex;gap:2px;cursor:pointer;font-size:15px;color:#cfc6b2;user-select:none}
+.stars span.on{color:var(--gold)}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px 22px;margin:16px 0 0;
+padding:16px 0 0;border-top:1px dashed var(--line)}
+.fact .k{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.fact .v{font-size:14px;margin-top:2px}
+.fact.wide{grid-column:1/-1}
+.next{background:#f6f2e9;border-radius:8px;padding:10px 12px;font-size:14px;margin-top:14px;
+display:flex;gap:10px;flex-wrap:wrap;justify-content:space-between}
+.card-foot{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:14px;padding-top:14px;
+border-top:1px dashed var(--line)}
+.card-foot label{font-size:12px;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
+.note{flex:1;min-width:200px}
+.note input{width:100%;font:inherit;font-size:13px;padding:7px 10px;border:1px solid var(--line);
+border-radius:7px;background:#fff}
+details.more{margin-top:12px}
+details.more summary{cursor:pointer;font-size:13px;color:var(--accent);list-style:none}
+details.more summary::-webkit-details-marker{display:none}
+details.more summary::before{content:"+ ";font-weight:600}
+details.more[open] summary::before{content:"- "}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line)}
+th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;font-size:14px}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);background:#f6f2e9;
+font-weight:600;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.pricebar{height:6px;background:#efeade;border-radius:3px;margin-top:6px;overflow:hidden;min-width:60px}
+.pricebar i{display:block;height:100%;background:var(--terra);border-radius:3px}
+.timeline{position:relative;padding-left:22px;margin:10px 0 0}
+.timeline::before{content:"";position:absolute;left:6px;top:6px;bottom:6px;width:1px;background:var(--line)}
+.mail{position:relative;margin-bottom:20px}
+.mail::before{content:"";position:absolute;left:-20px;top:6px;width:9px;height:9px;border-radius:50%;
+background:var(--accent);border:2px solid var(--paper)}
+.mail.in::before{background:var(--terra)}
+.mail .when{font-size:12px;color:var(--muted)}
+.mail h4{margin:2px 0 4px;font-size:15px;font-weight:600}
+.mail p{margin:0;color:#3a3f3a;font-size:14px}
+.mail .nxt{margin-top:6px;font-size:13px;color:var(--muted)}
+.databox{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;max-width:760px}
+.databox h3{margin:0 0 6px;font-size:16px}
+.databox p{color:var(--muted);font-size:14px;margin:0 0 14px}
+.btnrow{display:flex;gap:10px;flex-wrap:wrap}
+.btn{font:inherit;font-size:14px;padding:9px 16px;border-radius:8px;cursor:pointer;border:1px solid var(--accent);
+background:var(--accent);color:#fff;display:inline-block}
+.btn.ghost{background:transparent;color:var(--accent)}
+.btn.danger{border-color:var(--terra);color:var(--terra);background:transparent}
+.hint{font-size:13px;color:var(--muted);margin-top:14px;line-height:1.6}
+.empty{padding:26px;text-align:center;color:var(--muted);background:var(--card);
+border:1px dashed var(--line);border-radius:12px}
+@media (max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}.charts{grid-template-columns:1fr}
+h1{font-size:24px}}
+@media print{nav.tabs,.controls,.card-foot,.btnrow{display:none}.card{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <div class="brand">Mugeniki · база поставщиков</div>
+  <h1>Мастерские, товары и переписка</h1>
+  <p class="sub">20 поставщиков: 3 уже ответили, 14 ждут ответа, 1 ещё не получали письма, 2 — резерв. Данные проверены 19–24 ноября 2026, ответы пришли 24 ноября.</p>
+  <div class="kpis">
+    <div class="kpi"><div class="n">20</div><div class="l">поставщиков</div></div>
+    <div class="kpi hot"><div class="n" id="kReplied">3</div><div class="l">ответили</div></div>
+    <div class="kpi"><div class="n" id="kWaiting">14</div><div class="l">ждут ответа</div></div>
+    <div class="kpi"><div class="n" id="kNone">1</div><div class="l">не контактировали</div></div>
+    <div class="kpi"><div class="n">44</div><div class="l">товаров в базе</div></div>
+  </div>
+</header>
+
+<nav class="tabs" role="tablist">
+  <button role="tab" aria-selected="true" data-panel="p-sup">Поставщики</button>
+  <button role="tab" aria-selected="false" data-panel="p-prod">Товары</button>
+  <button role="tab" aria-selected="false" data-panel="p-mail">Переписка</button>
+  <button role="tab" aria-selected="false" data-panel="p-data">Данные</button>
+</nav>
+
+<section class="panel" id="p-sup" role="tabpanel">
+  <div class="charts">
+    <div class="chart"><h3>По статусу</h3><div id="chStatus"><div class="bar"><span class="lbl" title="Письмо отправлено">Письмо отправлено</span><span class="track"><span class="fill" style="width:100%"></span></span><span class="num">14</span></div><div class="bar"><span class="lbl" title="Ответил — данные получены">Ответил — данные получены</span><span class="track"><span class="fill" style="width:14%"></span></span><span class="num">2</span></div><div class="bar"><span class="lbl" title="Резерв">Резерв</span><span class="track"><span class="fill" style="width:14%"></span></span><span class="num">2</span></div><div class="bar"><span class="lbl" title="Ответил, данные обещаны">Ответил, данные обещаны</span><span class="track"><span class="fill" style="width:7%"></span></span><span class="num">1</span></div><div class="bar"><span class="lbl" title="Не контактировали">Не контактировали</span><span class="track"><span class="fill" style="width:7%"></span></span><span class="num">1</span></div></div></div>
+    <div class="chart"><h3>По региону</h3><div id="chRegion"><div class="bar"><span class="lbl" title="Исикава">Исикава</span><span class="track"><span class="fill" style="width:100%"></span></span><span class="num">3</span></div><div class="bar"><span class="lbl" title="Тояма">Тояма</span><span class="track"><span class="fill" style="width:100%"></span></span><span class="num">3</span></div><div class="bar"><span class="lbl" title="Миэ">Миэ</span><span class="track"><span class="fill" style="width:100%"></span></span><span class="num">3</span></div><div class="bar"><span class="lbl" title="Сага">Сага</span><span class="track"><span class="fill" style="width:67%"></span></span><span class="num">2</span></div><div class="bar"><span class="lbl" title="Киото">Киото</span><span class="track"><span class="fill" style="width:67%"></span></span><span class="num">2</span></div><div class="bar"><span class="lbl" title="Гифу">Гифу</span><span class="track"><span class="fill" style="width:67%"></span></span><span class="num">2</span></div><div class="bar"><span class="lbl" title="Эхимэ">Эхимэ</span><span class="track"><span class="fill" style="width:67%"></span></span><span class="num">2</span></div><div class="bar"><span class="lbl" title="Айти">Айти</span><span class="track"><span class="fill" style="width:33%"></span></span><span class="num">1</span></div><div class="bar"><span class="lbl" title="Окаяма">Окаяма</span><span class="track"><span class="fill" style="width:33%"></span></span><span class="num">1</span></div><div class="bar"><span class="lbl" title="Оита">Оита</span><span class="track"><span class="fill" style="width:33%"></span></span><span class="num">1</span></div></div></div>
+  </div>
+  <div class="controls">
+    <input type="search" id="q" placeholder="Поиск: имя, техника, регион, товар…" aria-label="Поиск по поставщикам">
+    <select id="fRegion" aria-label="Регион"><option value="">Все регионы</option><option>Айти</option><option>Гифу</option><option>Исикава</option><option>Киото</option><option>Миэ</option><option>Оита</option><option>Окаяма</option><option>Сага</option><option>Тояма</option><option>Эхимэ</option></select>
+    <select id="fUnique" aria-label="Тест уникальности"><option value="">Любая уникальность</option>
+      <option>Не выходил на внешние рынки</option><option>Выходил точечно</option>
+      <option>Представлен широко</option><option>Не проверено</option></select>
+    <select id="fSort" aria-label="Сортировка">
+      <option value="rating">Сначала сильные</option><option value="date">Ближайший шаг</option>
+      <option value="name">По названию</option></select>
+    <button class="pill" id="pinActive" aria-pressed="false">Только в работе</button>
+  </div>
+  <div class="cards" id="cards">
+<article class="card" data-id="S-01" data-text="皓洋窯 kōyōgama сага 有田町 (арита) фарфор арита: подглазурный кобальт, годзу донышки, чашки, тарелки, наборы; серии konoha, kohanako, kanure, hana-musubi, sanbō, rinka, kikuzaki, shōchikubai экспортной линии нет; в письме спросили про зарубежные поставки нет экспортного опыта и англоязычного интерфейса; 5 человек — объём 300–600 под вопросом; цены только розничные письмо отправлено — ждём ответ не выходил на внешние рынки: сайт только на японском, продажи в японии konoha round donburi, large 木の葉 丸丼（大） kohanako round donburi, large 小花ちらし 丸丼（大） hana-musubi bowl, mokko shape 花結び 木瓜小鉢 sanbō naburi bowl, three patterns 三方なぶり鉢（３柄） rinka plate, large 輪花皿l（3色） kikuzaki oval plate, three sizes オリーブ 菊割オーバル皿（3サイズ） sometsuke rim octagonal plate, four sizes 染付剣先小花 リム八角プレート（４サイズ） canelé mug, two colours カヌレマグカップ（2色） shōchikubai small dish set of three 松竹梅小付３点セット dessert cup, large, two colours デザートカップｌ（2色） amie shinogi soba cup 網絵 しのぎそば猪口"
+  data-rating="4" data-sort-date="2026-11-30"
+  data-name="Kōyōgama" data-region="Сага"
+  data-unique="Не выходил на внешние рынки: сайт только на японском, продажи в Японии" data-group="Письмо отправлено"
+  data-status="Письмо отправлено — ждём ответ">
+  <div class="card-head">
+    <div>
+      <h3>皓洋窯<span class="lat">Kōyōgama</span></h3>
+      <div class="meta">Сага · 有田町 (Арита) · Фарфор Арита: подглазурный кобальт, годзу</div>
+    </div>
+    <div class="badges">
+      <span class="badge st-work" data-badge="status">Письмо отправлено</span>
+      <span class="badge u-none">Не выходил на внешние рынки: сайт только на японском, продажи в Японии</span>
+      <span class="stars" data-id="S-01" role="group" aria-label="Оценка 1-5"><span class="on" data-v="1">★</span><span class="on" data-v="2">★</span><span class="on" data-v="3">★</span><span class="on" data-v="4">★</span><span class="" data-v="5">★</span></span>
+    </div>
+  </div>
+  <dl class="facts">
+    <div class="fact"><div class="k">Основано</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Цена мастерской</div><div class="v">¥1 650 – 6 050 (10 позиций с ценой)</div></div>
+    <div class="fact"><div class="k">Ex-works</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">MOQ</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Мощность</div><div class="v">5 сотрудников</div></div>
+    <div class="fact"><div class="k">Срок</div><div class="v">7 дней со склада; ~1 месяц на заказ (сайт); под объём 300–600 — уточняем</div></div>
+    <div class="fact"><div class="k">Язык</div><div class="v">Японский</div></div>
+    <div class="fact"><div class="k">Проверено</div><div class="v">19.11.2026</div></div>
+    <div class="fact wide"><div class="k">Что производит</div><div class="v">Донышки, чашки, тарелки, наборы; серии Konoha, Kohanako, Kanure, Hana-musubi, Sanbō, Rinka, Kikuzaki, Shōchikubai</div></div>
+    <div class="fact wide"><div class="k">Экспорт: подтверждённые факты</div><div class="v">Экспортной линии нет; в письме спросили про зарубежные поставки</div></div>
+    <div class="fact wide"><div class="k">Риски</div><div class="v">Нет экспортного опыта и англоязычного интерфейса; 5 человек — объём 300–600 под вопросом; цены только розничные</div></div>
+  </dl>
+  <div class="next">
+    <span><b>Следующий шаг:</b> Ответ до 27.11; если тишина — напоминание по готовому тексту</span>
+    <span><b>30.11.2026</b></span>
+  </div>
+  <div class="card-foot">
+    <label for="st-S-01">Статус</label>
+    <select id="st-S-01" data-status="S-01"><option>Не контактировали</option><option selected>Письмо отправлено — ждём ответ</option><option>Ответил, данные обещаны</option><option>Ответил — данные получены</option><option>Переговоры: цена и условия</option><option>Образцы</option><option>Пробный заказ</option><option>Отказ</option><option>Резерв: уже на внешних рынках</option></select>
+    <span class="note"><input type="text" data-note="S-01" value=""
+      placeholder="Заметка: что спросили, что ответили…" aria-label="Заметка"></span>
+  </div>
+  <details class="more">
+    <summary>Контакты и источник</summary>
+    <dl class="facts">
+      <div class="fact"><div class="k">Email</div><div class="v">contact@kouyougama.co.jp</div></div>
+      <div class="fact"><div class="k">Телефон</div><div class="v">0955-42-2762</div></div>
+      <div class="fact"><div class="k">Сайт</div><div class="v"><a href="https://www.kouyougama.co.jp/" target="_self" rel="noopener">www.kouyougama.co.jp/</a></div></div>
+      <div class="fact"><div class="k">Источник контакта</div><div class="v">Официальный сайт, раздел контактов</div></div>
+    </dl>
+  </details>
+</article>
+<article class="card" data-id="S-02" data-text="嘉祥窯 kashogama киото 東山区清水3-343 (киото) кё-яки / киёмидзу-яки, дровяная печь анагама чайные чаши (идо, сино, сигараки, бидзэн, селадон), мидзусаси, посуда под заказ для отелей и ресторанов ritz-carlton kyoto (2017), pierre hermé paris (2018), prévenance, grasara kagurazaka цены не публикует; загрузка обжигом ограничивает объём; иностранные клиенты — в японии, не экспорт письмо отправлено — ждём ответ выходил точечно: работал с иностранными брендами, но экспортной линии нет ido tea bowl 井戸茶碗 kin-tenmoku water jar 金天目釉水指 bespoke hotel and restaurant tableware ホテル・レストラン向けオーダーメイド器"
+  data-rating="5" data-sort-date="2026-11-30"
+  data-name="Kashogama" data-region="Киото"
+  data-unique="Выходил точечно: работал с иностранными брендами, но экспортной линии нет" data-group="Письмо отправлено"
+  data-status="Письмо отправлено — ждём ответ">
+  <div class="card-head">
+    <div>
+      <h3>嘉祥窯<span class="lat">Kashogama</span></h3>
+      <div class="meta">Киото · 東山区清水3-343 (Киото) · Кё-яки / Киёмидзу-яки, дровяная печь анагама</div>
+    </div>
+    <div class="badges">
+      <span class="badge st-work" data-badge="status">Письмо отправлено</span>
+      <span class="badge u-point">Выходил точечно: работал с иностранными брендами, но экспортной линии нет</span>
+      <span class="stars" data-id="S-02" role="group" aria-label="Оценка 1-5"><span class="on" data-v="1">★</span><span class="on" data-v="2">★</span><span class="on" data-v="3">★</span><span class="on" data-v="4">★</span><span class="on" data-v="5">★</span></span>
+    </div>
+  </div>
+  <dl class="facts">
+    <div class="fact"><div class="k">Основано</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Цена мастерской</div><div class="v">Не публикует — цена по запросу</div></div>
+    <div class="fact"><div class="k">Ex-works</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">MOQ</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Мощность</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Срок</div><div class="v">Зависит от графика обжига; сезонные проекты — за сезон до сдачи</div></div>
+    <div class="fact"><div class="k">Язык</div><div class="v">Японский (переписка на японском)</div></div>
+    <div class="fact"><div class="k">Проверено</div><div class="v">19.11.2026</div></div>
+    <div class="fact wide"><div class="k">Что производит</div><div class="v">Чайные чаши (Идо, Сино, Сигараки, Бидзэн, селадон), мидзусаси, посуда под заказ для отелей и ресторанов</div></div>
+    <div class="fact wide"><div class="k">Экспорт: подтверждённые факты</div><div class="v">Ritz-Carlton Kyoto (2017), Pierre Hermé Paris (2018), Prévenance, Grasara Kagurazaka</div></div>
+    <div class="fact wide"><div class="k">Риски</div><div class="v">Цены не публикует; загрузка обжигом ограничивает объём; иностранные клиенты — в Японии, не экспорт</div></div>
+  </dl>
+  <div class="next">
+    <span><b>Следующий шаг:</b> Ответ до 27.11; если тишина — напоминание</span>
+    <span><b>30.11.2026</b></span>
+  </div>
+  <div class="card-foot">
+    <label for="st-S-02">Статус</label>
+    <select id="st-S-02" data-status="S-02"><option>Не контактировали</option><option selected>Письмо отправлено — ждём ответ</option><option>Ответил, данные обещаны</option><option>Ответил — данные получены</option><option>Переговоры: цена и условия</option><option>Образцы</option><option>Пробный заказ</option><option>Отказ</option><option>Резерв: уже на внешних рынках</option></select>
+    <span class="note"><input type="text" data-note="S-02" value=""
+      placeholder="Заметка: что спросили, что ответили…" aria-label="Заметка"></span>
+  </div>
+  <details class="more">
+    <summary>Контакты и источник</summary>
+    <dl class="facts">
+      <div class="fact"><div class="k">Email</div><div class="v">info@kashogama.com</div></div>
+      <div class="fact"><div class="k">Телефон</div><div class="v">неизвестно</div></div>
+      <div class="fact"><div class="k">Сайт</div><div class="v"><a href="https://www.kashogama.com/" target="_self" rel="noopener">www.kashogama.com/</a></div></div>
+      <div class="fact"><div class="k">Источник контакта</div><div class="v">Официальный сайт, раздел контактов</div></div>
+    </dl>
+  </details>
+</article>
+<article class="card" data-id="S-03" data-text="株式会社匠頭漆工 shozu shikko исикава 加賀市黒瀬町347-2 (кага; промысел 山中漆器) точение дерева (木地) + нано-стеклянное покрытие деревянная посуда под брендами ippongi, mebuki, shokyu есть опыт зарубежных продаж и логистики; в ответе: «сами думали о выходе за рубеж, при подходящих условиях хотим работать» покрытие — не лак: нужен документ о пищевой безопасности и ресурсе посудомойки; часть брендов уже в рознице ес/азии ответил, данные обещаны выходил точечно: pop-up в париже и ангулеме (09.06.2026), 髙島屋 сингапур (с 15.11.2025) "
+  data-rating="5" data-sort-date="2026-11-26"
+  data-name="Shozu Shikko" data-region="Исикава"
+  data-unique="Выходил точечно: POP-UP в Париже и Ангулеме (09.06.2026), 髙島屋 Сингапур (с 15.11.2025)" data-group="Ответил, данные обещаны"
+  data-status="Ответил, данные обещаны">
+  <div class="card-head">
+    <div>
+      <h3>株式会社匠頭漆工<span class="lat">Shozu Shikko</span></h3>
+      <div class="meta">Исикава · 加賀市黒瀬町347-2 (Кага; промысел 山中漆器) · Точение дерева (木地) + нано-стеклянное покрытие</div>
+    </div>
+    <div class="badges">
+      <span class="badge st-replied" data-badge="status">Ответил, данные обещаны</span>
+      <span class="badge u-point">Выходил точечно: POP-UP в Париже и Ангулеме (09.06.2026), 髙島屋 Сингапур (с 15.11.2025)</span>
+      <span class="stars" data-id="S-03" role="group" aria-label="Оценка 1-5"><span class="on" data-v="1">★</span><span class="on" data-v="2">★</span><span class="on" data-v="3">★</span><span class="on" data-v="4">★</span><span class="on" data-v="5">★</span></span>
+    </div>
+  </div>
+  <dl class="facts">
+    <div class="fact"><div class="k">Основано</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Цена мастерской</div><div class="v">Не публикует — запросили прайс</div></div>
+    <div class="fact"><div class="k">Ex-works</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">MOQ</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Мощность</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Срок</div><div class="v">Обещали сообщить в ответе до 26.11.2026</div></div>
+    <div class="fact"><div class="k">Язык</div><div class="v">Японский</div></div>
+    <div class="fact"><div class="k">Проверено</div><div class="v">20.11.2026</div></div>
+    <div class="fact wide"><div class="k">Что производит</div><div class="v">Деревянная посуда под брендами IPPONGI, mebuki, shokyu</div></div>
+    <div class="fact wide"><div class="k">Экспорт: подтверждённые факты</div><div class="v">Есть опыт зарубежных продаж и логистики; в ответе: «сами думали о выходе за рубеж, при подходящих условиях хотим работать»</div></div>
+    <div class="fact wide"><div class="k">Риски</div><div class="v">Покрытие — не лак: нужен документ о пищевой безопасности и ресурсе посудомойки; часть брендов уже в рознице ЕС/Азии</div></div>
+  </dl>
+  <div class="next">
+    <span><b>Следующий шаг:</b> 26–27.11: разобрать ответ, запросить протокол на пищевой контакт покрытия</span>
+    <span><b>26.11.2026</b></span>
+  </div>
+  <div class="card-foot">
+    <label for="st-S-03">Статус</label>
+    <select id="st-S-03" data-status="S-03"><option>Не контактировали</option><option>Письмо отправлено — ждём ответ</option><option selected>Ответил, данные обещаны</option><option>Ответил — данные получены</option><option>Переговоры: цена и условия</option><option>Образцы</option><option>Пробный заказ</option><option>Отказ</option><option>Резерв: уже на внешних рынках</option></select>
+    <span class="note"><input type="text" data-note="S-03" value=""
+      placeholder="Заметка: что спросили, что ответили…" aria-label="Заметка"></span>
+  </div>
+  <details class="more">
+    <summary>Контакты и источник</summary>
+    <dl class="facts">
+      <div class="fact"><div class="k">Email</div><div class="v">shozushikko@gmail.com</div></div>
+      <div class="fact"><div class="k">Телефон</div><div class="v">0761-73-0778; моб. 080-3577-7906</div></div>
+      <div class="fact"><div class="k">Сайт</div><div class="v"><a href="https://shozushikko.jp/" target="_self" rel="noopener">shozushikko.jp/</a></div></div>
+      <div class="fact"><div class="k">Источник контакта</div><div class="v">Раздел 会社概要 на сайте (в PDF-каталоге опечатка «gmail,com»)</div></div>
+    </dl>
+  </details>
+</article>
+<article class="card" data-id="S-04" data-text="陶葊 tōan киото 東山区泉涌寺東林町38 (киото) кё-яки / киёмидзу-яки: цветные глазури, сомэцукэ, листовидный тэммоку, селадон; роспись до глазури + обжиг 1200 °c посуда, подарочные наборы; ~20 мастеров на формовке и росписи; серия 花結晶 неизвестно крупный кей-яки с сильным розничным брендом в японии; адрес почты — из условий интернет-магазина, может не дойти письмо отправлено — ждём ответ не выходил на внешние рынки: сайт только на японском, доставка только внутри японии, английской версии и международной доставки нет "
+  data-rating="4" data-sort-date="2026-12-01"
+  data-name="Tōan" data-region="Киото"
+  data-unique="Не выходил на внешние рынки: сайт только на японском, доставка только внутри Японии, английской версии и международной доставки нет" data-group="Письмо отправлено"
+  data-status="Письмо отправлено — ждём ответ">
+  <div class="card-head">
+    <div>
+      <h3>陶葊<span class="lat">Tōan</span></h3>
+      <div class="meta">Киото · 東山区泉涌寺東林町38 (Киото) · Кё-яки / Киёмидзу-яки: цветные глазури, сомэцукэ, листовидный тэммоку, селадон; роспись до глазури + обжиг 1200 °C</div>
+    </div>
+    <div class="badges">
+      <span class="badge st-work" data-badge="status">Письмо отправлено</span>
+      <span class="badge u-none">Не выходил на внешние рынки: сайт только на японском, доставка только внутри Японии, английской версии и международной доставки нет</span>
+      <span class="stars" data-id="S-04" role="group" aria-label="Оценка 1-5"><span class="on" data-v="1">★</span><span class="on" data-v="2">★</span><span class="on" data-v="3">★</span><span class="on" data-v="4">★</span><span class="" data-v="5">★</span></span>
+    </div>
+  </div>
+  <dl class="facts">
+    <div class="fact"><div class="k">Основано</div><div class="v">1922 (大正11)</div></div>
+    <div class="fact"><div class="k">Цена мастерской</div><div class="v">От ¥3 000 (по данным каталога)</div></div>
+    <div class="fact"><div class="k">Ex-works</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">MOQ</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Мощность</div><div class="v">~20 мастеров</div></div>
+    <div class="fact"><div class="k">Срок</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Язык</div><div class="v">Японский</div></div>
+    <div class="fact"><div class="k">Проверено</div><div class="v">23.11.2026</div></div>
+    <div class="fact wide"><div class="k">Что производит</div><div class="v">Посуда, подарочные наборы; ~20 мастеров на формовке и росписи; серия 花結晶</div></div>
+    <div class="fact wide"><div class="k">Экспорт: подтверждённые факты</div><div class="v">неизвестно</div></div>
+    <div class="fact wide"><div class="k">Риски</div><div class="v">Крупный кей-яки с сильным розничным брендом в Японии; адрес почты — из условий интернет-магазина, может не дойти</div></div>
+  </dl>
+  <div class="next">
+    <span><b>Следующий шаг:</b> Письмо отправлено 23.11.2026 на info@touan.co.jp; ждать до 30.11–01.12, дальше напоминание</span>
+    <span><b>01.12.2026</b></span>
+  </div>
+  <div class="card-foot">
+    <label for="st-S-04">Статус</label>
+    <select id="st-S-04" data-status="S-04"><option>Не контактировали</option><option selected>Письмо отправлено — ждём ответ</option><option>Ответил, данные обещаны</option><option>Ответил — данные получены</option><option>Переговоры: цена и условия</option><option>Образцы</option><option>Пробный заказ</option><option>Отказ</option><option>Резерв: уже на внешних рынках</option></select>
+    <span class="note"><input type="text" data-note="S-04" value=""
+      placeholder="Заметка: что спросили, что ответили…" aria-label="Заметка"></span>
+  </div>
+  <details class="more">
+    <summary>Контакты и источник</summary>
+    <dl class="facts">
+      <div class="fact"><div class="k">Email</div><div class="v">info@touan.co.jp (из раздела 特定商取引法に基づく表記)</div></div>
+      <div class="fact"><div class="k">Телефон</div><div class="v">075-541-1987</div></div>
+      <div class="fact"><div class="k">Сайт</div><div class="v"><a href="https://www.touan.co.jp/" target="_self" rel="noopener">www.touan.co.jp/</a></div></div>
+      <div class="fact"><div class="k">Источник контакта</div><div class="v">Официальный сайт, разделы 会社概要 и 特定商取引法に基づく表記</div></div>
+    </dl>
+  </details>
+</article>
+<article class="card" data-id="S-05" data-text="浅田漆器工芸 asada shikki kōgei исикава 加賀市山中温泉菅谷町ハ-215 (яманака, кага) лак: точение 木地 и покрытие урyси, техника 叢雲塗; бренд asada лакированная посуда: うつろいカップ, suwari 叢雲塗, yuwaragi, десертная чаша motenashi glass (дерево+латунь) есть опыт зарубежных продаж через pop-up; экспортные документы и дилерская сеть не подтверждены натуральный лак: ограничения по ввозу и уходу; публичной почты нет; форма блокирует автоматическую отправку; изделия бренда asada уже продаются за рубежом через japanesecrafts.com — эксклюзивности не ждём не контактировали выходил точечно: pop-up в париже (dejima store paris, с 05.03.2026), 髙島屋 синдзюку, выставка interior lifestyle 2026; сайт на английском "
+  data-rating="4" data-sort-date="2026-12-02"
+  data-name="Asada Shikki Kōgei" data-region="Исикава"
+  data-unique="Выходил точечно: POP-UP в Париже (DEJIMA STORE PARIS, с 05.03.2026), 髙島屋 Синдзюку, выставка Interior Lifestyle 2026; сайт на английском" data-group="Не контактировали"
+  data-status="Не контактировали">
+  <div class="card-head">
+    <div>
+      <h3>浅田漆器工芸<span class="lat">Asada Shikki Kōgei</span></h3>
+      <div class="meta">Исикава · 加賀市山中温泉菅谷町ハ-215 (Яманака, Кага) · Лак: точение 木地 и покрытие урyси, техника 叢雲塗; бренд asada</div>
+    </div>
+    <div class="badges">
+      <span class="badge st-none" data-badge="status">Не контактировали</span>
+      <span class="badge u-point">Выходил точечно: POP-UP в Париже (DEJIMA STORE PARIS, с 05.03.2026), 髙島屋 Синдзюку, выставка Interior Lifestyle 2026; сайт на английском</span>
+      <span class="stars" data-id="S-05" role="group" aria-label="Оценка 1-5"><span class="on" data-v="1">★</span><span class="on" data-v="2">★</span><span class="on" data-v="3">★</span><span class="on" data-v="4">★</span><span class="" data-v="5">★</span></span>
+    </div>
+  </div>
+  <dl class="facts">
+    <div class="fact"><div class="k">Основано</div><div class="v">1977 (компания; 木地-мастерская с 1912; бренд asada с 2013)</div></div>
+    <div class="fact"><div class="k">Цена мастерской</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Ex-works</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">MOQ</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Мощность</div><div class="v">5 сотрудников (по данным meihincho.com)</div></div>
+    <div class="fact"><div class="k">Срок</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Язык</div><div class="v">Японский / английский</div></div>
+    <div class="fact"><div class="k">Проверено</div><div class="v">23.11.2026</div></div>
+    <div class="fact wide"><div class="k">Что производит</div><div class="v">Лакированная посуда: うつろいカップ, SUWARI 叢雲塗, yuwaragi, десертная чаша Motenashi Glass (дерево+латунь)</div></div>
+    <div class="fact wide"><div class="k">Экспорт: подтверждённые факты</div><div class="v">Есть опыт зарубежных продаж через POP-UP; экспортные документы и дилерская сеть не подтверждены</div></div>
+    <div class="fact wide"><div class="k">Риски</div><div class="v">Натуральный лак: ограничения по ввозу и уходу; публичной почты нет; форма блокирует автоматическую отправку; изделия бренда asada уже продаются за рубежом через japanesecrafts.com — эксклюзивности не ждём</div></div>
+  </dl>
+  <div class="next">
+    <span><b>Следующий шаг:</b> Письмо подготовлено (mugeniki-pisma-masterskim-2.txt). Форму на сайте отправить не удалось: её служебный адрес отдаёт 403 из браузера агента (проверено 23.11.2026). Остались факс 0761-78-0470, телефон 0761-78-4200 или отправка формы владельцем из своего браузера</span>
+    <span><b>02.12.2026</b></span>
+  </div>
+  <div class="card-foot">
+    <label for="st-S-05">Статус</label>
+    <select id="st-S-05" data-status="S-05"><option selected>Не контактировали</option><option>Письмо отправлено — ждём ответ</option><option>Ответил, данные обещаны</option><option>Ответил — данные получены</option><option>Переговоры: цена и условия</option><option>Образцы</option><option>Пробный заказ</option><option>Отказ</option><option>Резерв: уже на внешних рынках</option></select>
+    <span class="note"><input type="text" data-note="S-05" value=""
+      placeholder="Заметка: что спросили, что ответили…" aria-label="Заметка"></span>
+  </div>
+  <details class="more">
+    <summary>Контакты и источник</summary>
+    <dl class="facts">
+      <div class="fact"><div class="k">Email</div><div class="v">публичного e-mail нет — форма お問い合わせ на сайте; факс 0761-78-0470</div></div>
+      <div class="fact"><div class="k">Телефон</div><div class="v">0761-78-4200</div></div>
+      <div class="fact"><div class="k">Сайт</div><div class="v"><a href="https://asada-shikki.com/" target="_self" rel="noopener">asada-shikki.com/</a></div></div>
+      <div class="fact"><div class="k">Источник контакта</div><div class="v">Официальный сайт, разделы お問い合わせ и 浅田漆器工芸について</div></div>
+    </dl>
+  </details>
+</article>
+<article class="card" data-id="S-06" data-text="東亜シーザ tōa scissors гифу 関市肥田瀬345-29 (секи) ножи и ножницы: ковка, чпу + ручная доводка, дамасская сталь ножницы портновские и парикмахерские, кухонные ножи; бренды toa, zencix, zenroku, 和匠 washou готовы к экспорту; ограничений по рынку сбыта нет — «どこに販売していただいてもかまいません» каталог только веб (печатного нет); срок 3–4 месяца — узкое место под сезон; гравировку и sds подтвердили, eu-декларацию по никелю нужно уточнять отдельно ответил — данные получены есть: 輸出の経験あり, могут выдать sds（安全データシート）и 成分表 (состав) kitchen shears tdk-12 善六 キッチンハサミ tdk-12 washou hairdressing scissors 和匠（washou）理美容ハサミ kitchen scissors tdk-9 善六 キッチンバサミ tdk-9 aus8 santoku knife ska-170 善六 aus8 三徳包丁 ska-170"
+  data-rating="5" data-sort-date="2026-11-27"
+  data-name="Tōa Scissors" data-region="Гифу"
+  data-unique="Есть: 輸出の経験あり, могут выдать SDS（安全データシート）и 成分表 (состав)" data-group="Ответил — данные получены"
+  data-status="Ответил — данные получены">
+  <div class="card-head">
+    <div>
+      <h3>東亜シーザ<span class="lat">Tōa Scissors</span></h3>
+      <div class="meta">Гифу · 関市肥田瀬345-29 (Секи) · Ножи и ножницы: ковка, ЧПУ + ручная доводка, дамасская сталь</div>
+    </div>
+    <div class="badges">
+      <span class="badge st-replied" data-badge="status">Ответил — данные получены</span>
+      <span class="badge st-none">Есть: 輸出の経験あり, могут выдать SDS（安全データシート）и 成分表 (состав)</span>
+      <span class="stars" data-id="S-06" role="group" aria-label="Оценка 1-5"><span class="on" data-v="1">★</span><span class="on" data-v="2">★</span><span class="on" data-v="3">★</span><span class="on" data-v="4">★</span><span class="on" data-v="5">★</span></span>
+    </div>
+  </div>
+  <dl class="facts">
+    <div class="fact"><div class="k">Основано</div><div class="v">1963 (創業100年以上, 大正元年頃から)</div></div>
+    <div class="fact"><div class="k">Цена мастерской</div><div class="v">Цены не в письме — присланы два прайс-листа вложением 24.11.2026: pricelist(homescsissors).xls и zenrokuprice.xlsx</div></div>
+    <div class="fact"><div class="k">Ex-works</div><div class="v">минимального лота нет (最低ロットは特にありません)</div></div>
+    <div class="fact"><div class="k">MOQ</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Мощность</div><div class="v">3–4 месяца по их письму (уточнить: речь, вероятно, о производстве под заказ)</div></div>
+    <div class="fact"><div class="k">Срок</div><div class="v">по выбранному товару — пришлют спецификацию (1箱あたりの入数, размеры, вес)</div></div>
+    <div class="fact"><div class="k">Язык</div><div class="v">Английский / японский</div></div>
+    <div class="fact"><div class="k">Проверено</div><div class="v">24.11.2026</div></div>
+    <div class="fact wide"><div class="k">Что производит</div><div class="v">Ножницы портновские и парикмахерские, кухонные ножи; бренды TOA, Zencix, Zenroku, 和匠 Washou</div></div>
+    <div class="fact wide"><div class="k">Экспорт: подтверждённые факты</div><div class="v">Готовы к экспорту; ограничений по рынку сбыта нет — «どこに販売していただいてもかまいません»</div></div>
+    <div class="fact wide"><div class="k">Риски</div><div class="v">Каталог только веб (печатного нет); срок 3–4 месяца — узкое место под сезон; гравировку и SDS подтвердили, EU-декларацию по никелю нужно уточнять отдельно</div></div>
+  </dl>
+  <div class="next">
+    <span><b>Следующий шаг:</b> Разобрать два прайс-листа, выбрать 2–3 SKU (кухонные ножи + портновские ножницы), запросить EXW по 300/600/1000 и упаковку</span>
+    <span><b>27.11.2026</b></span>
+  </div>
+  <div class="card-foot">
+    <label for="st-S-06">Статус</label>
+    <select id="st-S-06" data-status="S-06"><option>Не контактировали</option><option>Письмо отправлено — ждём ответ</option><option>Ответил, данные обещаны</option><option selected>Ответил — данные получены</option><option>Переговоры: цена и условия</option><option>Образцы</option><option>Пробный заказ</option><option>Отказ</option><option>Резерв: уже на внешних рынках</option></select>
+    <span class="note"><input type="text" data-note="S-06" value=""
+      placeholder="Заметка: что спросили, что ответили…" aria-label="Заметка"></span>
+  </div>
+  <details class="more">
+    <summary>Контакты и источник</summary>
+    <dl class="facts">
+      <div class="fact"><div class="k">Email</div><div class="v">toki@toa-scissors.jp (土岐 知弘, 常務取締役 и 海外紹介窓口 — адрес опубликован в списке 岐阜県関刃物産業連合会, seki-japan.com)</div></div>
+      <div class="fact"><div class="k">Телефон</div><div class="v">+81-575-22-5045; факс +81-575-24-5739</div></div>
+      <div class="fact"><div class="k">Сайт</div><div class="v"><a href="http://toa-scissors.jp/en" target="_self" rel="noopener">toa-scissors.jp/en</a></div></div>
+      <div class="fact"><div class="k">Источник контакта</div><div class="v">Ответ по e-mail от 24.11.2026 10:48 JST (id 1a20b3d2294734d3) + официальный сайт и карточка в списке 岐阜県関刃物産業連合会 (seki-japan.com)</div></div>
+    </dl>
+  </details>
+</article>
+<article class="card" data-id="S-07" data-text="幸楽窯 (徳永陶磁器) kōrakugama (tokunaga tōjiki) сага 有田町丸尾丙2512 (арита) фарфор арита, 5 поколений, 4 шаттловые печи посуда для horeca и дома, дизайнерские заказные серии; 23 мастера; соя-бутылочки カワセミ moma ny (с 2024–2025), аэропорты сага и нарита, зарубежные байеры уже представлен на внешних рынках — эксклюзивности не даст; сильный конкурент внутри той же категории резерв: уже на внешних рынках представлен широко: продажи в moma design store ny, поддержка jetro, сайт на английском "
+  data-rating="2" data-sort-date="9999-12-31"
+  data-name="Kōrakugama (Tokunaga Tōjiki)" data-region="Сага"
+  data-unique="Представлен широко: продажи в MoMA Design Store NY, поддержка JETRO, сайт на английском" data-group="Резерв"
+  data-status="Резерв: уже на внешних рынках">
+  <div class="card-head">
+    <div>
+      <h3>幸楽窯 (徳永陶磁器)<span class="lat">Kōrakugama (Tokunaga Tōjiki)</span></h3>
+      <div class="meta">Сага · 有田町丸尾丙2512 (Арита) · Фарфор Арита, 5 поколений, 4 шаттловые печи</div>
+    </div>
+    <div class="badges">
+      <span class="badge st-reserve" data-badge="status">Резерв · уже на внешних рынках</span>
+      <span class="badge u-wide">Представлен широко: продажи в MoMA Design Store NY, поддержка JETRO, сайт на английском</span>
+      <span class="stars" data-id="S-07" role="group" aria-label="Оценка 1-5"><span class="on" data-v="1">★</span><span class="on" data-v="2">★</span><span class="" data-v="3">★</span><span class="" data-v="4">★</span><span class="" data-v="5">★</span></span>
+    </div>
+  </div>
+  <dl class="facts">
+    <div class="fact"><div class="k">Основано</div><div class="v">1865 (慶応元年)</div></div>
+    <div class="fact"><div class="k">Цена мастерской</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Ex-works</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">MOQ</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Мощность</div><div class="v">23 мастера, участок 19 000 м²</div></div>
+    <div class="fact"><div class="k">Срок</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Язык</div><div class="v">Английский / японский</div></div>
+    <div class="fact"><div class="k">Проверено</div><div class="v">20.11.2026</div></div>
+    <div class="fact wide"><div class="k">Что производит</div><div class="v">Посуда для HoReCa и дома, дизайнерские заказные серии; 23 мастера; соя-бутылочки カワセミ</div></div>
+    <div class="fact wide"><div class="k">Экспорт: подтверждённые факты</div><div class="v">MoMA NY (с 2024–2025), аэропорты Сага и Нарита, зарубежные байеры</div></div>
+    <div class="fact wide"><div class="k">Риски</div><div class="v">Уже представлен на внешних рынках — эксклюзивности не даст; сильный конкурент внутри той же категории</div></div>
+  </dl>
+  <div class="next">
+    <span><b>Следующий шаг:</b> Держать как альтернативу, если Арита-направление упрётся</span>
+    <span><b>—</b></span>
+  </div>
+  <div class="card-foot">
+    <label for="st-S-07">Статус</label>
+    <select id="st-S-07" data-status="S-07"><option>Не контактировали</option><option>Письмо отправлено — ждём ответ</option><option>Ответил, данные обещаны</option><option>Ответил — данные получены</option><option>Переговоры: цена и условия</option><option>Образцы</option><option>Пробный заказ</option><option>Отказ</option><option selected>Резерв: уже на внешних рынках</option></select>
+    <span class="note"><input type="text" data-note="S-07" value=""
+      placeholder="Заметка: что спросили, что ответили…" aria-label="Заметка"></span>
+  </div>
+  <details class="more">
+    <summary>Контакты и источник</summary>
+    <dl class="facts">
+      <div class="fact"><div class="k">Email</div><div class="v">kouraku.jp@gmail.com</div></div>
+      <div class="fact"><div class="k">Телефон</div><div class="v">0955-42-4121</div></div>
+      <div class="fact"><div class="k">Сайт</div><div class="v"><a href="https://www.kourakukiln.com/" target="_self" rel="noopener">www.kourakukiln.com/</a></div></div>
+      <div class="fact"><div class="k">Источник контакта</div><div class="v">Официальный сайт, раздел 会社概要</div></div>
+    </dl>
+  </details>
+</article>
+<article class="card" data-id="S-08" data-text="株式会社スズサン (suzusan) suzusan co., ltd. айти 名古屋市緑区有松1905 (нагоя, аримацу) 有松鳴海絞り (сибори) на кашемире, альпаке, шёлке, хлопке шарфы, трикотаж, одежда, домашний текстиль, светильники designed in düsseldorf / made in arimatsu; собственное юрлицо в германии прямой конкурент по позиционированию в ес; работает как ориентир по цене и каналам резерв: уже на внешних рынках представлен широко: 29 стран, 120+ магазинов, флагман в дюссельдорфе "
+  data-rating="1" data-sort-date="9999-12-31"
+  data-name="Suzusan Co., Ltd." data-region="Айти"
+  data-unique="Представлен широко: 29 стран, 120+ магазинов, флагман в Дюссельдорфе" data-group="Резерв"
+  data-status="Резерв: уже на внешних рынках">
+  <div class="card-head">
+    <div>
+      <h3>株式会社スズサン (suzusan)<span class="lat">Suzusan Co., Ltd.</span></h3>
+      <div class="meta">Айти · 名古屋市緑区有松1905 (Нагоя, Аримацу) · 有松鳴海絞り (сибори) на кашемире, альпаке, шёлке, хлопке</div>
+    </div>
+    <div class="badges">
+      <span class="badge st-reserve" data-badge="status">Резерв · уже на внешних рынках</span>
+      <span class="badge u-wide">Представлен широко: 29 стран, 120+ магазинов, флагман в Дюссельдорфе</span>
+      <span class="stars" data-id="S-08" role="group" aria-label="Оценка 1-5"><span class="on" data-v="1">★</span><span class="" data-v="2">★</span><span class="" data-v="3">★</span><span class="" data-v="4">★</span><span class="" data-v="5">★</span></span>
+    </div>
+  </div>
+  <dl class="facts">
+    <div class="fact"><div class="k">Основано</div><div class="v">2008 (бренд suzusan)</div></div>
+    <div class="fact"><div class="k">Цена мастерской</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Ex-works</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">MOQ</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Мощность</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Срок</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Язык</div><div class="v">Английский / немецкий / японский</div></div>
+    <div class="fact"><div class="k">Проверено</div><div class="v">20.11.2026</div></div>
+    <div class="fact wide"><div class="k">Что производит</div><div class="v">Шарфы, трикотаж, одежда, домашний текстиль, светильники</div></div>
+    <div class="fact wide"><div class="k">Экспорт: подтверждённые факты</div><div class="v">Designed in Düsseldorf / Made in Arimatsu; собственное юрлицо в Германии</div></div>
+    <div class="fact wide"><div class="k">Риски</div><div class="v">Прямой конкурент по позиционированию в ЕС; работает как ориентир по цене и каналам</div></div>
+  </dl>
+  <div class="next">
+    <span><b>Следующий шаг:</b> Не для каталога: эталон того, как японский промысел выходит в ЕС</span>
+    <span><b>—</b></span>
+  </div>
+  <div class="card-foot">
+    <label for="st-S-08">Статус</label>
+    <select id="st-S-08" data-status="S-08"><option>Не контактировали</option><option>Письмо отправлено — ждём ответ</option><option>Ответил, данные обещаны</option><option>Ответил — данные получены</option><option>Переговоры: цена и условия</option><option>Образцы</option><option>Пробный заказ</option><option>Отказ</option><option selected>Резерв: уже на внешних рынках</option></select>
+    <span class="note"><input type="text" data-note="S-08" value=""
+      placeholder="Заметка: что спросили, что ответили…" aria-label="Заметка"></span>
+  </div>
+  <details class="more">
+    <summary>Контакты и источник</summary>
+    <dl class="facts">
+      <div class="fact"><div class="k">Email</div><div class="v">форма на сайте</div></div>
+      <div class="fact"><div class="k">Телефон</div><div class="v">052-693-9624</div></div>
+      <div class="fact"><div class="k">Сайт</div><div class="v"><a href="https://www.suzusan.com/" target="_self" rel="noopener">www.suzusan.com/</a></div></div>
+      <div class="fact"><div class="k">Источник контакта</div><div class="v">Официальный сайт, раздел about</div></div>
+    </dl>
+  </details>
+</article>
+<article class="card" data-id="S-09" data-text="株式会社kouro kouro co., ltd. тояма 高岡市長慶寺1000 (такаока) литьё: латунь (真鍮), олово (錫); 5-е поколение литейщиков brasscube и другие латунные и оловянные предметы, интерьер и стол экспортного опыта не видно почта на личном домене ocn.ne.jp; небольшая мастерская — объём под 300+ предметов под вопросом письмо отправлено — ждём ответ не выходил на внешние рынки: сайт только на японском, продажи внутри страны, английской версии нет "
+  data-rating="4" data-sort-date="2026-12-03"
+  data-name="KOURO Co., Ltd." data-region="Тояма"
+  data-unique="Не выходил на внешние рынки: сайт только на японском, продажи внутри страны, английской версии нет" data-group="Письмо отправлено"
+  data-status="Письмо отправлено — ждём ответ">
+  <div class="card-head">
+    <div>
+      <h3>株式会社KOURO<span class="lat">KOURO Co., Ltd.</span></h3>
+      <div class="meta">Тояма · 高岡市長慶寺1000 (Такаока) · Литьё: латунь (真鍮), олово (錫); 5-е поколение литейщиков</div>
+    </div>
+    <div class="badges">
+      <span class="badge st-work" data-badge="status">Письмо отправлено</span>
+      <span class="badge u-none">Не выходил на внешние рынки: сайт только на японском, продажи внутри страны, английской версии нет</span>
+      <span class="stars" data-id="S-09" role="group" aria-label="Оценка 1-5"><span class="on" data-v="1">★</span><span class="on" data-v="2">★</span><span class="on" data-v="3">★</span><span class="on" data-v="4">★</span><span class="" data-v="5">★</span></span>
+    </div>
+  </div>
+  <dl class="facts">
+    <div class="fact"><div class="k">Основано</div><div class="v">2011 (компания; 家業 с 1897)</div></div>
+    <div class="fact"><div class="k">Цена мастерской</div><div class="v">не публикует</div></div>
+    <div class="fact"><div class="k">Ex-works</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">MOQ</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Мощность</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Срок</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Язык</div><div class="v">Японский</div></div>
+    <div class="fact"><div class="k">Проверено</div><div class="v">23.11.2026</div></div>
+    <div class="fact wide"><div class="k">Что производит</div><div class="v">BrassCube и другие латунные и оловянные предметы, интерьер и стол</div></div>
+    <div class="fact wide"><div class="k">Экспорт: подтверждённые факты</div><div class="v">Экспортного опыта не видно</div></div>
+    <div class="fact wide"><div class="k">Риски</div><div class="v">Почта на личном домене ocn.ne.jp; небольшая мастерская — объём под 300+ предметов под вопросом</div></div>
+  </dl>
+  <div class="next">
+    <span><b>Следующий шаг:</b> Письмо отправлено 23.11.2026; ждать до 30.11–03.12, затем напоминание</span>
+    <span><b>03.12.2026</b></span>
+  </div>
+  <div class="card-foot">
+    <label for="st-S-09">Статус</label>
+    <select id="st-S-09" data-status="S-09"><option>Не контактировали</option><option selected>Письмо отправлено — ждём ответ</option><option>Ответил, данные обещаны</option><option>Ответил — данные получены</option><option>Переговоры: цена и условия</option><option>Образцы</option><option>Пробный заказ</option><option>Отказ</option><option>Резерв: уже на внешних рынках</option></select>
+    <span class="note"><input type="text" data-note="S-09" value=""
+      placeholder="Заметка: что спросили, что ответили…" aria-label="Заметка"></span>
+  </div>
+  <details class="more">
+    <summary>Контакты и источник</summary>
+    <dl class="facts">
+      <div class="fact"><div class="k">Email</div><div class="v">kojimapet@helen.ocn.ne.jp</div></div>
+      <div class="fact"><div class="k">Телефон</div><div class="v">0766-21-8530</div></div>
+      <div class="fact"><div class="k">Сайт</div><div class="v"><a href="https://kojimapet.wixsite.com/kouro-kojima/" target="_self" rel="noopener">kojimapet.wixsite.com/kouro-kojima/</a></div></div>
+      <div class="fact"><div class="k">Источник контакта</div><div class="v">Официальный сайт, раздел 会社概要</div></div>
+    </dl>
+  </details>
+</article>
+<article class="card" data-id="S-10" data-text="株式会社竹中銅器 takenaka dōki co., ltd. тояма 高岡市美幸町2-1-16 (такаока) литьё: 16 техник, латунь/бронза/олово/титан, окраска художественное литьё, памятники, корпоративные и памятные подарки экспортного опыта не видно; есть своё дизайн-бюро (с 1971) — готовы к разработке ориентированы на памятники и монументы — предметная линейка для horeca может потребовать разработки письмо отправлено — ждём ответ не выходил на внешние рынки: сайт только на японском, клиенты в японии "
+  data-rating="4" data-sort-date="2026-12-03"
+  data-name="Takenaka Dōki Co., Ltd." data-region="Тояма"
+  data-unique="Не выходил на внешние рынки: сайт только на японском, клиенты в Японии" data-group="Письмо отправлено"
+  data-status="Письмо отправлено — ждём ответ">
+  <div class="card-head">
+    <div>
+      <h3>株式会社竹中銅器<span class="lat">Takenaka Dōki Co., Ltd.</span></h3>
+      <div class="meta">Тояма · 高岡市美幸町2-1-16 (Такаока) · Литьё: 16 техник, латунь/бронза/олово/титан, окраска</div>
+    </div>
+    <div class="badges">
+      <span class="badge st-work" data-badge="status">Письмо отправлено</span>
+      <span class="badge u-none">Не выходил на внешние рынки: сайт только на японском, клиенты в Японии</span>
+      <span class="stars" data-id="S-10" role="group" aria-label="Оценка 1-5"><span class="on" data-v="1">★</span><span class="on" data-v="2">★</span><span class="on" data-v="3">★</span><span class="on" data-v="4">★</span><span class="" data-v="5">★</span></span>
+    </div>
+  </div>
+  <dl class="facts">
+    <div class="fact"><div class="k">Основано</div><div class="v">2007 (отделение; 竹中製作所 с 1927)</div></div>
+    <div class="fact"><div class="k">Цена мастерской</div><div class="v">не публикует</div></div>
+    <div class="fact"><div class="k">Ex-works</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">MOQ</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Мощность</div><div class="v">16 сотрудников</div></div>
+    <div class="fact"><div class="k">Срок</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Язык</div><div class="v">Японский</div></div>
+    <div class="fact"><div class="k">Проверено</div><div class="v">23.11.2026</div></div>
+    <div class="fact wide"><div class="k">Что производит</div><div class="v">Художественное литьё, памятники, корпоративные и памятные подарки</div></div>
+    <div class="fact wide"><div class="k">Экспорт: подтверждённые факты</div><div class="v">Экспортного опыта не видно; есть своё дизайн-бюро (с 1971) — готовы к разработке</div></div>
+    <div class="fact wide"><div class="k">Риски</div><div class="v">Ориентированы на памятники и монументы — предметная линейка для HoReCa может потребовать разработки</div></div>
+  </dl>
+  <div class="next">
+    <span><b>Следующий шаг:</b> Письмо отправлено 23.11.2026; ждать до 30.11–03.12</span>
+    <span><b>03.12.2026</b></span>
+  </div>
+  <div class="card-foot">
+    <label for="st-S-10">Статус</label>
+    <select id="st-S-10" data-status="S-10"><option>Не контактировали</option><option selected>Письмо отправлено — ждём ответ</option><option>Ответил, данные обещаны</option><option>Ответил — данные получены</option><option>Переговоры: цена и условия</option><option>Образцы</option><option>Пробный заказ</option><option>Отказ</option><option>Резерв: уже на внешних рынках</option></select>
+    <span class="note"><input type="text" data-note="S-10" value=""
+      placeholder="Заметка: что спросили, что ответили…" aria-label="Заметка"></span>
+  </div>
+  <details class="more">
+    <summary>Контакты и источник</summary>
+    <dl class="facts">
+      <div class="fact"><div class="k">Email</div><div class="v">info@takenakadouki.co.jp</div></div>
+      <div class="fact"><div class="k">Телефон</div><div class="v">0766-22-0707</div></div>
+      <div class="fact"><div class="k">Сайт</div><div class="v"><a href="https://takenakadouki.co.jp/" target="_self" rel="noopener">takenakadouki.co.jp/</a></div></div>
+      <div class="fact"><div class="k">Источник контакта</div><div class="v">Официальный сайт, раздел 会社概要</div></div>
+    </dl>
+  </details>
+</article>
+<article class="card" data-id="S-11" data-text="株式会社織田幸銅器 odakō dōki co., ltd. тояма 高岡市金屋本町3-34 (такаока) литьё и металлокрафт, декор, кастомные изделия художественное литьё, интерьер и экстерьер, подарки, металлические изделия экспортного опыта не видно компания-посредник по части позиций (гифтовый каталог) — нужно разделить своё производство и закупку письмо отправлено — ждём ответ не выходил на внешние рынки: сайт только на японском "
+  data-rating="4" data-sort-date="2026-12-03"
+  data-name="Odakō Dōki Co., Ltd." data-region="Тояма"
+  data-unique="Не выходил на внешние рынки: сайт только на японском" data-group="Письмо отправлено"
+  data-status="Письмо отправлено — ждём ответ">
+  <div class="card-head">
+    <div>
+      <h3>株式会社織田幸銅器<span class="lat">Odakō Dōki Co., Ltd.</span></h3>
+      <div class="meta">Тояма · 高岡市金屋本町3-34 (Такаока) · Литьё и металлокрафт, декор, кастомные изделия</div>
+    </div>
+    <div class="badges">
+      <span class="badge st-work" data-badge="status">Письмо отправлено</span>
+      <span class="badge u-none">Не выходил на внешние рынки: сайт только на японском</span>
+      <span class="stars" data-id="S-11" role="group" aria-label="Оценка 1-5"><span class="on" data-v="1">★</span><span class="on" data-v="2">★</span><span class="on" data-v="3">★</span><span class="on" data-v="4">★</span><span class="" data-v="5">★</span></span>
+    </div>
+  </div>
+  <dl class="facts">
+    <div class="fact"><div class="k">Основано</div><div class="v">1925 (大正14)</div></div>
+    <div class="fact"><div class="k">Цена мастерской</div><div class="v">не публикует</div></div>
+    <div class="fact"><div class="k">Ex-works</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">MOQ</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Мощность</div><div class="v">10 сотрудников</div></div>
+    <div class="fact"><div class="k">Срок</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Язык</div><div class="v">Японский</div></div>
+    <div class="fact"><div class="k">Проверено</div><div class="v">23.11.2026</div></div>
+    <div class="fact wide"><div class="k">Что производит</div><div class="v">Художественное литьё, интерьер и экстерьер, подарки, металлические изделия</div></div>
+    <div class="fact wide"><div class="k">Экспорт: подтверждённые факты</div><div class="v">Экспортного опыта не видно</div></div>
+    <div class="fact wide"><div class="k">Риски</div><div class="v">Компания-посредник по части позиций (гифтовый каталог) — нужно разделить своё производство и закупку</div></div>
+  </dl>
+  <div class="next">
+    <span><b>Следующий шаг:</b> Письмо отправлено 23.11.2026; ждать до 30.11–03.12</span>
+    <span><b>03.12.2026</b></span>
+  </div>
+  <div class="card-foot">
+    <label for="st-S-11">Статус</label>
+    <select id="st-S-11" data-status="S-11"><option>Не контактировали</option><option selected>Письмо отправлено — ждём ответ</option><option>Ответил, данные обещаны</option><option>Ответил — данные получены</option><option>Переговоры: цена и условия</option><option>Образцы</option><option>Пробный заказ</option><option>Отказ</option><option>Резерв: уже на внешних рынках</option></select>
+    <span class="note"><input type="text" data-note="S-11" value=""
+      placeholder="Заметка: что спросили, что ответили…" aria-label="Заметка"></span>
+  </div>
+  <details class="more">
+    <summary>Контакты и источник</summary>
+    <dl class="facts">
+      <div class="fact"><div class="k">Email</div><div class="v">info@odakou-douki.co.jp</div></div>
+      <div class="fact"><div class="k">Телефон</div><div class="v">0766-24-6154</div></div>
+      <div class="fact"><div class="k">Сайт</div><div class="v"><a href="http://odakou-douki.co.jp/" target="_self" rel="noopener">odakou-douki.co.jp/</a></div></div>
+      <div class="fact"><div class="k">Источник контакта</div><div class="v">Официальный сайт, раздел 企業情報</div></div>
+    </dl>
+  </details>
+</article>
+<article class="card" data-id="S-12" data-text="東濃陶器株式会社 tōnō tōki co., ltd. гифу 土岐市駄知町1435 (токи, мино) минo-яки: туннельные печи, автоматическое формование и глазурование посуда японского, западного и китайского стиля; бренд 有古窯; серийное производство экспорт не подтверждён массовое производство — вопрос в мягкости цен под малые объёмы; адрес почты на ocn.ne.jp письмо отправлено — ждём ответ сайт только на японском; b2b-канал super delivery внутри японии; данных о зарубежных продажах нет "
+  data-rating="5" data-sort-date="2026-12-03"
+  data-name="Tōnō Tōki Co., Ltd." data-region="Гифу"
+  data-unique="Сайт только на японском; B2B-канал SUPER DELIVERY внутри Японии; данных о зарубежных продажах нет" data-group="Письмо отправлено"
+  data-status="Письмо отправлено — ждём ответ">
+  <div class="card-head">
+    <div>
+      <h3>東濃陶器株式会社<span class="lat">Tōnō Tōki Co., Ltd.</span></h3>
+      <div class="meta">Гифу · 土岐市駄知町1435 (Токи, Мино) · Минo-яки: туннельные печи, автоматическое формование и глазурование</div>
+    </div>
+    <div class="badges">
+      <span class="badge st-work" data-badge="status">Письмо отправлено</span>
+      <span class="badge st-none">Сайт только на японском; B2B-канал SUPER DELIVERY внутри Японии; данных о зарубежных продажах нет</span>
+      <span class="stars" data-id="S-12" role="group" aria-label="Оценка 1-5"><span class="on" data-v="1">★</span><span class="on" data-v="2">★</span><span class="on" data-v="3">★</span><span class="on" data-v="4">★</span><span class="on" data-v="5">★</span></span>
+    </div>
+  </div>
+  <dl class="facts">
+    <div class="fact"><div class="k">Основано</div><div class="v">1941 (昭和16)</div></div>
+    <div class="fact"><div class="k">Цена мастерской</div><div class="v">не публикует</div></div>
+    <div class="fact"><div class="k">Ex-works</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">MOQ</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Мощность</div><div class="v">70 сотрудников, 1 млн шт/мес</div></div>
+    <div class="fact"><div class="k">Срок</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Язык</div><div class="v">Японский</div></div>
+    <div class="fact"><div class="k">Проверено</div><div class="v">23.11.2026</div></div>
+    <div class="fact wide"><div class="k">Что производит</div><div class="v">Посуда японского, западного и китайского стиля; бренд 有古窯; серийное производство</div></div>
+    <div class="fact wide"><div class="k">Экспорт: подтверждённые факты</div><div class="v">Экспорт не подтверждён</div></div>
+    <div class="fact wide"><div class="k">Риски</div><div class="v">Массовое производство — вопрос в мягкости цен под малые объёмы; адрес почты на ocn.ne.jp</div></div>
+  </dl>
+  <div class="next">
+    <span><b>Следующий шаг:</b> Письмо отправлено 23.11.2026; ждать до 30.11–03.12</span>
+    <span><b>03.12.2026</b></span>
+  </div>
+  <div class="card-foot">
+    <label for="st-S-12">Статус</label>
+    <select id="st-S-12" data-status="S-12"><option>Не контактировали</option><option selected>Письмо отправлено — ждём ответ</option><option>Ответил, данные обещаны</option><option>Ответил — данные получены</option><option>Переговоры: цена и условия</option><option>Образцы</option><option>Пробный заказ</option><option>Отказ</option><option>Резерв: уже на внешних рынках</option></select>
+    <span class="note"><input type="text" data-note="S-12" value=""
+      placeholder="Заметка: что спросили, что ответили…" aria-label="Заметка"></span>
+  </div>
+  <details class="more">
+    <summary>Контакты и источник</summary>
+    <dl class="facts">
+      <div class="fact"><div class="k">Email</div><div class="v">tono-toki@crux.ocn.ne.jp</div></div>
+      <div class="fact"><div class="k">Телефон</div><div class="v">0572-59-3131</div></div>
+      <div class="fact"><div class="k">Сайт</div><div class="v"><a href="https://tono-toki.com/" target="_self" rel="noopener">tono-toki.com/</a></div></div>
+      <div class="fact"><div class="k">Источник контакта</div><div class="v">Официальный сайт, раздел 会社案内</div></div>
+    </dl>
+  </details>
+</article>
+<article class="card" data-id="S-13" data-text="備前焼窯元 五郎辺衛窯 bizen-yaki gorobee-gama окаяма 備前市香登本828 (бидзэн) бидзэн-яки: без глазури, обжиг в дровяной печи, пламенная поверхность посуда и мелкая пластика из неглазурованного обожжённого камня, работа 武用務 экспортного опыта не видно каждый предмет единичен (нет повторяемости) — европейскому байеру нужен отдельный разговор о партии письмо отправлено — ждём ответ не выходил на внешние рынки: доставка только по японии, продажи через собственный онлайн-магазин и телефон "
+  data-rating="4" data-sort-date="2026-12-03"
+  data-name="Bizen-yaki Gorobee-gama" data-region="Окаяма"
+  data-unique="Не выходил на внешние рынки: доставка только по Японии, продажи через собственный онлайн-магазин и телефон" data-group="Письмо отправлено"
+  data-status="Письмо отправлено — ждём ответ">
+  <div class="card-head">
+    <div>
+      <h3>備前焼窯元 五郎辺衛窯<span class="lat">Bizen-yaki Gorobee-gama</span></h3>
+      <div class="meta">Окаяма · 備前市香登本828 (Бидзэн) · Бидзэн-яки: без глазури, обжиг в дровяной печи, пламенная поверхность</div>
+    </div>
+    <div class="badges">
+      <span class="badge st-work" data-badge="status">Письмо отправлено</span>
+      <span class="badge u-none">Не выходил на внешние рынки: доставка только по Японии, продажи через собственный онлайн-магазин и телефон</span>
+      <span class="stars" data-id="S-13" role="group" aria-label="Оценка 1-5"><span class="on" data-v="1">★</span><span class="on" data-v="2">★</span><span class="on" data-v="3">★</span><span class="on" data-v="4">★</span><span class="" data-v="5">★</span></span>
+    </div>
+  </div>
+  <dl class="facts">
+    <div class="fact"><div class="k">Основано</div><div class="v">неизвестно (действующая мастерская)</div></div>
+    <div class="fact"><div class="k">Цена мастерской</div><div class="v">не публикует</div></div>
+    <div class="fact"><div class="k">Ex-works</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">MOQ</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Мощность</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Срок</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Язык</div><div class="v">Японский</div></div>
+    <div class="fact"><div class="k">Проверено</div><div class="v">23.11.2026</div></div>
+    <div class="fact wide"><div class="k">Что производит</div><div class="v">Посуда и мелкая пластика из неглазурованного обожжённого камня, работа 武用務</div></div>
+    <div class="fact wide"><div class="k">Экспорт: подтверждённые факты</div><div class="v">Экспортного опыта не видно</div></div>
+    <div class="fact wide"><div class="k">Риски</div><div class="v">Каждый предмет единичен (нет повторяемости) — европейскому байеру нужен отдельный разговор о партии</div></div>
+  </dl>
+  <div class="next">
+    <span><b>Следующий шаг:</b> Письмо отправлено 23.11.2026; ждать до 30.11–03.12</span>
+    <span><b>03.12.2026</b></span>
+  </div>
+  <div class="card-foot">
+    <label for="st-S-13">Статус</label>
+    <select id="st-S-13" data-status="S-13"><option>Не контактировали</option><option selected>Письмо отправлено — ждём ответ</option><option>Ответил, данные обещаны</option><option>Ответил — данные получены</option><option>Переговоры: цена и условия</option><option>Образцы</option><option>Пробный заказ</option><option>Отказ</option><option>Резерв: уже на внешних рынках</option></select>
+    <span class="note"><input type="text" data-note="S-13" value=""
+      placeholder="Заметка: что спросили, что ответили…" aria-label="Заметка"></span>
+  </div>
+  <details class="more">
+    <summary>Контакты и источник</summary>
+    <dl class="facts">
+      <div class="fact"><div class="k">Email</div><div class="v">info@56b.co.jp</div></div>
+      <div class="fact"><div class="k">Телефон</div><div class="v">0869-66-0011</div></div>
+      <div class="fact"><div class="k">Сайт</div><div class="v"><a href="https://56b.co.jp" target="_self" rel="noopener">56b.co.jp</a></div></div>
+      <div class="fact"><div class="k">Источник контакта</div><div class="v">Официальный сайт, раздел 特定商取引法に基づく表記</div></div>
+    </dl>
+  </details>
+</article>
+<article class="card" data-id="S-14" data-text="もっと！竹（森口竹工業） mottotake (moriguchi takekōgyō) оита 別府市馬場3組-1-2 (бэппу) 別府竹細工: плетение из бамбука мадакэ, 400+ узоров корзины, кухонные принадлежности, фонари, кашпо; изготовление на заказ по размеру экспортного опыта не видно ввоз растительных материалов: нужны фитосанитарные требования ес и обработка (проверить отдельно) письмо отправлено — ждём ответ не выходил на внешние рынки: доставка только внутри японии, покупка через онлайн-магазин и по телефону "
+  data-rating="4" data-sort-date="2026-12-03"
+  data-name="Mottotake (Moriguchi Takekōgyō)" data-region="Оита"
+  data-unique="Не выходил на внешние рынки: доставка только внутри Японии, покупка через онлайн-магазин и по телефону" data-group="Письмо отправлено"
+  data-status="Письмо отправлено — ждём ответ">
+  <div class="card-head">
+    <div>
+      <h3>もっと！竹（森口竹工業）<span class="lat">Mottotake (Moriguchi Takekōgyō)</span></h3>
+      <div class="meta">Оита · 別府市馬場3組-1-2 (Бэппу) · 別府竹細工: плетение из бамбука мадакэ, 400+ узоров</div>
+    </div>
+    <div class="badges">
+      <span class="badge st-work" data-badge="status">Письмо отправлено</span>
+      <span class="badge u-none">Не выходил на внешние рынки: доставка только внутри Японии, покупка через онлайн-магазин и по телефону</span>
+      <span class="stars" data-id="S-14" role="group" aria-label="Оценка 1-5"><span class="on" data-v="1">★</span><span class="on" data-v="2">★</span><span class="on" data-v="3">★</span><span class="on" data-v="4">★</span><span class="" data-v="5">★</span></span>
+    </div>
+  </div>
+  <dl class="facts">
+    <div class="fact"><div class="k">Основано</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Цена мастерской</div><div class="v">не публикует</div></div>
+    <div class="fact"><div class="k">Ex-works</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">MOQ</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Мощность</div><div class="v">небольшая мастерская</div></div>
+    <div class="fact"><div class="k">Срок</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Язык</div><div class="v">Японский</div></div>
+    <div class="fact"><div class="k">Проверено</div><div class="v">23.11.2026</div></div>
+    <div class="fact wide"><div class="k">Что производит</div><div class="v">Корзины, кухонные принадлежности, фонари, кашпо; изготовление на заказ по размеру</div></div>
+    <div class="fact wide"><div class="k">Экспорт: подтверждённые факты</div><div class="v">Экспортного опыта не видно</div></div>
+    <div class="fact wide"><div class="k">Риски</div><div class="v">Ввоз растительных материалов: нужны фитосанитарные требования ЕС и обработка (проверить отдельно)</div></div>
+  </dl>
+  <div class="next">
+    <span><b>Следующий шаг:</b> Письмо отправлено 23.11.2026; ждать до 30.11–03.12</span>
+    <span><b>03.12.2026</b></span>
+  </div>
+  <div class="card-foot">
+    <label for="st-S-14">Статус</label>
+    <select id="st-S-14" data-status="S-14"><option>Не контактировали</option><option selected>Письмо отправлено — ждём ответ</option><option>Ответил, данные обещаны</option><option>Ответил — данные получены</option><option>Переговоры: цена и условия</option><option>Образцы</option><option>Пробный заказ</option><option>Отказ</option><option>Резерв: уже на внешних рынках</option></select>
+    <span class="note"><input type="text" data-note="S-14" value=""
+      placeholder="Заметка: что спросили, что ответили…" aria-label="Заметка"></span>
+  </div>
+  <details class="more">
+    <summary>Контакты и источник</summary>
+    <dl class="facts">
+      <div class="fact"><div class="k">Email</div><div class="v">info@mottotake.co.jp</div></div>
+      <div class="fact"><div class="k">Телефон</div><div class="v">0977-24-7115</div></div>
+      <div class="fact"><div class="k">Сайт</div><div class="v"><a href="http://www.mottotake.co.jp/" target="_self" rel="noopener">www.mottotake.co.jp/</a></div></div>
+      <div class="fact"><div class="k">Источник контакта</div><div class="v">Официальный сайт, раздел お問い合わせ先</div></div>
+    </dl>
+  </details>
+</article>
+<article class="card" data-id="S-15" data-text="株式会社マルヨシ陶器 maruyoshi tōki co., ltd. миэ 四日市市浜一色1-6 (ёккаити) манко-яки: дон набэ (土鍋) и кюсу, торговый дом с 1949 глиняные котлы 土鍋, чайники 急須, посуда; бренд まいもん (с 2026) экспорт не подтверждён; готовят межязычную версию сайта работают как торговый дом: производство у窯元-партнёров, нужно подтвердить мощности и протокол испытаний письмо отправлено — ждём ответ сайт на японском с en/cn версиями, но каналы и клиенты — внутри японии; зарубежных продаж не видно "
+  data-rating="5" data-sort-date="2026-12-03"
+  data-name="Maruyoshi Tōki Co., Ltd." data-region="Миэ"
+  data-unique="Сайт на японском с EN/CN версиями, но каналы и клиенты — внутри Японии; зарубежных продаж не видно" data-group="Письмо отправлено"
+  data-status="Письмо отправлено — ждём ответ">
+  <div class="card-head">
+    <div>
+      <h3>株式会社マルヨシ陶器<span class="lat">Maruyoshi Tōki Co., Ltd.</span></h3>
+      <div class="meta">Миэ · 四日市市浜一色1-6 (Ёккаити) · Манко-яки: дон набэ (土鍋) и кюсу, торговый дом с 1949</div>
+    </div>
+    <div class="badges">
+      <span class="badge st-work" data-badge="status">Письмо отправлено</span>
+      <span class="badge st-none">Сайт на японском с EN/CN версиями, но каналы и клиенты — внутри Японии; зарубежных продаж не видно</span>
+      <span class="stars" data-id="S-15" role="group" aria-label="Оценка 1-5"><span class="on" data-v="1">★</span><span class="on" data-v="2">★</span><span class="on" data-v="3">★</span><span class="on" data-v="4">★</span><span class="on" data-v="5">★</span></span>
+    </div>
+  </div>
+  <dl class="facts">
+    <div class="fact"><div class="k">Основано</div><div class="v">1949 (昭和24, 法人 1980)</div></div>
+    <div class="fact"><div class="k">Цена мастерской</div><div class="v">не публикует</div></div>
+    <div class="fact"><div class="k">Ex-works</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">MOQ</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Мощность</div><div class="v">небольшая команда</div></div>
+    <div class="fact"><div class="k">Срок</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Язык</div><div class="v">Японский / английский (сайт)</div></div>
+    <div class="fact"><div class="k">Проверено</div><div class="v">23.11.2026</div></div>
+    <div class="fact wide"><div class="k">Что производит</div><div class="v">Глиняные котлы 土鍋, чайники 急須, посуда; бренд まいもん (с 2026)</div></div>
+    <div class="fact wide"><div class="k">Экспорт: подтверждённые факты</div><div class="v">Экспорт не подтверждён; готовят межязычную версию сайта</div></div>
+    <div class="fact wide"><div class="k">Риски</div><div class="v">Работают как торговый дом: производство у窯元-партнёров, нужно подтвердить мощности и протокол испытаний</div></div>
+  </dl>
+  <div class="next">
+    <span><b>Следующий шаг:</b> Письмо отправлено 23.11.2026; первый вопрос — совместимость с европейскими источниками тепла</span>
+    <span><b>03.12.2026</b></span>
+  </div>
+  <div class="card-foot">
+    <label for="st-S-15">Статус</label>
+    <select id="st-S-15" data-status="S-15"><option>Не контактировали</option><option selected>Письмо отправлено — ждём ответ</option><option>Ответил, данные обещаны</option><option>Ответил — данные получены</option><option>Переговоры: цена и условия</option><option>Образцы</option><option>Пробный заказ</option><option>Отказ</option><option>Резерв: уже на внешних рынках</option></select>
+    <span class="note"><input type="text" data-note="S-15" value=""
+      placeholder="Заметка: что спросили, что ответили…" aria-label="Заметка"></span>
+  </div>
+  <details class="more">
+    <summary>Контакты и источник</summary>
+    <dl class="facts">
+      <div class="fact"><div class="k">Email</div><div class="v">info@maruyoshi-touki.com</div></div>
+      <div class="fact"><div class="k">Телефон</div><div class="v">059-331-5422</div></div>
+      <div class="fact"><div class="k">Сайт</div><div class="v"><a href="https://maruyoshi-touki.com/" target="_self" rel="noopener">maruyoshi-touki.com/</a></div></div>
+      <div class="fact"><div class="k">Источник контакта</div><div class="v">Официальный сайт, раздел 会社概要</div></div>
+    </dl>
+  </details>
+</article>
+<article class="card" data-id="S-16" data-text="佐治陶器株式会社 saji tōki co., ltd. миэ 四日市市小杉町332 (ёккаити) манко-яки: посуда, работающая на открытом огне (火にかけられる陶器) оптовая продажа манко-яки: дон набэ, кюсу, посуда от窯元-партнёров готовы к экспорту; каналы в ес отсутствуют («現時点ではございません», ранее были) испытания под eu/fda по каждому sku не обещают — только декларацию о неиспользовании свинца и кадмия; работают как торговый дом, производство у窯元-партнёров; срок 3 месяца под сезон с июня ответил — данные получены есть: таможня, инвойс и packing list оформляют, остальные документы — по запросу "
+  data-rating="5" data-sort-date="2026-11-27"
+  data-name="Saji Tōki Co., Ltd." data-region="Миэ"
+  data-unique="Есть: таможня, инвойс и packing list оформляют, остальные документы — по запросу" data-group="Ответил — данные получены"
+  data-status="Ответил — данные получены">
+  <div class="card-head">
+    <div>
+      <h3>佐治陶器株式会社<span class="lat">Saji Tōki Co., Ltd.</span></h3>
+      <div class="meta">Миэ · 四日市市小杉町332 (Ёккаити) · Манко-яки: посуда, работающая на открытом огне (火にかけられる陶器)</div>
+    </div>
+    <div class="badges">
+      <span class="badge st-replied" data-badge="status">Ответил — данные получены</span>
+      <span class="badge st-none">Есть: таможня, инвойс и packing list оформляют, остальные документы — по запросу</span>
+      <span class="stars" data-id="S-16" role="group" aria-label="Оценка 1-5"><span class="on" data-v="1">★</span><span class="on" data-v="2">★</span><span class="on" data-v="3">★</span><span class="on" data-v="4">★</span><span class="on" data-v="5">★</span></span>
+    </div>
+  </div>
+  <dl class="facts">
+    <div class="fact"><div class="k">Основано</div><div class="v">1923 (大正12)</div></div>
+    <div class="fact"><div class="k">Цена мастерской</div><div class="v">EXW = 45 % от розничной цены (掛け率45 %); каталог saji.co.jp/catalog/ (пароль sajicatalog)</div></div>
+    <div class="fact"><div class="k">Ex-works</div><div class="v">при EXW — от ¥30 000 за заказ</div></div>
+    <div class="fact"><div class="k">MOQ</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Мощность</div><div class="v">2 недели при наличии на складе, ~3 месяца под производство; высокий сезон июнь–октябрь</div></div>
+    <div class="fact"><div class="k">Срок</div><div class="v">число в коробке — в каталоге; средний объём ~0.09 м³, ~20 кг; смоляные паллеты возможны за отдельную плату</div></div>
+    <div class="fact"><div class="k">Язык</div><div class="v">Японский / английский (сайт)</div></div>
+    <div class="fact"><div class="k">Проверено</div><div class="v">24.11.2026</div></div>
+    <div class="fact wide"><div class="k">Что производит</div><div class="v">Оптовая продажа манко-яки: дон набэ, кюсу, посуда от窯元-партнёров</div></div>
+    <div class="fact wide"><div class="k">Экспорт: подтверждённые факты</div><div class="v">Готовы к экспорту; каналы в ЕС отсутствуют («現時点ではございません», ранее были)</div></div>
+    <div class="fact wide"><div class="k">Риски</div><div class="v">Испытания под EU/FDA по каждому SKU не обещают — только декларацию о неиспользовании свинца и кадмия; работают как торговый дом, производство у窯元-партнёров; срок 3 месяца под сезон с июня</div></div>
+  </dl>
+  <div class="next">
+    <span><b>Следующий шаг:</b> Запросить каталог с ценами под наши SKU, обсудить тесты под EU 1935/2004 (готовы при ограниченном числе SKU), уточнить паллеты и упаковку</span>
+    <span><b>27.11.2026</b></span>
+  </div>
+  <div class="card-foot">
+    <label for="st-S-16">Статус</label>
+    <select id="st-S-16" data-status="S-16"><option>Не контактировали</option><option>Письмо отправлено — ждём ответ</option><option>Ответил, данные обещаны</option><option selected>Ответил — данные получены</option><option>Переговоры: цена и условия</option><option>Образцы</option><option>Пробный заказ</option><option>Отказ</option><option>Резерв: уже на внешних рынках</option></select>
+    <span class="note"><input type="text" data-note="S-16" value=""
+      placeholder="Заметка: что спросили, что ответили…" aria-label="Заметка"></span>
+  </div>
+  <details class="more">
+    <summary>Контакты и источник</summary>
+    <dl class="facts">
+      <div class="fact"><div class="k">Email</div><div class="v">banko2@saji.co.jp (ответил 専務取締役 佐治 忠明; 海外営業担当 中村 — в командировке)</div></div>
+      <div class="fact"><div class="k">Телефон</div><div class="v">059-331-1171</div></div>
+      <div class="fact"><div class="k">Сайт</div><div class="v"><a href="https://saji.co.jp/" target="_self" rel="noopener">saji.co.jp/</a></div></div>
+      <div class="fact"><div class="k">Источник контакта</div><div class="v">Ответ по e-mail от 24.11.2026 10:52 JST (id 1a20b40d9ef1d945) + официальный сайт, раздел 会社概要</div></div>
+    </dl>
+  </details>
+</article>
+<article class="card" data-id="S-17" data-text="株式会社華月 kagetsu co., ltd. миэ 四日市市羽津山町20-9 (ёккаити) манко-яки: рисовые глиняные котлы 大黒ごはん鍋, inaho; детали по отдельности глиняные котлы для варки риса; сертификация 三重ブランド, детали продаются отдельно экспортного опыта не видно продукт заточен под японский рис и японские источники тепла — нужен тест на европейских плитах письмо отправлено — ждём ответ не выходил на внешние рынки: сайт и продажи только в японии, международной доставки нет "
+  data-rating="5" data-sort-date="2026-12-03"
+  data-name="Kagetsu Co., Ltd." data-region="Миэ"
+  data-unique="Не выходил на внешние рынки: сайт и продажи только в Японии, международной доставки нет" data-group="Письмо отправлено"
+  data-status="Письмо отправлено — ждём ответ">
+  <div class="card-head">
+    <div>
+      <h3>株式会社華月<span class="lat">Kagetsu Co., Ltd.</span></h3>
+      <div class="meta">Миэ · 四日市市羽津山町20-9 (Ёккаити) · Манко-яки: рисовые глиняные котлы 大黒ごはん鍋, INAHO; детали по отдельности</div>
+    </div>
+    <div class="badges">
+      <span class="badge st-work" data-badge="status">Письмо отправлено</span>
+      <span class="badge u-none">Не выходил на внешние рынки: сайт и продажи только в Японии, международной доставки нет</span>
+      <span class="stars" data-id="S-17" role="group" aria-label="Оценка 1-5"><span class="on" data-v="1">★</span><span class="on" data-v="2">★</span><span class="on" data-v="3">★</span><span class="on" data-v="4">★</span><span class="on" data-v="5">★</span></span>
+    </div>
+  </div>
+  <dl class="facts">
+    <div class="fact"><div class="k">Основано</div><div class="v">1856 (安政三年)</div></div>
+    <div class="fact"><div class="k">Цена мастерской</div><div class="v">не публикует</div></div>
+    <div class="fact"><div class="k">Ex-works</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">MOQ</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Мощность</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Срок</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Язык</div><div class="v">Японский</div></div>
+    <div class="fact"><div class="k">Проверено</div><div class="v">23.11.2026</div></div>
+    <div class="fact wide"><div class="k">Что производит</div><div class="v">Глиняные котлы для варки риса; сертификация 三重ブランド, детали продаются отдельно</div></div>
+    <div class="fact wide"><div class="k">Экспорт: подтверждённые факты</div><div class="v">Экспортного опыта не видно</div></div>
+    <div class="fact wide"><div class="k">Риски</div><div class="v">Продукт заточен под японский рис и японские источники тепла — нужен тест на европейских плитах</div></div>
+  </dl>
+  <div class="next">
+    <span><b>Следующий шаг:</b> Письмо отправлено 23.11.2026; ждать до 30.11–03.12</span>
+    <span><b>03.12.2026</b></span>
+  </div>
+  <div class="card-foot">
+    <label for="st-S-17">Статус</label>
+    <select id="st-S-17" data-status="S-17"><option>Не контактировали</option><option selected>Письмо отправлено — ждём ответ</option><option>Ответил, данные обещаны</option><option>Ответил — данные получены</option><option>Переговоры: цена и условия</option><option>Образцы</option><option>Пробный заказ</option><option>Отказ</option><option>Резерв: уже на внешних рынках</option></select>
+    <span class="note"><input type="text" data-note="S-17" value=""
+      placeholder="Заметка: что спросили, что ответили…" aria-label="Заметка"></span>
+  </div>
+  <details class="more">
+    <summary>Контакты и источник</summary>
+    <dl class="facts">
+      <div class="fact"><div class="k">Email</div><div class="v">info@japandonabe.co.jp</div></div>
+      <div class="fact"><div class="k">Телефон</div><div class="v">059-331-6037</div></div>
+      <div class="fact"><div class="k">Сайт</div><div class="v"><a href="https://www.donabe.info/" target="_self" rel="noopener">www.donabe.info/</a></div></div>
+      <div class="fact"><div class="k">Источник контакта</div><div class="v">Официальный сайт, раздел 会社情報</div></div>
+    </dl>
+  </details>
+</article>
+<article class="card" data-id="S-18" data-text="株式会社梅野精陶所（砥部焼 梅山窯） umeno seitōsho (baizan-gama) эхимэ 伊予郡砥部町大南1441 (тобэ) тобэ-яки: белый фарфор с ручной росписью, большая восходящая печь (文化財) посуда тобэ-яки, ручная роспись; собственный завод, магазин, музей экспортного опыта не видно ориентированы на розничные магазины в японии; неизвестна готовность к заказу 300+ предметов письмо отправлено — ждём ответ сайт только на японском, продажи через свои точки и реселлеров в японии "
+  data-rating="4" data-sort-date="2026-12-03"
+  data-name="Umeno Seitōsho (Baizan-gama)" data-region="Эхимэ"
+  data-unique="Сайт только на японском, продажи через свои точки и реселлеров в Японии" data-group="Письмо отправлено"
+  data-status="Письмо отправлено — ждём ответ">
+  <div class="card-head">
+    <div>
+      <h3>株式会社梅野精陶所（砥部焼 梅山窯）<span class="lat">Umeno Seitōsho (Baizan-gama)</span></h3>
+      <div class="meta">Эхимэ · 伊予郡砥部町大南1441 (Тобэ) · Тобэ-яки: белый фарфор с ручной росписью, большая восходящая печь (文化財)</div>
+    </div>
+    <div class="badges">
+      <span class="badge st-work" data-badge="status">Письмо отправлено</span>
+      <span class="badge st-none">Сайт только на японском, продажи через свои точки и реселлеров в Японии</span>
+      <span class="stars" data-id="S-18" role="group" aria-label="Оценка 1-5"><span class="on" data-v="1">★</span><span class="on" data-v="2">★</span><span class="on" data-v="3">★</span><span class="on" data-v="4">★</span><span class="" data-v="5">★</span></span>
+    </div>
+  </div>
+  <dl class="facts">
+    <div class="fact"><div class="k">Основано</div><div class="v">1882 (明治15)</div></div>
+    <div class="fact"><div class="k">Цена мастерской</div><div class="v">не публикует</div></div>
+    <div class="fact"><div class="k">Ex-works</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">MOQ</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Мощность</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Срок</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Язык</div><div class="v">Японский</div></div>
+    <div class="fact"><div class="k">Проверено</div><div class="v">23.11.2026</div></div>
+    <div class="fact wide"><div class="k">Что производит</div><div class="v">Посуда Тобэ-яки, ручная роспись; собственный завод, магазин, музей</div></div>
+    <div class="fact wide"><div class="k">Экспорт: подтверждённые факты</div><div class="v">Экспортного опыта не видно</div></div>
+    <div class="fact wide"><div class="k">Риски</div><div class="v">Ориентированы на розничные магазины в Японии; неизвестна готовность к заказу 300+ предметов</div></div>
+  </dl>
+  <div class="next">
+    <span><b>Следующий шаг:</b> Письмо отправлено 23.11.2026; ждать до 30.11–03.12</span>
+    <span><b>03.12.2026</b></span>
+  </div>
+  <div class="card-foot">
+    <label for="st-S-18">Статус</label>
+    <select id="st-S-18" data-status="S-18"><option>Не контактировали</option><option selected>Письмо отправлено — ждём ответ</option><option>Ответил, данные обещаны</option><option>Ответил — данные получены</option><option>Переговоры: цена и условия</option><option>Образцы</option><option>Пробный заказ</option><option>Отказ</option><option>Резерв: уже на внешних рынках</option></select>
+    <span class="note"><input type="text" data-note="S-18" value=""
+      placeholder="Заметка: что спросили, что ответили…" aria-label="Заметка"></span>
+  </div>
+  <details class="more">
+    <summary>Контакты и источник</summary>
+    <dl class="facts">
+      <div class="fact"><div class="k">Email</div><div class="v">info@baizangama.jp</div></div>
+      <div class="fact"><div class="k">Телефон</div><div class="v">089-962-2311</div></div>
+      <div class="fact"><div class="k">Сайт</div><div class="v"><a href="https://baizangama.jp/" target="_self" rel="noopener">baizangama.jp/</a></div></div>
+      <div class="fact"><div class="k">Источник контакта</div><div class="v">Официальный сайт, раздел 会社概要・アクセス</div></div>
+    </dl>
+  </details>
+</article>
+<article class="card" data-id="S-19" data-text="有限会社すこし屋（砥部焼） sukoshiya (tobe-yaki) эхимэ 伊予郡砥部町大南826 (тобэ) тобэ-яки: повседневная посуда ручной работы посуда тобэ-яки, небольшие серии экспортного опыта не видно очень небольшая мастерская: объём 300+ предметов, вероятно, вне её возможностей письмо отправлено — ждём ответ не выходил на внешние рынки: сайт только на японском, продажи внутри японии "
+  data-rating="3" data-sort-date="2026-12-03"
+  data-name="Sukoshiya (Tobe-yaki)" data-region="Эхимэ"
+  data-unique="Не выходил на внешние рынки: сайт только на японском, продажи внутри Японии" data-group="Письмо отправлено"
+  data-status="Письмо отправлено — ждём ответ">
+  <div class="card-head">
+    <div>
+      <h3>有限会社すこし屋（砥部焼）<span class="lat">Sukoshiya (Tobe-yaki)</span></h3>
+      <div class="meta">Эхимэ · 伊予郡砥部町大南826 (Тобэ) · Тобэ-яки: повседневная посуда ручной работы</div>
+    </div>
+    <div class="badges">
+      <span class="badge st-work" data-badge="status">Письмо отправлено</span>
+      <span class="badge u-none">Не выходил на внешние рынки: сайт только на японском, продажи внутри Японии</span>
+      <span class="stars" data-id="S-19" role="group" aria-label="Оценка 1-5"><span class="on" data-v="1">★</span><span class="on" data-v="2">★</span><span class="on" data-v="3">★</span><span class="" data-v="4">★</span><span class="" data-v="5">★</span></span>
+    </div>
+  </div>
+  <dl class="facts">
+    <div class="fact"><div class="k">Основано</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Цена мастерской</div><div class="v">не публикует</div></div>
+    <div class="fact"><div class="k">Ex-works</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">MOQ</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Мощность</div><div class="v">небольшая мастерская</div></div>
+    <div class="fact"><div class="k">Срок</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Язык</div><div class="v">Японский</div></div>
+    <div class="fact"><div class="k">Проверено</div><div class="v">23.11.2026</div></div>
+    <div class="fact wide"><div class="k">Что производит</div><div class="v">Посуда Тобэ-яки, небольшие серии</div></div>
+    <div class="fact wide"><div class="k">Экспорт: подтверждённые факты</div><div class="v">Экспортного опыта не видно</div></div>
+    <div class="fact wide"><div class="k">Риски</div><div class="v">Очень небольшая мастерская: объём 300+ предметов, вероятно, вне её возможностей</div></div>
+  </dl>
+  <div class="next">
+    <span><b>Следующий шаг:</b> Письмо отправлено 23.11.2026; ждать до 30.11–03.12</span>
+    <span><b>03.12.2026</b></span>
+  </div>
+  <div class="card-foot">
+    <label for="st-S-19">Статус</label>
+    <select id="st-S-19" data-status="S-19"><option>Не контактировали</option><option selected>Письмо отправлено — ждём ответ</option><option>Ответил, данные обещаны</option><option>Ответил — данные получены</option><option>Переговоры: цена и условия</option><option>Образцы</option><option>Пробный заказ</option><option>Отказ</option><option>Резерв: уже на внешних рынках</option></select>
+    <span class="note"><input type="text" data-note="S-19" value=""
+      placeholder="Заметка: что спросили, что ответили…" aria-label="Заметка"></span>
+  </div>
+  <details class="more">
+    <summary>Контакты и источник</summary>
+    <dl class="facts">
+      <div class="fact"><div class="k">Email</div><div class="v">info@sukoshiya.com</div></div>
+      <div class="fact"><div class="k">Телефон</div><div class="v">089-962-1130</div></div>
+      <div class="fact"><div class="k">Сайт</div><div class="v"><a href="https://sukoshiya.com/" target="_self" rel="noopener">sukoshiya.com/</a></div></div>
+      <div class="fact"><div class="k">Источник контакта</div><div class="v">Официальный сайт</div></div>
+    </dl>
+  </details>
+</article>
+<article class="card" data-id="S-20" data-text="株式会社taya-shikkiten（田谷漆器店） taya shikkiten (wajima-nuri) исикава 輪島市 (вадзима) вадзима-нури: лак, грунты, 100+ операций; реставрация и заказные серии лакированная посуда, чашки, заказные серии; участок wajimanuri village работает с корпорациями в японии; в 2024 изделие фирмы — гос. подарок президенту сша стройка восстановления продолжается, производство восстановлено не полностью; бренд уже известен, эксклюзивности не ждём письмо отправлено — ждём ответ выходил точечно: сайт на трёх языках (jp/en/cn), выставка в hyatt kanazawa, но международных продаж нет "
+  data-rating="3" data-sort-date="2026-12-03"
+  data-name="Taya Shikkiten (Wajima-nuri)" data-region="Исикава"
+  data-unique="Выходил точечно: сайт на трёх языках (JP/EN/CN), выставка в Hyatt Kanazawa, но международных продаж нет" data-group="Письмо отправлено"
+  data-status="Письмо отправлено — ждём ответ">
+  <div class="card-head">
+    <div>
+      <h3>株式会社TAYA-SHIKKITEN（田谷漆器店）<span class="lat">Taya Shikkiten (Wajima-nuri)</span></h3>
+      <div class="meta">Исикава · 輪島市 (Вадзима) · Вадзима-нури: лак, грунты, 100+ операций; реставрация и заказные серии</div>
+    </div>
+    <div class="badges">
+      <span class="badge st-work" data-badge="status">Письмо отправлено</span>
+      <span class="badge u-point">Выходил точечно: сайт на трёх языках (JP/EN/CN), выставка в Hyatt Kanazawa, но международных продаж нет</span>
+      <span class="stars" data-id="S-20" role="group" aria-label="Оценка 1-5"><span class="on" data-v="1">★</span><span class="on" data-v="2">★</span><span class="on" data-v="3">★</span><span class="" data-v="4">★</span><span class="" data-v="5">★</span></span>
+    </div>
+  </div>
+  <dl class="facts">
+    <div class="fact"><div class="k">Основано</div><div class="v">неизвестно (после землетрясения 2024 реконструкция)</div></div>
+    <div class="fact"><div class="k">Цена мастерской</div><div class="v">не публикует</div></div>
+    <div class="fact"><div class="k">Ex-works</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">MOQ</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Мощность</div><div class="v">своя команда + мастера 20–30 лет</div></div>
+    <div class="fact"><div class="k">Срок</div><div class="v">неизвестно</div></div>
+    <div class="fact"><div class="k">Язык</div><div class="v">Японский / английский</div></div>
+    <div class="fact"><div class="k">Проверено</div><div class="v">23.11.2026</div></div>
+    <div class="fact wide"><div class="k">Что производит</div><div class="v">Лакированная посуда, чашки, заказные серии; участок WAJIMANURI VILLAGE</div></div>
+    <div class="fact wide"><div class="k">Экспорт: подтверждённые факты</div><div class="v">Работает с корпорациями в Японии; в 2024 изделие фирмы — гос. подарок президенту США</div></div>
+    <div class="fact wide"><div class="k">Риски</div><div class="v">Стройка восстановления продолжается, производство восстановлено не полностью; бренд уже известен, эксклюзивности не ждём</div></div>
+  </dl>
+  <div class="next">
+    <span><b>Следующий шаг:</b> Письмо отправлено 23.11.2026; отдельно уточнить производственные мощности после землетрясения</span>
+    <span><b>03.12.2026</b></span>
+  </div>
+  <div class="card-foot">
+    <label for="st-S-20">Статус</label>
+    <select id="st-S-20" data-status="S-20"><option>Не контактировали</option><option selected>Письмо отправлено — ждём ответ</option><option>Ответил, данные обещаны</option><option>Ответил — данные получены</option><option>Переговоры: цена и условия</option><option>Образцы</option><option>Пробный заказ</option><option>Отказ</option><option>Резерв: уже на внешних рынках</option></select>
+    <span class="note"><input type="text" data-note="S-20" value=""
+      placeholder="Заметка: что спросили, что ответили…" aria-label="Заметка"></span>
+  </div>
+  <details class="more">
+    <summary>Контакты и источник</summary>
+    <dl class="facts">
+      <div class="fact"><div class="k">Email</div><div class="v">tayatakahiro@wajimanuri.co.jp (адрес для прессы — рабочий адрес руководителя)</div></div>
+      <div class="fact"><div class="k">Телефон</div><div class="v">090-2090-6812</div></div>
+      <div class="fact"><div class="k">Сайт</div><div class="v"><a href="https://www.wajimanuri.co.jp/" target="_self" rel="noopener">www.wajimanuri.co.jp/</a></div></div>
+      <div class="fact"><div class="k">Источник контакта</div><div class="v">Официальный сайт, разделы お知らせ и 会社案内</div></div>
+    </dl>
+  </details>
+</article>
+  </div>
+  <div class="empty" id="noCards" hidden>Под фильтр ничего не подошло.</div>
+</section>
+
+<section class="panel" id="p-prod" role="tabpanel" hidden>
+  <div class="controls">
+    <input type="search" id="pq" placeholder="Поиск по товарам…" aria-label="Поиск по товарам">
+    <select id="pMaker" aria-label="Поставщик"><option value="">Все поставщики</option><option>皓洋窯</option><option>佐治陶器</option><option>マルヨシ陶器</option><option>五郎辺衛窯</option><option>華月</option><option>田谷漆器店</option><option>梅山窯</option><option>東亜シーザ</option><option>嘉祥窯</option></select>
+    <select id="pCat" aria-label="Категория"><option value="">Все категории</option><option>Tableware</option><option>Tea</option><option>Gifting</option><option>Lacquerware</option><option>Blades</option></select>
+  </div>
+  <table>
+    <thead><tr><th>Товар</th><th>Поставщик</th><th>Категория</th><th>Размер</th>
+      <th style="text-align:right">Розница JP</th><th style="text-align:right">≈ €</th>
+      <th>MOQ</th><th>Срок</th></tr></thead>
+    <tbody id="prodBody">
+<tr data-maker="皓洋窯" data-cat="Tableware" data-text="konoha round donburi, large 木の葉 丸丼（大） 皓洋窯 arita porcelain, underglaze blue and clear glaze leaf motif in underglaze blue. the kiln states outright that out-of-stock items are made to order. large; diameter and volume not published on the shop">
+  <td><b>Konoha round donburi, large</b><div class="meta">木の葉 丸丼（大）</div><div class="meta">Leaf motif in underglaze blue. The kiln states outright that out-of-stock items are made to order.</div></td>
+  <td>皓洋窯</td><td>Tableware</td><td>Large; diameter and volume not published on the shop</td>
+  <td class="num">¥4 235<div class="pricebar"><i style="width:10%"></i></div></td><td class="num">€24,15</td>
+  <td>Quoted per order</td><td>Ships within 7 days from stock; about 1 month made to order</td>
+</tr>
+<tr data-maker="皓洋窯" data-cat="Tableware" data-text="kohanako round donburi, large 小花ちらし 丸丼（大） 皓洋窯 arita porcelain, hand-stamped small flowers under clear glaze two sizes, one shape: useful for a hotel that wants one form in two covers. large; a small version of the same bowl is ¥3,630">
+  <td><b>Kohanako round donburi, large</b><div class="meta">小花ちらし 丸丼（大）</div><div class="meta">Two sizes, one shape: useful for a hotel that wants one form in two covers.</div></td>
+  <td>皓洋窯</td><td>Tableware</td><td>Large; a small version of the same bowl is ¥3,630</td>
+  <td class="num">¥4 235<div class="pricebar"><i style="width:10%"></i></div></td><td class="num">€24,15</td>
+  <td>Quoted per order</td><td>Ships within 7 days from stock; about 1 month made to order</td>
+</tr>
+<tr data-maker="皓洋窯" data-cat="Tableware" data-text="hana-musubi bowl, mokko shape 花結び 木瓜小鉢 皓洋窯 arita porcelain, cast mokko (melon) form the paired small dish at ¥2,420 makes a ready two-piece set. small bowl; the paired small dish 花結び 木瓜小付 is ¥2,420">
+  <td><b>Hana-musubi bowl, mokko shape</b><div class="meta">花結び 木瓜小鉢</div><div class="meta">The paired small dish at ¥2,420 makes a ready two-piece set.</div></td>
+  <td>皓洋窯</td><td>Tableware</td><td>Small bowl; the paired small dish 花結び 木瓜小付 is ¥2,420</td>
+  <td class="num">¥3 080<div class="pricebar"><i style="width:7%"></i></div></td><td class="num">€17,56</td>
+  <td>Quoted per order</td><td>Ships within 7 days from stock; about 1 month made to order</td>
+</tr>
+<tr data-maker="皓洋窯" data-cat="Tableware" data-text="sanbō naburi bowl, three patterns 三方なぶり鉢（３柄） 皓洋窯 arita porcelain, hand-cut faceted sides three patterns at one price — a range rather than a single sku to test. bowl; three patterns in the line at one price">
+  <td><b>Sanbō naburi bowl, three patterns</b><div class="meta">三方なぶり鉢（３柄）</div><div class="meta">Three patterns at one price — a range rather than a single SKU to test.</div></td>
+  <td>皓洋窯</td><td>Tableware</td><td>Bowl; three patterns in the line at one price</td>
+  <td class="num">¥3 300<div class="pricebar"><i style="width:8%"></i></div></td><td class="num">€18,82</td>
+  <td>Quoted per order</td><td>Ships within 7 days from stock; about 1 month made to order</td>
+</tr>
+<tr data-maker="皓洋窯" data-cat="Tableware" data-text="rinka plate, large 輪花皿l（3色） 皓洋窯 arita porcelain, petal-cut rim the most expensive plate in the kiln&#x27;s own list. large; three colours">
+  <td><b>Rinka plate, large</b><div class="meta">輪花皿L（3色）</div><div class="meta">The most expensive plate in the kiln&#x27;s own list.</div></td>
+  <td>皓洋窯</td><td>Tableware</td><td>Large; three colours</td>
+  <td class="num">¥3 850<div class="pricebar"><i style="width:9%"></i></div></td><td class="num">€21,95</td>
+  <td>Quoted per order</td><td>Ships within 7 days from stock; about 1 month made to order</td>
+</tr>
+<tr data-maker="皓洋窯" data-cat="Tableware" data-text="kikuzaki oval plate, three sizes オリーブ 菊割オーバル皿（3サイズ） 皓洋窯 arita porcelain, oval rim with a chrysanthemum cut eight colour and motif variants sit at this price — the form is stable, the surface is the variable. three sizes; the entry price of the shop">
+  <td><b>Kikuzaki oval plate, three sizes</b><div class="meta">オリーブ 菊割オーバル皿（3サイズ）</div><div class="meta">Eight colour and motif variants sit at this price — the form is stable, the surface is the variable.</div></td>
+  <td>皓洋窯</td><td>Tableware</td><td>Three sizes; the entry price of the shop</td>
+  <td class="num">¥1 760<div class="pricebar"><i style="width:4%"></i></div></td><td class="num">€10,04</td>
+  <td>Quoted per order</td><td>Ships within 7 days from stock; about 1 month made to order</td>
+</tr>
+<tr data-maker="皓洋窯" data-cat="Tableware" data-text="sometsuke rim octagonal plate, four sizes 染付剣先小花 リム八角プレート（４サイズ） 皓洋窯 arita porcelain, underglaze cobalt (sometsuke) the lowest price in the kiln&#x27;s shop — the natural item to test a first order on. four sizes; entry price of the shop">
+  <td><b>Sometsuke rim octagonal plate, four sizes</b><div class="meta">染付剣先小花 リム八角プレート（４サイズ）</div><div class="meta">The lowest price in the kiln&#x27;s shop — the natural item to test a first order on.</div></td>
+  <td>皓洋窯</td><td>Tableware</td><td>Four sizes; entry price of the shop</td>
+  <td class="num">¥1 650<div class="pricebar"><i style="width:4%"></i></div></td><td class="num">€9,41</td>
+  <td>Quoted per order</td><td>Ships within 7 days from stock; about 1 month made to order</td>
+</tr>
+<tr data-maker="皓洋窯" data-cat="Tea" data-text="canelé mug, two colours カヌレマグカップ（2色） 皓洋窯 arita porcelain, two glazes two colours. the closest thing the kiln makes to the handleless cup european buyers ask for. mug; capacity not published on the shop">
+  <td><b>Canelé mug, two colours</b><div class="meta">カヌレマグカップ（2色）</div><div class="meta">Two colours. The closest thing the kiln makes to the handleless cup European buyers ask for.</div></td>
+  <td>皓洋窯</td><td>Tea</td><td>Mug; capacity not published on the shop</td>
+  <td class="num">¥2 750<div class="pricebar"><i style="width:6%"></i></div></td><td class="num">€15,68</td>
+  <td>Quoted per order</td><td>Ships within 7 days from stock; about 1 month made to order</td>
+</tr>
+<tr data-maker="皓洋窯" data-cat="Gifting" data-text="shōchikubai small dish set of three 松竹梅小付３点セット 皓洋窯 arita porcelain, three seasonal motifs pine, bamboo and plum — the standard gift triad. a ready gift sku at ¥6,050 retail. set of three small dishes">
+  <td><b>Shōchikubai small dish set of three</b><div class="meta">松竹梅小付３点セット</div><div class="meta">Pine, bamboo and plum — the standard gift triad. A ready gift SKU at ¥6,050 retail.</div></td>
+  <td>皓洋窯</td><td>Gifting</td><td>Set of three small dishes</td>
+  <td class="num">¥6 050<div class="pricebar"><i style="width:14%"></i></div></td><td class="num">€34,50</td>
+  <td>Quoted per order</td><td>Ships within 7 days from stock; about 1 month made to order</td>
+</tr>
+<tr data-maker="皓洋窯" data-cat="Tea" data-text="dessert cup, large, two colours デザートカップｌ（2色） 皓洋窯 arita porcelain, footed cup two sizes and a patterned variant at this price point. large; a smaller cup デザートカップs is ¥2,420, and the 剣先小花 pattern is ¥3,080">
+  <td><b>Dessert cup, large, two colours</b><div class="meta">デザートカップＬ（2色）</div><div class="meta">Two sizes and a patterned variant at this price point.</div></td>
+  <td>皓洋窯</td><td>Tea</td><td>Large; a smaller cup デザートカップS is ¥2,420, and the 剣先小花 pattern is ¥3,080</td>
+  <td class="num">¥2 750<div class="pricebar"><i style="width:6%"></i></div></td><td class="num">€15,68</td>
+  <td>Quoted per order</td><td>Ships within 7 days from stock; about 1 month made to order</td>
+</tr>
+<tr data-maker="皓洋窯" data-cat="Tea" data-text="amie shinogi soba cup 網絵 しのぎそば猪口 皓洋窯 arita porcelain, faceted shinogi wall left empty on purpose: the price was not readable on the page, and it is not a guess. cup; size not published on the shop">
+  <td><b>Amie shinogi soba cup</b><div class="meta">網絵 しのぎそば猪口</div><div class="meta">Left empty on purpose: the price was not readable on the page, and it is not a guess.</div></td>
+  <td>皓洋窯</td><td>Tea</td><td>Cup; size not published on the shop</td>
+  <td class="num">по запросу</td><td class="num">—</td>
+  <td>Quoted per order</td><td>Ships within 7 days from stock; about 1 month made to order</td>
+</tr>
+<tr data-maker="佐治陶器" data-cat="Tableware" data-text="manpuku donabe, earthenware pot 土鍋 萬福 佐治陶器 banko-yaki heat-resistant earthenware ex-works is 45% of the retail price (掛け率45 %) per the house&#x27;s letter of 24.11.2026. 6, 8 and 9 gou sizes (1 to 5 people); a retailer lists the 6 gou as about 19.5 × 22 × 11.5 cm, 1,100 g, 800 ml">
+  <td><b>Manpuku donabe, earthenware pot</b><div class="meta">土鍋 萬福</div><div class="meta">Ex-works is 45% of the retail price (掛け率45 %) per the house&#x27;s letter of 24.11.2026.</div></td>
+  <td>佐治陶器</td><td>Tableware</td><td>6, 8 and 9 gou sizes (1 to 5 people); a retailer lists the 6 gou as about 19.5 × 22 × 11.5 cm, 1,100 g, 800 ml</td>
+  <td class="num">¥3 740<div class="pricebar"><i style="width:8%"></i></div></td><td class="num">€21,33</td>
+  <td>From ¥30,000 at ex-works (the house&#x27;s own answer, 24.11.2026)</td><td>2 weeks from stock, about 3 months made to order; the busy season runs June to October</td>
+</tr>
+<tr data-maker="佐治陶器" data-cat="Tableware" data-text="yamabuki rice pot 山吹ごはん鍋 佐治陶器 banko-yaki heat-resistant earthenware, double lid one of three named lines the house sells under: 山吹 yamafuki, 伊勢 ise, 萬福 manpuku. sizes not read on the store page">
+  <td><b>Yamabuki rice pot</b><div class="meta">山吹ごはん鍋</div><div class="meta">One of three named lines the house sells under: 山吹 Yamafuki, 伊勢 Ise, 萬福 Manpuku.</div></td>
+  <td>佐治陶器</td><td>Tableware</td><td>Sizes not read on the store page</td>
+  <td class="num">¥12 000<div class="pricebar"><i style="width:27%"></i></div></td><td class="num">€68,42</td>
+  <td>From ¥30,000 at ex-works (24.11.2026)</td><td>2 weeks from stock, about 3 months made to order</td>
+</tr>
+<tr data-maker="佐治陶器" data-cat="Tableware" data-text="ikki-sanyaku pot, three uses in one 一器三役 佐治陶器 banko-yaki heat-resistant earthenware the most concept-led item in the house&#x27;s list — easy to explain in a retail edit. sizes not read on the store page">
+  <td><b>Ikki-sanyaku pot, three uses in one</b><div class="meta">一器三役</div><div class="meta">The most concept-led item in the house&#x27;s list — easy to explain in a retail edit.</div></td>
+  <td>佐治陶器</td><td>Tableware</td><td>Sizes not read on the store page</td>
+  <td class="num">¥12 100<div class="pricebar"><i style="width:28%"></i></div></td><td class="num">€68,99</td>
+  <td>From ¥30,000 at ex-works (24.11.2026)</td><td>2 weeks from stock, about 3 months made to order</td>
+</tr>
+<tr data-maker="佐治陶器" data-cat="Tableware" data-text="hagama earthenware pot 羽釜の土鍋 佐治陶器 banko-yaki heat-resistant earthenware, kamado form the house&#x27;s own photograph is the strongest single image in its store. sizes not read on the store page">
+  <td><b>Hagama earthenware pot</b><div class="meta">羽釜の土鍋</div><div class="meta">The house&#x27;s own photograph is the strongest single image in its store.</div></td>
+  <td>佐治陶器</td><td>Tableware</td><td>Sizes not read on the store page</td>
+  <td class="num">¥11 000<div class="pricebar"><i style="width:25%"></i></div></td><td class="num">€62,72</td>
+  <td>From ¥30,000 at ex-works (24.11.2026)</td><td>2 weeks from stock, about 3 months made to order</td>
+</tr>
+<tr data-maker="佐治陶器" data-cat="Tea" data-text="banko teapot an 萬古急須【庵】 佐治陶器 banko-yaki stoneware, built-in ceramic strainer the house publishes a separate kyusu and tea-tools catalogue each year (2026 edition announced 29.06.2026). size not read on the store page">
+  <td><b>Banko teapot An</b><div class="meta">萬古急須【庵】</div><div class="meta">The house publishes a separate kyusu and tea-tools catalogue each year (2026 edition announced 29.06.2026).</div></td>
+  <td>佐治陶器</td><td>Tea</td><td>Size not read on the store page</td>
+  <td class="num">¥15 000<div class="pricebar"><i style="width:34%"></i></div></td><td class="num">€85,53</td>
+  <td>From ¥30,000 at ex-works (24.11.2026)</td><td>2 weeks from stock, about 3 months made to order</td>
+</tr>
+<tr data-maker="佐治陶器" data-cat="Tableware" data-text="ohitsu rice tub, white おひつ白 佐治陶器 banko-yaki stoneware the lowest-priced item read in the house&#x27;s store — a possible volume line. size not read on the store page">
+  <td><b>Ohitsu rice tub, white</b><div class="meta">おひつ白</div><div class="meta">The lowest-priced item read in the house&#x27;s store — a possible volume line.</div></td>
+  <td>佐治陶器</td><td>Tableware</td><td>Size not read on the store page</td>
+  <td class="num">¥2 400<div class="pricebar"><i style="width:5%"></i></div></td><td class="num">€13,68</td>
+  <td>From ¥30,000 at ex-works (24.11.2026)</td><td>2 weeks from stock, about 3 months made to order</td>
+</tr>
+<tr data-maker="佐治陶器" data-cat="Tableware" data-text="caldera spanish-style pot スペイン風土鍋 caldera 佐治陶器 banko-yaki heat-resistant earthenware more than half the items in the house&#x27;s store still sell at retail prices below ¥5,000. size not read on the store page">
+  <td><b>Caldera Spanish-style pot</b><div class="meta">スペイン風土鍋 CALDERA</div><div class="meta">More than half the items in the house&#x27;s store still sell at retail prices below ¥5,000.</div></td>
+  <td>佐治陶器</td><td>Tableware</td><td>Size not read on the store page</td>
+  <td class="num">¥33 000<div class="pricebar"><i style="width:75%"></i></div></td><td class="num">€188,17</td>
+  <td>From ¥30,000 at ex-works (24.11.2026)</td><td>2 weeks from stock, about 3 months made to order</td>
+</tr>
+<tr data-maker="マルヨシ陶器" data-cat="Tableware" data-text="tsuyatsuya rice pot, 5 gou 「まいもん」のつやつやごはん鍋 マルヨシ陶器 banko-yaki heat-resistant earthenware the house states that banko-yaki accounts for about 80% of japan&#x27;s domestic donabe production. φ25 × w20.5 × h19 cm, 2,600 g, 2,200 ml, 5 gou">
+  <td><b>Tsuyatsuya rice pot, 5 gou</b><div class="meta">「まいもん」のつやつやごはん鍋</div><div class="meta">The house states that Banko-yaki accounts for about 80% of Japan&#x27;s domestic donabe production.</div></td>
+  <td>マルヨシ陶器</td><td>Tableware</td><td>φ25 × W20.5 × H19 cm, 2,600 g, 2,200 ml, 5 gou</td>
+  <td class="num">¥9 900<div class="pricebar"><i style="width:22%"></i></div></td><td class="num">€56,45</td>
+  <td>Quoted per order</td><td>Listed as a pre-order item on the house&#x27;s own shop</td>
+</tr>
+<tr data-maker="マルヨシ陶器" data-cat="Tableware" data-text="manmaru rice tub 「まいもん」のまんまるおひつ マルヨシ陶器 banko-yaki stoneware, breathing clay the house sells the pot, bowls and tub as a six-piece set at ¥15,300 — a readymade gifting bundle. φ15 × w18 × h10.5 cm, 950 g, 700 ml">
+  <td><b>Manmaru rice tub</b><div class="meta">「まいもん」のまんまるおひつ</div><div class="meta">The house sells the pot, bowls and tub as a six-piece set at ¥15,300 — a readymade gifting bundle.</div></td>
+  <td>マルヨシ陶器</td><td>Tableware</td><td>φ15 × W18 × H10.5 cm, 950 g, 700 ml</td>
+  <td class="num">¥3 410<div class="pricebar"><i style="width:8%"></i></div></td><td class="num">€19,44</td>
+  <td>Quoted per order</td><td>Pre-order item on the house&#x27;s own shop</td>
+</tr>
+<tr data-maker="マルヨシ陶器" data-cat="Tableware" data-text="tsuyatsuya rice bowl 「まいもん」のつやつやお茶碗 マルヨシ陶器 banko-yaki stoneware sold white and black as a pair — the simplest way to give a menu two covers. φ12 × h5.5 cm, 160 g, 200 ml">
+  <td><b>Tsuyatsuya rice bowl</b><div class="meta">「まいもん」のつやつやお茶碗</div><div class="meta">Sold white and black as a pair — the simplest way to give a menu two covers.</div></td>
+  <td>マルヨシ陶器</td><td>Tableware</td><td>φ12 × H5.5 cm, 160 g, 200 ml</td>
+  <td class="num">¥1 540<div class="pricebar"><i style="width:4%"></i></div></td><td class="num">€8,78</td>
+  <td>Quoted per order</td><td>Pre-order item on the house&#x27;s own shop</td>
+</tr>
+<tr data-maker="マルヨシ陶器" data-cat="Tableware" data-text="mazemaze mixing bowl 「まいもん」のまぜまぜ小鉢 マルヨシ陶器 banko-yaki stoneware made by 照山陶苑 for the house&#x27;s own brand — the brand is the house, the kiln is named in its description. φ12 × w14.5 × h7.5 cm, 300 g, 250 ml">
+  <td><b>Mazemaze mixing bowl</b><div class="meta">「まいもん」のまぜまぜ小鉢</div><div class="meta">Made by 照山陶苑 for the house&#x27;s own brand — the brand is the house, the kiln is named in its description.</div></td>
+  <td>マルヨシ陶器</td><td>Tableware</td><td>φ12 × W14.5 × H7.5 cm, 300 g, 250 ml</td>
+  <td class="num">¥1 760<div class="pricebar"><i style="width:4%"></i></div></td><td class="num">€10,04</td>
+  <td>Quoted per order</td><td>In stock on the house&#x27;s own shop (24.11.2026)</td>
+</tr>
+<tr data-maker="マルヨシ陶器" data-cat="Tea" data-text="benry teapot, flat form ベンリー急須 平碗 マルヨシ陶器 banko-yaki stoneware, three glazes made by 南景製陶所 in 青磁, 黒ゆず and ビードロ glazes. φ10 × 18 × h7.5 cm, 320 ml; two further forms at 370 ml and 130 ml">
+  <td><b>Benry teapot, flat form</b><div class="meta">ベンリー急須 平碗</div><div class="meta">Made by 南景製陶所 in 青磁, 黒ゆず and ビードロ glazes.</div></td>
+  <td>マルヨシ陶器</td><td>Tea</td><td>φ10 × 18 × H7.5 cm, 320 ml; two further forms at 370 ml and 130 ml</td>
+  <td class="num">¥6 000<div class="pricebar"><i style="width:14%"></i></div></td><td class="num">€34,21</td>
+  <td>Quoted per order</td><td>In stock on the house&#x27;s own shop (24.11.2026)</td>
+</tr>
+<tr data-maker="マルヨシ陶器" data-cat="Tea" data-text="ippuku bowl いっぷく碗 マルヨシ陶器 banko-yaki stoneware, three colours made by 照山陶苑. matcha demand peaks in europe in march — worth timing an order to it. φ9 × h6 cm, 250 ml; black, white and red">
+  <td><b>Ippuku bowl</b><div class="meta">いっぷく碗</div><div class="meta">Made by 照山陶苑. Matcha demand peaks in Europe in March — worth timing an order to it.</div></td>
+  <td>マルヨシ陶器</td><td>Tea</td><td>φ9 × H6 cm, 250 ml; black, white and red</td>
+  <td class="num">¥1 485<div class="pricebar"><i style="width:3%"></i></div></td><td class="num">€8,47</td>
+  <td>Quoted per order</td><td>In stock on the house&#x27;s own shop (24.11.2026)</td>
+</tr>
+<tr data-maker="五郎辺衛窯" data-cat="Tea" data-text="guinomi sake cup, medium ぐい呑（中） 五郎辺衛窯 bizen-yaki, unglazed wood-fired stoneware the kiln&#x27;s shop lists 68 items, so a single order can be assembled from one workshop. w6 × h5 cm, 80 g">
+  <td><b>Guinomi sake cup, medium</b><div class="meta">ぐい呑（中）</div><div class="meta">The kiln&#x27;s shop lists 68 items, so a single order can be assembled from one workshop.</div></td>
+  <td>五郎辺衛窯</td><td>Tea</td><td>W6 × H5 cm, 80 g</td>
+  <td class="num">¥2 200<div class="pricebar"><i style="width:5%"></i></div></td><td class="num">€12,54</td>
+  <td>Quoted per order</td><td>Not published; the kiln makes to order</td>
+</tr>
+<tr data-maker="五郎辺衛窯" data-cat="Tea" data-text="guinomi sake cup, small ぐい呑（小） 五郎辺衛窯 bizen-yaki, unglazed wood-fired stoneware bizen keeps heated sake warm — a functional argument for the category. w5 × h4 cm, 60 g">
+  <td><b>Guinomi sake cup, small</b><div class="meta">ぐい呑（小）</div><div class="meta">Bizen keeps heated sake warm — a functional argument for the category.</div></td>
+  <td>五郎辺衛窯</td><td>Tea</td><td>W5 × H4 cm, 60 g</td>
+  <td class="num">¥1 870<div class="pricebar"><i style="width:4%"></i></div></td><td class="num">€10,66</td>
+  <td>Quoted per order</td><td>Not published; the kiln makes to order</td>
+</tr>
+<tr data-maker="五郎辺衛窯" data-cat="Tableware" data-text="round plate, 5 sun ５寸丸皿 五郎辺衛窯 bizen-yaki, unglazed wood-fired stoneware the kiln builds its plates with a rounded lip — its own stated reason for a long service life. w15 × h2 cm, 270 g">
+  <td><b>Round plate, 5 sun</b><div class="meta">５寸丸皿</div><div class="meta">The kiln builds its plates with a rounded lip — its own stated reason for a long service life.</div></td>
+  <td>五郎辺衛窯</td><td>Tableware</td><td>W15 × H2 cm, 270 g</td>
+  <td class="num">¥2 200<div class="pricebar"><i style="width:5%"></i></div></td><td class="num">€12,54</td>
+  <td>Quoted per order</td><td>Not published; the kiln makes to order</td>
+</tr>
+<tr data-maker="五郎辺衛窯" data-cat="Tableware" data-text="flower-shaped plate 輪花皿 五郎辺衛窯 bizen-yaki, unglazed wood-fired stoneware each piece is one of a kind — the kiln states outright that no two are alike, so specs vary per firing. w13 × h1 cm, 150 g">
+  <td><b>Flower-shaped plate</b><div class="meta">輪花皿</div><div class="meta">Each piece is one of a kind — the kiln states outright that no two are alike, so specs vary per firing.</div></td>
+  <td>五郎辺衛窯</td><td>Tableware</td><td>W13 × H1 cm, 150 g</td>
+  <td class="num">¥1 650<div class="pricebar"><i style="width:4%"></i></div></td><td class="num">€9,41</td>
+  <td>Quoted per order</td><td>Not published; the kiln makes to order</td>
+</tr>
+<tr data-maker="五郎辺衛窯" data-cat="Gifting" data-text="hibi-tasuki stoneware spoon 火襷スプーン 五郎辺衛窯 bizen-yaki, hibi-tasuki straw firing mark the cheapest real item in the whole catalogue — usable as a gift-with-purchase. w12 × d3 × h1 cm, 20 g">
+  <td><b>Hibi-tasuki stoneware spoon</b><div class="meta">火襷スプーン</div><div class="meta">The cheapest real item in the whole catalogue — usable as a gift-with-purchase.</div></td>
+  <td>五郎辺衛窯</td><td>Gifting</td><td>W12 × D3 × H1 cm, 20 g</td>
+  <td class="num">¥385<div class="pricebar"><i style="width:1%"></i></div></td><td class="num">€2,20</td>
+  <td>Quoted per order</td><td>Not published; the kiln makes to order</td>
+</tr>
+<tr data-maker="華月" data-cat="Tableware" data-text="inaho rice pot, white, 2 gou inaho shiro 2合 華月 banko-yaki heat-resistant earthenware, developed in house the kiln states the glaze and clay contain no lead or cadmium — a documented food-contact claim. w20.4 × d16.7 × h15.4 cm, 930 ml, 1.475 kg; sizes run 1 to 6 gou">
+  <td><b>INAHO rice pot, white, 2 gou</b><div class="meta">INAHO SHIRO 2合</div><div class="meta">The kiln states the glaze and clay contain no lead or cadmium — a documented food-contact claim.</div></td>
+  <td>華月</td><td>Tableware</td><td>W20.4 × D16.7 × H15.4 cm, 930 ml, 1.475 kg; sizes run 1 to 6 gou</td>
+  <td class="num">¥19 800<div class="pricebar"><i style="width:45%"></i></div></td><td class="num">€112,90</td>
+  <td>Quoted per order</td><td>Next business day from stock; 2–3 weeks when out of stock</td>
+</tr>
+<tr data-maker="華月" data-cat="Tableware" data-text="inaho rice pot, white, 3 gou inaho shiro ３合 華月 banko-yaki heat-resistant earthenware the kiln also makes a steam insert at ¥4,400 for this size. w24.2 × d20 × h18.9 cm, 1,900 ml, 2.22 kg; an ih version is ¥35,200">
+  <td><b>INAHO rice pot, white, 3 gou</b><div class="meta">INAHO SHIRO ３合</div><div class="meta">The kiln also makes a steam insert at ¥4,400 for this size.</div></td>
+  <td>華月</td><td>Tableware</td><td>W24.2 × D20 × H18.9 cm, 1,900 ml, 2.22 kg; an IH version is ¥35,200</td>
+  <td class="num">¥24 200<div class="pricebar"><i style="width:55%"></i></div></td><td class="num">€137,99</td>
+  <td>Quoted per order</td><td>Next business day from stock; 2–3 weeks when out of stock</td>
+</tr>
+<tr data-maker="華月" data-cat="Tableware" data-text="inaho rice pot, white, 4 gou inaho shiro ４合 華月 banko-yaki heat-resistant earthenware the kiln has run since 安政三年 (1856) and sells under its own brand only. w26.8 × d22.6 × h21.2 cm, 2,115 ml, 2.882 kg">
+  <td><b>INAHO rice pot, white, 4 gou</b><div class="meta">INAHO SHIRO ４合</div><div class="meta">The kiln has run since 安政三年 (1856) and sells under its own brand only.</div></td>
+  <td>華月</td><td>Tableware</td><td>W26.8 × D22.6 × H21.2 cm, 2,115 ml, 2.882 kg</td>
+  <td class="num">¥33 000<div class="pricebar"><i style="width:75%"></i></div></td><td class="num">€188,17</td>
+  <td>Quoted per order</td><td>Next business day from stock; 2–3 weeks when out of stock</td>
+</tr>
+<tr data-maker="田谷漆器店" data-cat="Lacquerware" data-text="hibi soup bowl, wajima-nuri 輪島塗 汁椀「日々」 田谷漆器店 wajima-nuri: natural urushi over wood, cloth-bound base, several coats named engraving costs ¥660 per character — relevant for corporate gifts. diameter 12 × height 7 cm">
+  <td><b>Hibi soup bowl, Wajima-nuri</b><div class="meta">輪島塗 汁椀「日々」</div><div class="meta">Named engraving costs ¥660 per character — relevant for corporate gifts.</div></td>
+  <td>田谷漆器店</td><td>Lacquerware</td><td>Diameter 12 × height 7 cm</td>
+  <td class="num">¥33 000<div class="pricebar"><i style="width:75%"></i></div></td><td class="num">€188,17</td>
+  <td>Quoted per order</td><td>The house is rebuilding after the 2024 Noto earthquake: orders are taken as reservations, delivery within a year</td>
+</tr>
+<tr data-maker="田谷漆器店" data-cat="Lacquerware" data-text="lacquer spoon, vermilion or black 輪島塗 スプーン（朱・黒） 田谷漆器店 wajima-nuri, natural urushi over wood the house does private-label and oem work — stated on its corporate site. length not read on the shop page">
+  <td><b>Lacquer spoon, vermilion or black</b><div class="meta">輪島塗 スプーン（朱・黒）</div><div class="meta">The house does private-label and OEM work — stated on its corporate site.</div></td>
+  <td>田谷漆器店</td><td>Lacquerware</td><td>Length not read on the shop page</td>
+  <td class="num">¥11 000<div class="pricebar"><i style="width:25%"></i></div></td><td class="num">€62,72</td>
+  <td>Quoted per order</td><td>Reservation orders; delivery within a year while the workshop is rebuilt</td>
+</tr>
+<tr data-maker="田谷漆器店" data-cat="Lacquerware" data-text="saigetsu deep bowl 輪島塗 歳月 田谷漆器店 wajima-nuri, natural urushi over wood the house&#x27;s own international price for this bowl is €258.95 — a direct comparison for european landed cost. size not read on the shop page">
+  <td><b>Saigetsu deep bowl</b><div class="meta">輪島塗 歳月</div><div class="meta">The house&#x27;s own international price for this bowl is €258.95 — a direct comparison for European landed cost.</div></td>
+  <td>田谷漆器店</td><td>Lacquerware</td><td>Size not read on the shop page</td>
+  <td class="num">¥44 000<div class="pricebar"><i style="width:100%"></i></div></td><td class="num">€250,89</td>
+  <td>Quoted per order</td><td>Reservation orders; delivery within a year while the workshop is rebuilt</td>
+</tr>
+<tr data-maker="梅山窯" data-cat="Tea" data-text="jimoto made mug, sansangarasa pattern, 296 ml マグ三唐草 296ml 梅山窯 tobe-yaki porcelain, cobalt arabesque under glaze the kiln&#x27;s own site dates the collaboration 2019 — proof of a branded large run, not of export. 296 ml">
+  <td><b>JIMOTO made mug, sansangarasa pattern, 296 ml</b><div class="meta">マグ三唐草 296ml</div><div class="meta">The kiln&#x27;s own site dates the collaboration 2019 — proof of a branded large run, not of export.</div></td>
+  <td>梅山窯</td><td>Tea</td><td>296 ml</td>
+  <td class="num">¥6 900<div class="pricebar"><i style="width:16%"></i></div></td><td class="num">€39,34</td>
+  <td>Not published; the collaboration shows the kiln can run a branded line</td><td>Not published</td>
+</tr>
+<tr data-maker="梅山窯" data-cat="Tea" data-text="karakusa mug, reverse pattern からくさの反マグカップ 梅山窯 tobe-yaki porcelain, cobalt arabesque under glaze the kiln is the oldest working one in tobe, opened 明治15 (1882); prices come from its retailers, not from the kiln. size not read; the retailer lists it at ¥1,980 with tax">
+  <td><b>Karakusa mug, reverse pattern</b><div class="meta">からくさの反マグカップ</div><div class="meta">The kiln is the oldest working one in Tobe, opened 明治15 (1882); prices come from its retailers, not from the kiln.</div></td>
+  <td>梅山窯</td><td>Tea</td><td>Size not read; the retailer lists it at ¥1,980 with tax</td>
+  <td class="num">¥1 980<div class="pricebar"><i style="width:4%"></i></div></td><td class="num">€11,29</td>
+  <td>Not published</td><td>Not published</td>
+</tr>
+<tr data-maker="東亜シーザ" data-cat="Blades" data-text="kitchen shears tdk-12 善六 キッチンハサミ tdk-12 東亜シーザ seki cutlery: press and nc grinding, hand finishing the maker wrote that it sells under toa, zencix, zenroku and 和匠 washou, and works from small lots including oem. 210 mm">
+  <td><b>Kitchen shears TDK-12</b><div class="meta">善六 キッチンハサミ TDK-12</div><div class="meta">The maker wrote that it sells under TOA, Zencix, Zenroku and 和匠 Washou, and works from small lots including OEM.</div></td>
+  <td>東亜シーザ</td><td>Blades</td><td>210 mm</td>
+  <td class="num">¥1 800<div class="pricebar"><i style="width:4%"></i></div></td><td class="num">€10,26</td>
+  <td>No minimum lot — the maker&#x27;s own answer, 24.11.2026</td><td>3–4 months, per the maker&#x27;s answer of 24.11.2026</td>
+</tr>
+<tr data-maker="東亜シーザ" data-cat="Blades" data-text="washou hairdressing scissors 和匠（washou）理美容ハサミ 東亜シーザ seki cutlery, hand-finished hairdressing blade sharpening of a washou blade is priced at ¥3,000 on the brand&#x27;s own page — a service line worth quoting. sizes not published">
+  <td><b>Washou hairdressing scissors</b><div class="meta">和匠（WASHOU）理美容ハサミ</div><div class="meta">Sharpening of a Washou blade is priced at ¥3,000 on the brand&#x27;s own page — a service line worth quoting.</div></td>
+  <td>東亜シーザ</td><td>Blades</td><td>Sizes not published</td>
+  <td class="num">по запросу</td><td class="num">—</td>
+  <td>No minimum lot (maker&#x27;s answer, 24.11.2026)</td><td>3–4 months (maker&#x27;s answer, 24.11.2026)</td>
+</tr>
+<tr data-maker="東亜シーザ" data-cat="Blades" data-text="kitchen scissors tdk-9 善六 キッチンバサミ tdk-9 東亜シーザ seki cutlery: press and nc grinding, hand finishing the cheapest line on the maker&#x27;s sheet — the natural add-on to a shears order. not published">
+  <td><b>Kitchen scissors TDK-9</b><div class="meta">善六 キッチンバサミ TDK-9</div><div class="meta">The cheapest line on the maker&#x27;s sheet — the natural add-on to a shears order.</div></td>
+  <td>東亜シーザ</td><td>Blades</td><td>Not published</td>
+  <td class="num">¥1 100<div class="pricebar"><i style="width:2%"></i></div></td><td class="num">€6,27</td>
+  <td>No minimum lot — the maker&#x27;s own answer, 24.11.2026</td><td>3–4 months, per the maker&#x27;s answer of 24.11.2026</td>
+</tr>
+<tr data-maker="東亜シーザ" data-cat="Blades" data-text="aus8 santoku knife ska-170 善六 aus8 三徳包丁 ska-170 東亜シーザ seki cutlery: aus8 stainless steel, press-formed and hand-finished aus8 is a mid-tier steel; the maker&#x27;s sheet also lists a 210 mm chef knife at ¥7,000, a 135 mm utility at ¥5,000 and a 210 mm sashimi knife at ¥10,000. 170 mm blade">
+  <td><b>AUS8 santoku knife SKA-170</b><div class="meta">善六 AUS8 三徳包丁 SKA-170</div><div class="meta">AUS8 is a mid-tier steel; the maker&#x27;s sheet also lists a 210 mm chef knife at ¥7,000, a 135 mm utility at ¥5,000 and a 210 mm sashimi knife at ¥10,000.</div></td>
+  <td>東亜シーザ</td><td>Blades</td><td>170 mm blade</td>
+  <td class="num">¥6 000<div class="pricebar"><i style="width:14%"></i></div></td><td class="num">€34,21</td>
+  <td>No minimum lot — the maker&#x27;s own answer, 24.11.2026</td><td>3–4 months, per the maker&#x27;s answer of 24.11.2026</td>
+</tr>
+<tr data-maker="嘉祥窯" data-cat="Tea" data-text="ido tea bowl 井戸茶碗 嘉祥窯 kyō-yaki, wood-fired kiln (anagama / noborigama) the kiln is run by the fourth generation of the morioka family and fires an anagama. not published">
+  <td><b>Ido tea bowl</b><div class="meta">井戸茶碗</div><div class="meta">The kiln is run by the fourth generation of the Morioka family and fires an anagama.</div></td>
+  <td>嘉祥窯</td><td>Tea</td><td>Not published</td>
+  <td class="num">по запросу</td><td class="num">—</td>
+  <td>Not published</td><td>Set by the firing calendar</td>
+</tr>
+<tr data-maker="嘉祥窯" data-cat="Tea" data-text="kin-tenmoku water jar 金天目釉水指 嘉祥窯 kyō-yaki, gold tenmoku glaze the kiln also sells from its own gallery in higashiyama, six minutes from kiyomizu-dera. not published">
+  <td><b>Kin-tenmoku water jar</b><div class="meta">金天目釉水指</div><div class="meta">The kiln also sells from its own gallery in Higashiyama, six minutes from Kiyomizu-dera.</div></td>
+  <td>嘉祥窯</td><td>Tea</td><td>Not published</td>
+  <td class="num">по запросу</td><td class="num">—</td>
+  <td>Not published</td><td>Set by the firing calendar</td>
+</tr>
+<tr data-maker="嘉祥窯" data-cat="Tableware" data-text="bespoke hotel and restaurant tableware ホテル・レストラン向けオーダーメイド器 嘉祥窯 kyō-yaki, made to brief the one entry with a named international client list — proof of capability, not of export readiness. made to the client&#x27;s drawing">
+  <td><b>Bespoke hotel and restaurant tableware</b><div class="meta">ホテル・レストラン向けオーダーメイド器</div><div class="meta">The one entry with a named international client list — proof of capability, not of export readiness.</div></td>
+  <td>嘉祥窯</td><td>Tableware</td><td>Made to the client&#x27;s drawing</td>
+  <td class="num">по запросу</td><td class="num">—</td>
+  <td>Not published — the workshop has worked on single seasonal projects</td><td>Set by the firing calendar; seasonal projects have run to a season&#x27;s notice</td>
+</tr>
+    </tbody>
+  </table>
+  <p class="hint">Курс пересчёта: 1 JPY = 0.005702 EUR (20.11.2026). Ex-works и MOQ под объём мастерские
+  не публикуют — эти поля появятся после ответов.</p>
+</section>
+
+<section class="panel" id="p-mail" role="tabpanel" hidden>
+  <div class="timeline">
+<div class="mail">
+  <div class="when">20.11.2026 15:37 · 皓洋窯 · → отправлено</div>
+  <h4>欧州ホテル・小売向け卸のご相談（初回のお問い合わせ）— Mugeniki</h4>
+  <p>Первое обращение: 8 вопросов — ex-works по 300/600/1000, MOQ, пищевая безопасность, сроки, упаковка, экспорт</p>
+  <div class="nxt">→ Ждать до 27.11; потом напоминание</div>
+</div>
+<div class="mail">
+  <div class="when">20.11.2026 15:37 · 嘉祥窯 · → отправлено</div>
+  <h4>京焼食器の欧州向け供給について（ホテル・レストラン向け）— Mugeniki</h4>
+  <p>Первое обращение с упором на их опыт HoReCa (Ritz-Carlton, Pierre Hermé)</p>
+  <div class="nxt">→ Ждать до 27.11; потом напоминание</div>
+</div>
+<div class="mail">
+  <div class="when">20.11.2026 15:37 · 匠頭漆工 · → отправлено</div>
+  <h4>山中漆器の木地について（欧州ホテル・小売向けのご相談）— Mugeniki</h4>
+  <p>Обращение с отсылкой к их POP-UP в Париже и Ангулеме и к 髙島屋 Сингапур</p>
+  <div class="nxt">→ Ответ пришёл в тот же день</div>
+</div>
+<div class="mail in">
+  <div class="when">20.11.2026 20:39 JST · 匠頭漆工 · ← получено</div>
+  <h4>Re: 山中漆器の木地について（欧州ホテル・小売向けのご相談）— Mugeniki</h4>
+  <p>久保出貴雄: «сами думали о выходе за рубеж, при подходящих условиях хотели бы работать»; обещал ответить до 26.11</p>
+  <div class="nxt">→ 26–27.11: разобрать ответ, запросить протокол покрытия</div>
+</div>
+<div class="mail">
+  <div class="when">20.11.2026 15:48 · 匠頭漆工 · → отправлено (в ветке)</div>
+  <h4>Re: 山中漆器の木地について（欧州ホテル・小売向けのご相談）— Mugeniki</h4>
+  <p>Благодарность, подтверждение срока 26.11, предложение задавать вопросы. Наши даты намеренно не упомянуты</p>
+  <div class="nxt">→ Ждать письмо с данными</div>
+</div>
+<div class="mail">
+  <div class="when">23.11.2026 09:21 · 陶葊 · → отправлено</div>
+  <h4>京焼・清水焼の欧州向け卸のご相談（ホテル・レストラン向け）— Mugeniki</h4>
+  <p>Отправлено владельцем с andrei@terekhindt.com на info@touan.co.jp (id 1a206da74b5da1c8): 8 вопросов, отсылка к 下絵付け и обжигу 1200 °C, серии 花結晶</p>
+  <div class="nxt">→ Ждать до 30.11–01.12; если тишина — форма お問い合わせ или телефон 075-541-1987</div>
+</div>
+<div class="mail">
+  <div class="when">23.11.2026 · 浅田漆器工芸 · → подготовлено (не отправлено)</div>
+  <h4>山中漆器の欧州ホテル・小売向け卸のご相談（asada／SUWARI 叢雲塗）— Mugeniki</h4>
+  <p>Текст готов: 9 вопросов, отсылка к SUWARI, Motenashi Glass, POP-UP в Париже. Публичной почты нет — только форма お問い合わせ, факс 0761-78-0470</p>
+  <div class="nxt">→ Отправляет владелец через форму; при тишине 7–10 дней — факс</div>
+</div>
+<div class="mail">
+  <div class="when">23.11.2026 14:01 · 東亜シーザ · → отправлено</div>
+  <h4>関の刃物・欧州向け卸のご相談（ホテル・小売・企業ギフト向け）— Mugeniki</h4>
+  <p>Отправлено на toki@toa-scissors.jp (id 1a207daa719c8858) — публичный адрес из карточки компании в списке 岐阜県関刃物産業連合会 (seki-japan.com), адресат 土岐 知弘 (常務取締役, 海外紹介窓口). Форма на сайте отправиться не смогла: её служебный адрес отдаёт 404</p>
+  <div class="nxt">→ Ждать до 30.11–03.12; при тишине — факс +81-575-24-5739 или телефон в рабочее время JST</div>
+</div>
+<div class="mail">
+  <div class="when">23.11.2026 13:50 · 株式会社KOURO · → отправлено</div>
+  <h4>高岡銅器の欧州ホテル・小売向けご相談（真鍮・錫の商品について）— Mugeniki</h4>
+  <p>Отправлено с andrei@terekhindt.com на kojimapet@helen.ocn.ne.jp (id 1a207d0e20eba0ac); 9 вопросов, опора на 5 поколений литейщиков и BrassCube</p>
+  <div class="nxt">→ Ждать до 30.11–03.12; напоминание при тишине</div>
+</div>
+<div class="mail">
+  <div class="when">23.11.2026 13:50 · 株式会社竹中銅器 · → отправлено</div>
+  <h4>高岡銅器の鋳造技術について、欧州ホテル・住宅・ギフト向けのご相談 — Mugeniki</h4>
+  <p>Отправлено на info@takenakadouki.co.jp (id 1a207d0eb1a6e7ba); 9 вопросов, опора на 16 техник литья и своё дизайн-бюро с 1971</p>
+  <div class="nxt">→ Ждать до 30.11–03.12</div>
+</div>
+<div class="mail">
+  <div class="when">23.11.2026 13:50 · 株式会社織田幸銅器 · → отправлено</div>
+  <h4>高岡銅器のインテリア・ギフト商品について、欧州向け卸のご相談 — Mugeniki</h4>
+  <p>Отправлено на info@odakou-douki.co.jp (id 1a207d0f37ad82b9); 9 вопросов, в т.ч. разделение своего производства и закупки</p>
+  <div class="nxt">→ Ждать до 30.11–03.12</div>
+</div>
+<div class="mail">
+  <div class="when">23.11.2026 13:50 · 東濃陶器株式会社 · → отправлено</div>
+  <h4>美濃焼の業務用食器について、欧州ホテル・レストラン向け供給のご相談 — Mugeniki</h4>
+  <p>Отправлено на tono-toki@crux.ocn.ne.jp (id 1a207d0f95db2b49); 9 вопросов, объёмы 600/1000/3000, OEM и протоколы</p>
+  <div class="nxt">→ Ждать до 30.11–03.12; ключевой кандидат по мощности</div>
+</div>
+<div class="mail">
+  <div class="when">23.11.2026 13:50 · 備前焼窯元 五郎辺衛窯 · → отправлено</div>
+  <h4>備前焼の器について、欧州ホテル・レストラン向け卸のご相談 — Mugeniki</h4>
+  <p>Отправлено на info@56b.co.jp (id 1a207d0fe5205ff7); 9 вопросов, отдельно про повторяемость партии</p>
+  <div class="nxt">→ Ждать до 30.11–03.12</div>
+</div>
+<div class="mail">
+  <div class="when">23.11.2026 13:50 · もっと！竹（森口竹工業） · → отправлено</div>
+  <h4>別府竹細工について、欧州ホテル・小売向け卸のご相談 — Mugeniki</h4>
+  <p>Отправлено на info@mottotake.co.jp (id 1a207d10494aa7a5); 9 вопросов, в т.ч. фитосанитарные требования и обработка бамбука</p>
+  <div class="nxt">→ Ждать до 30.11–03.12</div>
+</div>
+<div class="mail">
+  <div class="when">23.11.2026 13:50 · 株式会社マルヨシ陶器 · → отправлено</div>
+  <h4>萬古焼の土鍋について、欧州ホテル・レストラン向け卸のご相談 — Mugeniki</h4>
+  <p>Отправлено на info@maruyoshi-touki.com (id 1a207d10da43d24d); 9 вопросов, опора на бренд まいもん и нишу donabe</p>
+  <div class="nxt">→ Ждать до 30.11–03.12; профильная ниша из отчёта о спросе</div>
+</div>
+<div class="mail">
+  <div class="when">23.11.2026 13:50 · 佐治陶器株式会社 · → отправлено</div>
+  <h4>萬古焼の「火にかけられる陶器」について、欧州向け卸のご相談 — Mugeniki</h4>
+  <p>Отправлено на banko2@saji.co.jp (id 1a207d11395acfa8); 8 вопросов, опора на столетие оптовой работы с窯元</p>
+  <div class="nxt">→ Ждать до 30.11–03.12</div>
+</div>
+<div class="mail">
+  <div class="when">23.11.2026 13:50 · 株式会社華月 · → отправлено</div>
+  <h4>大黒ごはん鍋（炊飯土鍋）について、欧州向け卸のご相談 — Mugeniki</h4>
+  <p>Отправлено на info@japandonabe.co.jp (id 1a207d1163945bc2); 8 вопросов, опора на 1856 год и сертификат 三重ブランド</p>
+  <div class="nxt">→ Ждать до 30.11–03.12; тест совместимости с европейскими плитами</div>
+</div>
+<div class="mail">
+  <div class="when">23.11.2026 13:50 · 砥部焼 梅山窯 · → отправлено</div>
+  <h4>砥部焼について、欧州ホテル・小売向け卸のご相談 — Mugeniki</h4>
+  <p>Отправлено на info@baizangama.jp (id 1a207d11c35fa3e7); 9 вопросов, объёмы 300/600/1000 и роспись на заказ</p>
+  <div class="nxt">→ Ждать до 30.11–03.12</div>
+</div>
+<div class="mail">
+  <div class="when">23.11.2026 13:50 · 砥部焼 すこし屋 · → отправлено</div>
+  <h4>砥部焼の器について、欧州の小売・ホテル向け卸のご相談 — Mugeniki</h4>
+  <p>Отправлено на info@sukoshiya.com (id 1a207d12139cd69b); 8 вопросов; мастерская маленькая — низкий приоритет</p>
+  <div class="nxt">→ Ждать до 30.11–03.12; держать как дополнение</div>
+</div>
+<div class="mail">
+  <div class="when">23.11.2026 13:50 · 田谷漆器店 · → отправлено</div>
+  <h4>輪島塗の器について、欧州ホテル・小売向け卸のご相談 — Mugeniki</h4>
+  <p>Отправлено на tayatakahiro@wajimanuri.co.jp (id 1a207d12819ee632); 10 вопросов, включая мощности после землетрясения</p>
+  <div class="nxt">→ Ждать до 30.11–03.12; отдельно уточнить производственные возможности</div>
+</div>
+<div class="mail in">
+  <div class="when">24.11.2026 10:48 JST · 東亜シーザ · ← ответ получен</div>
+  <h4>RE: 関の刃物・欧州向け卸のご相談（ホテル・小売・企業ギフト向け）— Mugeniki</h4>
+  <p>土岐 知弘 (TOKI): прайс-листы вложением (pricelist(homescsissors).xls, zenrokuprice.xlsx), минимального лота нет, ограничений по рынку сбыта нет, гравировка возможна, экспортный опыт есть, SDS и состав предоставят, упаковка — по выбранному товару, срок 3–4 месяца, каталог только веб. Ответ на письмо от 23.11.2026 (id 1a20b3d2294734d3)</p>
+  <div class="nxt">→ Разобрать прайсы, выбрать 2–3 SKU, запросить EXW под 300/600/1000 и спецификацию упаковки</div>
+</div>
+<div class="mail in">
+  <div class="when">24.11.2026 10:52 JST · 佐治陶器株式会社 · ← ответ получен</div>
+  <h4>RE: 萬古焼の「火にかけられる陶器」について、欧州向け卸のご相談 — Mugeniki</h4>
+  <p>専務取締役 佐治 忠明 (海外営業 中村 в командировке): EXW = 掛け率45 % от розницы, каталог saji.co.jp/catalog/ (пароль sajicatalog), MOQ при EXW от ¥30 000, экспортные документы (таможня, инвойс, P/L) оформляют, свинец и кадмий — декларация о неиспользовании, тесты EU/FDA по каждому SKU не обещают, срок 2 недели со склада / 3 месяца под производство, высокий сезон июнь–октябрь, упаковка ~0.09 м³ / ~20 кг, паллеты за отдельную плату, каналов в ЕС нет. Ответ на письмо от 23.11.2026 (id 1a20b40d9ef1d945)</p>
+  <div class="nxt">→ Запросить каталог под наши SKU, обсудить объём тестов EU 1935/2004, уточнить паллеты и упаковку</div>
+</div>
+<div class="mail">
+  <div class="when">24.11.2026 10:17 · 佐治陶器株式会社 · → отправлено (в ветке)</div>
+  <h4>Re: 萬古焼の「火にかけられる陶器」について、欧州向け卸のご相談 — Mugeniki</h4>
+  <p>Просьба о фотографиях: 7 позиций нашего каталога, JPEG ≥1500 px по длинной стороне или ссылка, разрешение на публикацию в каталоге и материалах для европейских покупателей, строка копирайта и английские названия товаров. Отправлено на tadaaki@saji.co.jp (id 1a20c3436aee412a)</p>
+  <div class="nxt">→ До 01.12: если фото не пришли — напомнить</div>
+</div>
+<div class="mail">
+  <div class="when">24.11.2026 10:17 · 東亜シーザ · → отправлено (в ветке)</div>
+  <h4>Re: 関の刃物・欧州向け卸のご相談（ホテル・小売・企業ギフト向け）— Mugeniki</h4>
+  <p>Просьба о фотографиях: 3–5 позиций, которые они сами рекомендуют для ЕС, снимки гравировки для подарочного направления, их розничная цена и ориентир оптовой, разрешение на публикацию, английские названия. Отправлено на toki@toa-scissors.jp (id 1a20c343a236c1dd)</p>
+  <div class="nxt">→ До 01.12: разобрать прайсы и фото вместе</div>
+</div>
+<div class="mail">
+  <div class="when">24.11.2026 10:40 · 東亜シーザ · ⇄ прайсы разобраны</div>
+  <h4>pricelist(homescsissors).xls + zenrokuprice.xlsx (EXW Japan)</h4>
+  <p>Прайсы прочитаны владельцем и разобраны: 29 позиций, EXW от ¥210 (PS-90) до ¥18 150 (HT-280). Расчёт landed/опт/полка — mugeniki-toa-ekonomika.xlsx. В шлих попали TDK-12 ножницы ¥1 800 (полка €46), TDK-9 ¥1 100, TD1210 ¥1 200, HT-240A ¥6 300, AUS8 сантоку SKA-170 ¥6 000 (полка €126 против Tojiro DP €122 в DE), AUS8 шеф SKA-210 ¥7 000</p>
+  <div class="nxt">→ Запросить: цену гравировки, габариты и вес упаковки по SKU, актуальность прайса на 2026, декларацию материалов по AUS8, условия EXW по 300/600/1000</div>
+</div>
+<div class="mail">
+  <div class="when">24.11.2026 10:45 · 東亜シーザ · → отправлено (в ветке)</div>
+  <h4>Re: 関の刃物・欧州向け卸のご相談（ホテル・小売・企業ギフト向け）— Mugeniki</h4>
+  <p>Четыре блока вопросов: гравировка (цена за штуку, минимальный тираж, шрифты, фото образца), упаковка по SKU (коробка, вложенность, картон, объём и вес под 300/600/1000, можно ли нашу брендированную коробку), прайс (действует ли на 2026, пересмотр, валюта, ступени по объёму на EXW), AUS8 (химсостав, отсутствие свинца и кадмия, никель, документы на английском под EU 1935/2004, LFGB, FDA и срок выдачи). Отправлено на toki@toa-scissors.jp (id 1a20c4cdeb380a9a)</p>
+  <div class="nxt">→ Ждать ответ; параллельно запрошены фото (письмо 10:17)</div>
+</div>
+<div class="mail">
+  <div class="when">24.11.2026 11:00 · все мастерские · ⇄ экономика пересчитана</div>
+  <h4>Юнит-экономика по 44 позициям на одной модели</h4>
+  <p>mugeniki-ekonomika-vse.xlsx: 10 позиций с точной базой цены (3 東亜 по прайсу EXW, 7 佐治陶器 по названной мастерской 掛け率45 %), 29 — коридор при EXW 40–60 % розницы, 5 — без цены. На сайте в /wholesale добавлен блок Landed cost (фрахт 180 €/м³, 800 € фикс на отправку, упаковка 2,20 €, бой 2 %, финансирование 1,5 %, пошлина 0 %) и пример по цене мастерской: 関 ножницы ¥1 800 ex-works → landed ~€14 → опт ~€23 → полка ~€46. Коммит e71c2f2</p>
+  <div class="nxt">→ Закрыть по остальным 7 мастерским: цена ex-works, упаковка, MOQ, протоколы</div>
+</div>
+<div class="mail">
+  <div class="when">24.11.2026 13:40 · 佐治陶器株式会社 · → отправлено (пилот)</div>
+  <h4>Re: 萬古焼の「火にかけられる陶器」について、欧州向け卸のご相談 — Mugeniki</h4>
+  <p>Пилотный запрос: 土鍋 萬福 и 羽釜の土鍋 по 300 шт, EXW по 掛け率45 %, доставка на нашего форвардера (море наше), официальное предложение и подтверждение, что 45 % действует на 300 шт, размеры/вложенность коробки и возможность нашей брендированной, 2–3 образца за наш счёт, документы под EU 1935/2004, LFGB, FDA и декларация об отсутствии свинца и кадмия, объём экспортных документов на первом заказе. Отправлено на tadaaki@saji.co.jp (id 1a20cecb331ee5a0)</p>
+  <div class="nxt">→ Ждать коммерческое предложение; напомнить при тишине 5 рабочих дней</div>
+</div>
+<div class="mail">
+  <div class="when">24.11.2026 13:40 · 東亜シーザ · → отправлено (пилот)</div>
+  <h4>Re: 関の刃物・欧州向け卸のご相談（ホテル・小売・企業ギフト向け）— Mugeniki</h4>
+  <p>Пилотный запрос: 善六 TDK-12 — 300 шт, AUS8 сантоку SKA-170 — 100 шт, гравировка на 50 шт под подарочный тест; EXW по их прайсу, ступени по объёму, цена и минимальный тираж гравировки с фото образца, упаковка по SKU и наша коробка, документы по AUS8 на английском, образцы включая гравированный, порт отгрузки. Отправлено на toki@toa-scissors.jp (id 1a20cecba36bbc07)</p>
+  <div class="nxt">→ Ждать коммерческое предложение; напоминание вместе с напоминанием молчащим 27.11</div>
+</div>
+  </div>
+</section>
+
+<section class="panel" id="p-data" role="tabpanel" hidden>
+  <div class="databox">
+    <h3>Как обновлять</h3>
+    <p>Статусы, оценки и заметки, которые вы меняете в карточках, сохраняются в этом браузере.
+    Чтобы перенести их на другое устройство или отдать мне — выгрузите JSON.</p>
+    <div class="btnrow">
+      <button class="btn" id="exportBtn">Выгрузить JSON</button>
+      <label class="btn ghost">Загрузить JSON<input type="file" id="importFile" accept="application/json" hidden></label>
+      <button class="btn danger" id="resetBtn">Сбросить правки</button>
+    </div>
+    <div class="hint" id="dirty">Правок пока нет: показываются данные базы.</div>
+    <div class="hint">Базовые данные — из файла <b>mugeniki-suppliers.xlsx</b>. Правки в браузере сам файл
+    не меняют: чтобы они попали в базу, пришлите выгруженный JSON.</div>
+  </div>
+</section>
+</div>
+
+<script>
+(function(){
+  var STORE = "mugeniki-suppliers-v1";
+  var $ = function(s, r){ return (r||document).querySelector(s); };
+  var $$ = function(s, r){ return Array.prototype.slice.call((r||document).querySelectorAll(s)); };
+  var cards = $$("#cards .card");
+  var edits = {};
+  try { edits = JSON.parse(localStorage.getItem(STORE) || "{}"); } catch(e) { edits = {}; }
+
+  function statusClass(st){
+    if (st.indexOf("Резерв") === 0) return "st-reserve";
+    if (st.indexOf("Не контактировали") === 0 || st.indexOf("Отказ") === 0) return "st-none";
+    if (st.indexOf("Письмо отправлено") === 0) return "st-work";
+    return "st-replied";
+  }
+  function shortStatus(st){
+    return st.replace("Резерв: ", "Резерв · ").replace("Письмо отправлено — ждём ответ", "Письмо отправлено");
+  }
+  function save(){
+    try { localStorage.setItem(STORE, JSON.stringify(edits)); } catch(e) {}
+    paintDirty();
+  }
+  function paintDirty(){
+    var el = $("#dirty");
+    if (!el) return;
+    var n = Object.keys(edits).length;
+    el.textContent = n ? "Правок в этом браузере: " + n +
+      ". Они сохранены локально и попадут в базу только через выгрузку." :
+      "Правок пока нет: показываются данные базы.";
+  }
+  function setStatusUI(card, st){
+    var b = card.querySelector('[data-badge="status"]');
+    if (b){ b.textContent = shortStatus(st); b.className = "badge " + statusClass(st); }
+    card.dataset.status = st;
+    card.dataset.group = shortStatus(st).split(" · ")[0];
+  }
+  function applyEdit(card){
+    var id = card.dataset.id, e = edits[id];
+    if (!e) return;
+    if (e.status){
+      var sel = card.querySelector("select[data-status]");
+      if (sel) sel.value = e.status;
+      setStatusUI(card, e.status);
+    }
+    if (e.rating){
+      card.dataset.rating = e.rating;
+      $$(".stars span", card).forEach(function(sp){
+        sp.classList.toggle("on", Number(sp.dataset.v) <= e.rating);
+      });
+    }
+    if (e.note){
+      var inp = card.querySelector("input[data-note]");
+      if (inp) inp.value = e.note;
+    }
+  }
+  function bars(obj){
+    var ent = Object.keys(obj).map(function(k){ return [k, obj[k]]; })
+      .sort(function(a,b){ return b[1]-a[1]; });
+    var mx = Math.max.apply(null, ent.map(function(e){ return e[1]; }).concat([1]));
+    return ent.map(function(e){
+      return '<div class="bar"><span class="lbl" title="' + e[0] + '">' + e[0] + '</span>' +
+        '<span class="track"><span class="fill" style="width:' + Math.round(e[1]/mx*100) + '%"></span></span>' +
+        '<span class="num">' + e[1] + '</span></div>';
+    }).join("");
+  }
+  function recount(){
+    var replied = 0, waiting = 0, none = 0, byStatus = {}, byRegion = {};
+    cards.forEach(function(c){
+      var st = c.dataset.status, g = c.dataset.group, r = c.dataset.region;
+      if (st.indexOf("Ответ") === 0) replied++;
+      else if (st.indexOf("Письмо") === 0) waiting++;
+      else if (st.indexOf("Не контактировали") === 0) none++;
+      byStatus[g] = (byStatus[g] || 0) + 1;
+      byRegion[r] = (byRegion[r] || 0) + 1;
+    });
+    if ($("#kReplied")) $("#kReplied").textContent = replied;
+    if ($("#kWaiting")) $("#kWaiting").textContent = waiting;
+    if ($("#kNone")) $("#kNone").textContent = none;
+    if ($("#chStatus")) $("#chStatus").innerHTML = bars(byStatus);
+    if ($("#chRegion")) $("#chRegion").innerHTML = bars(byRegion);
+  }
+  function filterCards(){
+    var q = ($("#q") ? $("#q").value : "").trim().toLowerCase();
+    var region = $("#fRegion") ? $("#fRegion").value : "";
+    var uniq = $("#fUnique") ? $("#fUnique").value : "";
+    var only = $("#pinActive") && $("#pinActive").getAttribute("aria-pressed") === "true";
+    var shown = 0;
+    cards.forEach(function(c){
+      var ok = true;
+      if (region && c.dataset.region !== region) ok = false;
+      if (uniq && c.dataset.unique.indexOf(uniq) !== 0) ok = false;
+      if (only && (c.dataset.status.indexOf("Резерв") === 0 || c.dataset.status.indexOf("Отказ") === 0)) ok = false;
+      if (ok && q && c.dataset.text.indexOf(q) < 0) ok = false;
+      c.hidden = !ok;
+      if (ok) shown++;
+    });
+    if ($("#noCards")) $("#noCards").hidden = shown > 0;
+  }
+  function sortCards(){
+    var mode = $("#fSort") ? $("#fSort").value : "rating";
+    var box = $("#cards");
+    if (!box) return;
+    var arr = cards.slice();
+    arr.sort(function(a,b){
+      if (mode === "rating"){
+        var d = Number(b.dataset.rating) - Number(a.dataset.rating);
+        return d !== 0 ? d : a.dataset.sortDate.localeCompare(b.dataset.sortDate);
+      }
+      if (mode === "date") return a.dataset.sortDate.localeCompare(b.dataset.sortDate);
+      return a.dataset.name.localeCompare(b.dataset.name);
+    });
+    arr.forEach(function(c){ box.appendChild(c); });
+  }
+  function filterProducts(){
+    var q = ($("#pq") ? $("#pq").value : "").trim().toLowerCase();
+    var maker = $("#pMaker") ? $("#pMaker").value : "";
+    var cat = $("#pCat") ? $("#pCat").value : "";
+    $$("#prodBody tr").forEach(function(tr){
+      var ok = true;
+      if (maker && tr.dataset.maker !== maker) ok = false;
+      if (cat && tr.dataset.cat !== cat) ok = false;
+      if (ok && q && tr.dataset.text.indexOf(q) < 0) ok = false;
+      tr.hidden = !ok;
+    });
+  }
+
+  cards.forEach(applyEdit);
+  recount(); paintDirty(); sortCards();
+
+  if ($("#q")) $("#q").addEventListener("input", filterCards);
+  if ($("#fRegion")) $("#fRegion").addEventListener("change", filterCards);
+  if ($("#fUnique")) $("#fUnique").addEventListener("change", filterCards);
+  if ($("#fSort")) $("#fSort").addEventListener("change", sortCards);
+  if ($("#pinActive")) $("#pinActive").addEventListener("click", function(e){
+    var on = e.currentTarget.getAttribute("aria-pressed") === "true";
+    e.currentTarget.setAttribute("aria-pressed", String(!on));
+    filterCards();
+  });
+  if ($("#pq")) $("#pq").addEventListener("input", filterProducts);
+  if ($("#pMaker")) $("#pMaker").addEventListener("change", filterProducts);
+  if ($("#pCat")) $("#pCat").addEventListener("change", filterProducts);
+
+  document.addEventListener("change", function(e){
+    var id = e.target.dataset ? e.target.dataset.status : null;
+    if (id && e.target.tagName === "SELECT"){
+      var card = e.target.closest(".card");
+      edits[id] = edits[id] || {};
+      edits[id].status = e.target.value;
+      setStatusUI(card, e.target.value);
+      save(); recount(); filterCards(); sortCards();
+    }
+  });
+  document.addEventListener("input", function(e){
+    var id = e.target.dataset ? e.target.dataset.note : null;
+    if (id){
+      edits[id] = edits[id] || {};
+      edits[id].note = e.target.value;
+      save();
+    }
+  });
+  document.addEventListener("click", function(e){
+    var star = e.target.closest ? e.target.closest(".stars span") : null;
+    if (star){
+      var box = star.parentElement;
+      var id = box.dataset.id;
+      var v = Number(star.dataset.v);
+      edits[id] = edits[id] || {};
+      edits[id].rating = v;
+      var card = box.closest(".card");
+      card.dataset.rating = v;
+      $$("span", box).forEach(function(sp){ sp.classList.toggle("on", Number(sp.dataset.v) <= v); });
+      save(); recount(); sortCards();
+    }
+  });
+  $$("nav.tabs button").forEach(function(b){
+    b.addEventListener("click", function(){
+      $$("nav.tabs button").forEach(function(x){ x.setAttribute("aria-selected", String(x === b)); });
+      $$(".panel").forEach(function(p){ p.hidden = p.id !== b.dataset.panel; });
+    });
+  });
+  if ($("#exportBtn")) $("#exportBtn").addEventListener("click", function(){
+    var blob = new Blob([JSON.stringify({savedAt: new Date().toISOString(), edits: edits}, null, 2)],
+      {type: "application/json"});
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "mugeniki-edits.json";
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+  if ($("#importFile")) $("#importFile").addEventListener("change", function(ev){
+    var f = ev.target.files[0];
+    if (!f) return;
+    var r = new FileReader();
+    r.onload = function(){
+      try {
+        var obj = JSON.parse(r.result);
+        var incoming = obj.edits || obj;
+        Object.keys(incoming).forEach(function(k){
+          edits[k] = Object.assign({}, edits[k], incoming[k]);
+        });
+        save();
+        cards.forEach(applyEdit);
+        recount(); sortCards();
+        alert("Загружено правок: " + Object.keys(incoming).length);
+      } catch(err) { alert("Не удалось прочитать файл: " + err.message); }
+    };
+    r.readAsText(f);
+  });
+  if ($("#resetBtn")) $("#resetBtn").addEventListener("click", function(){
+    if (!confirm("Сбросить все статусы, оценки и заметки в этом браузере?")) return;
+    edits = {};
+    save();
+    cards.forEach(function(c){
+      $$(".stars span", c).forEach(function(sp){
+        sp.classList.toggle("on", Number(sp.dataset.v) <= Number(c.dataset.rating));
+      });
+      var inp = c.querySelector("input[data-note]"); if (inp) inp.value = "";
+    });
+    recount();
+  });
+})();
+</script>
+</body>
+</html>

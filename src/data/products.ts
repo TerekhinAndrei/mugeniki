@@ -23,11 +23,12 @@ export type Product = {
 };
 
 /**
- * Every price below is a real retail price published by the workshop itself in
- * Japan, read on the date in `checked`. Nothing here is an ex-works, wholesale
- * or export price: none of these workshops publishes one, they are quoted per
- * order. Where a workshop publishes no price, the field is null and the card
- * says so instead of guessing.
+ * Every price below is published by the workshop itself in Japan, read on the
+ * date in `checked`. Most are shop prices with consumption tax included. Where
+ * a workshop has given us its own trade sheet, the price is that sheet's
+ * ex-works figure and `priceNote` says so. No wholesale or export price is
+ * derived here: those are quoted per order. Where a workshop publishes no
+ * price, the field is null and the card says so instead of guessing.
  */
 export const products: Product[] = [
   {

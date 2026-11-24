@@ -12,9 +12,9 @@ const makerCount = new Set(products.map((p) => p.maker)).size;
 const placeCount = new Set(products.map((p) => p.region)).size;
 
 export const metadata: Metadata = {
-  title: "Catalogue — Japanese Ceramics, Tea Wares and Lacquer",
+  title: "Catalogue — Japanese Ceramics, Tea Wares, Lacquer and Blades",
   description:
-    `${products.length} pieces from ${makerCount} workshops — ceramics, tea wares, lacquerware and blades, with retail prices in Japan. Wholesale terms quoted per order.`,
+    `${products.length} pieces from ${makerCount} workshops — ceramics, tea wares, lacquerware and blades, priced as the workshops publish them. Wholesale terms quoted per order.`,
   alternates: { canonical: "/collections" },
 };
 
