@@ -50,9 +50,8 @@ export default function SectionServices() {
           {services.map((s) => (
             <RevealWrapper key={s.index}>
               <div
-                className="grid items-start py-12 gap-12 transition-colors hover:bg-black/[0.015] cursor-default"
+                className="grid grid-cols-1 md:grid-cols-[1fr_2fr_1fr] items-start py-8 md:py-12 gap-3 md:gap-12 transition-colors hover:bg-black/[0.015] cursor-default"
                 style={{
-                  gridTemplateColumns: "1fr 2fr 1fr",
                   borderBottom: "1px solid var(--rule)",
                 }}
               >

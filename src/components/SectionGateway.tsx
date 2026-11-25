@@ -36,11 +36,11 @@ export default function SectionGateway() {
 
         <RevealWrapper delay={2}>
           <div
-            className="grid grid-cols-2"
+            className="grid grid-cols-1 sm:grid-cols-2"
             style={{ gap: "1px", background: "var(--offblack)", border: "1px solid var(--offblack)" }}
           >
             {items.map((item) => (
-              <div key={item.label} className="p-8" style={{ background: "var(--black)" }}>
+              <div key={item.label} className="p-6 sm:p-8" style={{ background: "var(--black)" }}>
                 <p
                   className="mb-2"
                   style={{ fontSize: "0.62rem", letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--light)" }}
