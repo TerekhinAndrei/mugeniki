@@ -903,7 +903,7 @@ export const products: Product[] = [
     sourceLabel: "Tōa Scissors, maker's price list",
     checked: "24.11.2026",
     swatch: "#c9ccd1",
-    notes: "The maker wrote that it sells under TOA, Zencix, Zenroku and 和匠 Washou, and works from small lots including OEM. Packing, the maker's own figures of 25.11.2026: 10 pieces to an inner box, 100 to a carton of 61 × 29 × 34 cm, 18 kg. Engraving costs ¥100 a piece with no minimum, from a logo in PDF.",
+    notes: "The maker wrote that it sells under TOA, Zencix, Zenroku and 和匠 Washou, and works from small lots including OEM. Packing, the maker's own figures of 25.11.2026: 10 pieces to an inner box, 100 to a carton of 61 × 29 × 34 cm, 18 kg. Engraving costs ¥100 a piece with no minimum, from a logo in PDF. The blade carries the house mark already: 善六, the maker's seal, ZENROKU and MADE IN SEKI JAPAN. The maker's own sample photographs reached us on 25.11.2026 (four shots); we hold them in house and publish them only once the maker says we may.",
   },
   {
     slug: "toa-washou-scissors",
@@ -972,7 +972,7 @@ export const products: Product[] = [
     sourceLabel: "Tōa Scissors, maker's price list",
     checked: "24.11.2026",
     swatch: "#b9bec6",
-    notes: "AUS8 is a mid-tier steel; the maker's sheet also lists a 210 mm chef knife at ¥7,000, a 135 mm utility at ¥5,000 and a 210 mm sashimi knife at ¥10,000. Packing, the maker's own figures of 25.11.2026: 6 pieces to an inner box, 60 to a carton of 45 × 43 × 40 cm, 20 kg. The maker's safety data sheet for AUS8 exists in Japanese only (25.11.2026).",
+    notes: "AUS8 is a mid-tier steel; the maker's sheet also lists a 210 mm chef knife at ¥7,000, a 135 mm utility at ¥5,000 and a 210 mm sashimi knife at ¥10,000. Packing, the maker's own figures of 25.11.2026: 6 pieces to an inner box, 60 to a carton of 45 × 43 × 40 cm, 20 kg. The maker's safety data sheet for AUS8 exists in Japanese only (25.11.2026). Its own sample photographs of 25.11.2026 show the marking we can promise a buyer: 善六, the maker's seal, ZENROKU, AUS8 STAINLESS STEEL BLADE and MADE IN SEKI JAPAN, etched on the blade near the bolster.",
   },
   {
     slug: "kashogama-ido-tea-bowl",
