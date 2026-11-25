@@ -78,6 +78,7 @@ export default function WholesalePage() {
           <Prose
             paragraphs={[
               "One example we can show, because the maker quoted it to us: a kitchen shears from Seki at ¥1,800 ex-works lands near €14 a piece at six hundred pieces, wholesale sits around €23, and the European shelf is near €46.",
+              "That freight line now rests on a real carton rather than an estimate — the Seki maker's own figures of 25.11.2026 are 100 kitchen shears to a carton of 61 × 29 × 34 cm at 18 kg, or 60 santoku knives to a carton of 45 × 43 × 40 cm at 20 kg. Sea freight comes to about eleven cents a piece for the shears and twenty-three for the knife, which is why a pilot at three hundred pieces costs almost the same per piece as a run of a thousand.",
               "Two of the nine workshops in the catalogue have given us trade terms. The rest price per design, and we say so on the quotation instead of estimating a number for you.",
             ]}
           />

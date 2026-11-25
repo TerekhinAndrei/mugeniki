@@ -35,7 +35,7 @@ export default function CollectionsPage() {
               "Most cards show what a customer pays in the workshop's own shop in Japan, consumption tax included. Where a workshop has given us its own trade sheet, the card shows that ex-works price instead, and says so — Seki cutlery is the case here.",
               "Wholesale is a separate conversation: ex-works price, minimum order, packing and lead time are quoted for your design, your volume and your market. Pieces marked “price on request” are made to order at a level the workshop prices per commission rather than per item.",
               "Most of the tableware is made to order rather than pulled from a shelf. Allow four to eight weeks from confirmation to a fired batch, longer for a new mould or a new glaze.",
-              "Cards that carry a photograph show a museum piece from the same tradition: it demonstrates the technique, not the exact item. The workshops' own product photography belongs to them, so it reaches you with the first quotation rather than before it.",
+              "Cards that carry a photograph show a museum piece from the same tradition: it demonstrates the technique, not the exact item. The workshops' own product photography belongs to them, so it reaches you with the first quotation rather than before it — carrying the credit the workshop asks for, such as “(c)SAJITOUKI Co.,Ltd.” where Saji Tōki allows its images in business-to-business material only.",
             ]}
           />
         </PageSection>
