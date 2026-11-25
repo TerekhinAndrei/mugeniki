@@ -123,6 +123,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                       : "Price in Japan",
                     value: formatYen(p.priceJpy),
                   },
+                  { label: "Availability and export", value: p.exportStatus },
                 ]}
               />
               <p style={{ marginTop: "1.5rem", fontSize: "0.9rem", color: "var(--muted)", lineHeight: 1.7 }}>
